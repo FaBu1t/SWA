@@ -10,8 +10,8 @@ public class db {
     public static String jdbcURL = "jdbc:derby:shoppingdb;create=true";
 
     public static void main(String[] args) throws Exception {
-        createTable();
-        insertWare(3, "Buch2", 8f, "Ein Buch kann man lesen");
+        //createTable();
+        insertWare(4, "Buch2", 8f, "Ein Buch kann man lesen");
         // insertWare(4, "Film2", 12f, "Einen Film kann man gucken");
         showWare();
     }
