@@ -34,4 +34,18 @@ public class WarenRepository implements Katalog {
         return null;
     }
 
+    public void insertData(){
+
+    }
+
+    public void deleteData(){
+
+    }
+
+    public void deleteTable(){
+
+    }
+    
+
+
 }
