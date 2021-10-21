@@ -5,6 +5,6 @@ public class Ware {
     private String name;
     private double preis;
     private String beschreibung;
-    private Produkinformation produktInfo;
+    private Produktinformation produktInfo;
 
 }
