@@ -1,19 +1,21 @@
 package de.hsos.swa.ssa.suchen.dal;
 
+import java.sql.Connection;
+
 import de.hsos.swa.ssa.suchen.bl.Katalog;
 import de.hsos.swa.ssa.suchen.bl.Suchalgorithmus;
 import de.hsos.swa.ssa.suchen.bl.Ware;
 
 public class WarenRepository implements Katalog {
+    public static String jdbcURL = "jdbc:derby:simple_shopping_app_db;create=true";
+    public static String jdbcClose = "jdbc:derby:simple_shopping_app_db;shutdown=true";
+
     private WarenSuche suchalgorithmus = new KeywordMatching();
 
+    //Strategy Pattern nachschauen
     @Override
     public void legeSuchalgorithmusFest(Suchalgorithmus algo) {
-        if (algo == Suchalgorithmus.KeywordMatching) {
-            suchalgorithmus = new KeywordMatching();
-        } else if (algo == Suchalgorithmus.SemanticMatching) {
-            suchalgorithmus = new SemanticMatching();
-        }
+        
     }
 
     @Override
@@ -34,8 +36,12 @@ public class WarenRepository implements Katalog {
         return null;
     }
 
-    public void insertData() {
+    public void insertTable(){
+        
+    }
 
+    public void insertData() {
+        
     }
 
     public void deleteData() {
