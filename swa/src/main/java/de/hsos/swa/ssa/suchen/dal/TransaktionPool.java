@@ -6,7 +6,7 @@ import java.util.List;
 public interface TransaktionPool {
     public boolean create(String sql);
 
-    public List<Object> read(String sql);
+    public List<String> read(String sql);
 
     public boolean update(String sql);
 

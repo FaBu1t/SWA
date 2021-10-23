@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ConnectionManagement implements ConnectionPool {
-    private String url = "jdbc:derby:simpleShoppingAppDB;create=true";
+    private String url;
     private List<Connection> connectionPool;
     private List<Connection> usedConnection = new ArrayList<>();
     private static int INITIAL_POOL_SIZE = 1;
@@ -27,9 +27,15 @@ public class ConnectionManagement implements ConnectionPool {
 
     @Override
     public Connection getConnection() {
-        Connection connection = connectionPool.remove(connectionPool.size() - 1);
-        usedConnection.add(connection);
-        return connection;
+        if (connectionPool.size() > 0) {
+            Connection connection = connectionPool.remove(connectionPool.size() - 1);
+            usedConnection.add(connection);
+            return connection;
+        } else {
+            System.out.println("Keine Connection verfügbar!");
+            return null;
+        }
+
     }
 
     @Override
