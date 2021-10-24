@@ -3,6 +3,7 @@ package de.hsos.swa.ssa.suchen.dal;
 import java.sql.Connection;
 
 import de.hsos.swa.ssa.suchen.bl.Katalog;
+import de.hsos.swa.ssa.suchen.bl.Produktinformation;
 import de.hsos.swa.ssa.suchen.bl.Suchalgorithmus;
 import de.hsos.swa.ssa.suchen.bl.Ware;
 
@@ -12,10 +13,10 @@ public class WarenRepository implements Katalog {
 
     private WarenSuche suchalgorithmus = new KeywordMatching();
 
-    //Strategy Pattern nachschauen
+    // Strategy Pattern nachschauen
     @Override
     public void legeSuchalgorithmusFest(Suchalgorithmus algo) {
-        
+
     }
 
     @Override
@@ -31,17 +32,17 @@ public class WarenRepository implements Katalog {
     }
 
     @Override
-    public Ware gebeProduktinformationen(Ware ware) {
+    public Produktinformation[] gebeProduktinformationen(Ware ware) {
         // TODO Auto-generated method stub
         return null;
     }
 
-    public void insertTable(){
-        
+    public void insertTable() {
+
     }
 
     public void insertData() {
-        
+
     }
 
     public void deleteData() {

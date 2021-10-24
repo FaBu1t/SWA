@@ -7,5 +7,5 @@ public interface Katalog {
 
     public Ware[] suchen(long warennummer);
 
-    public Ware gebeProduktinformationen(Ware ware);
+    public Produktinformation[] gebeProduktinformationen(Ware ware);
 }
