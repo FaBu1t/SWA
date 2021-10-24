@@ -1,6 +1,6 @@
 ----------------------------------------------------------------
-Sun Oct 24 12:27:39 CEST 2021:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.15.2.0 - (1873585): instance a816c00e-017c-b1d7-72ac-0000076b1050 
+Sun Oct 24 20:41:14 CEST 2021:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.15.2.0 - (1873585): instance a816c00e-017c-b39b-5646-0000076b7b10 
 on database directory C:\Users\joana\Documents\GitHub\SWA\SWA_AB01\simpleShoppingAppDB with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@30946e09 
 Loaded from file:/C:/Users/joana/.m2/repository/org/apache/derby/derby/10.15.2.0/derby-10.15.2.0.jar
 java.vendor=Eclipse Foundation

@@ -1,15 +1,15 @@
 package de.hsos.swa.ssa.suchen.bl;
 
+import java.io.Serializable;
+
 public class Produktinformation {
     private final String bezeichnung;
-    private final Object information;
+    private Serializable information;
 
-    public Produktinformation(String bezeichnung, Object information) {
+    public Produktinformation(String bezeichnung, Serializable information) {
         this.bezeichnung = bezeichnung;
         this.information = information;
     }
-
-    
 
     @Override
     public boolean equals(Object obj) {

@@ -23,6 +23,7 @@ public class TransaktionManagement implements TransaktionPool {
             connectionPool.releaseConnection(conn);
             return true;
         } catch (SQLException e) {
+            e.printStackTrace();
             connectionPool.releaseConnection(conn);
             return false;
         }
@@ -39,7 +40,7 @@ public class TransaktionManagement implements TransaktionPool {
             connectionPool.releaseConnection(conn);
             return rs;
         } catch (SQLException e) {
-            // e.printStackTrace();
+            e.printStackTrace();
             connectionPool.releaseConnection(conn);
             return null;
         }

@@ -9,9 +9,18 @@ public class Ware {
     private String beschreibung;
     private Produktinformation produktInfo;
 
-    // nur Test
-    public Ware(long warennummer) {
+    public Ware(long warennummer, String name, Geld preis) {
         this.warennummer = warennummer;
+        this.name = name;
+        this.preis = preis;
+    }
+
+    public void setBeschreibung(String beschreibung) {
+        this.beschreibung = beschreibung;
+    }
+
+    public void setProduktInfo(Produktinformation produktinfo) {
+        this.produktInfo = produktinfo;
     }
 
     public long getWarennummer() {
@@ -29,4 +38,9 @@ public class Ware {
     public String getBeschreibung() {
         return beschreibung;
     }
+
+    public String toString(){
+        return warennummer + ", " + name + ", " + preis + ", " + beschreibung;
+    }
+
 }
