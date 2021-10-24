@@ -5,42 +5,50 @@ import de.hsos.swa.ssa.suchen.bl.Produktinformation;
 import de.hsos.swa.ssa.suchen.bl.Ware;
 
 public class EinkaueferIn implements HoleWarenkorb, PruefeWare, SucheWare, WaehleWare {
-    private WarenSuchenUndPruefen warenSuP;
+
+    private static EinkaueferIn einkaueferInObjekt;
+
+    public static synchronized EinkaueferIn getEinkaueferInObjekt() {
+        if (einkaueferInObjekt == null) {
+            einkaueferInObjekt = new EinkaueferIn();
+        }
+        return einkaueferInObjekt;
+    }
 
     @Override
     public boolean wareZuWarenkorbHinzufuegen(Ware ware) {
-        // TODO Auto-generated method stub
-        return false;
+        WarenkorbVerwalten wKorbVerwalten = WarenkorbVerwalten.getWarenkorbVerwalten();
+        return wKorbVerwalten.wareZuWarenkorbHinzufuegen(ware);
     }
 
     @Override
     public Ware[] sucheWare(String warenname) {
-
-        return warenSuP.sucheWare(warenname);
+        WarenSuchenUndPruefen wSuP = WarenSuchenUndPruefen.getWarenSuchenUndPruefen();
+        return wSuP.sucheWare(warenname);
     }
 
     @Override
     public Ware sucheWare(long warennummer) {
-
-        return warenSuP.sucheWare(warennummer);
+        WarenSuchenUndPruefen wSuP = WarenSuchenUndPruefen.getWarenSuchenUndPruefen();
+        return wSuP.sucheWare(warennummer);
     }
 
     @Override
     public Produktinformation[] holeDetailinformation(Ware ware) {
-
-        return warenSuP.holeDetailinformation(ware);
+        WarenSuchenUndPruefen wSuP = WarenSuchenUndPruefen.getWarenSuchenUndPruefen();
+        return wSuP.holeDetailinformation(ware);
     }
 
     @Override
     public WarenkorbFuerSuche holeWarenkorb() {
-        // TODO Auto-generated method stub
-        return null;
+        WarenkorbVerwalten wKorbVerwalten = WarenkorbVerwalten.getWarenkorbVerwalten();
+        return wKorbVerwalten.holeWarenkorb();
     }
 
     @Override
     public WarenkorbFuerSuche holeWarenkorb(long warenkorbnummer) {
-        // TODO Auto-generated method stub
-        return null;
+        WarenkorbVerwalten wKorbVerwalten = WarenkorbVerwalten.getWarenkorbVerwalten();
+        return wKorbVerwalten.holeWarenkorb(warenkorbnummer);
     }
 
 }
