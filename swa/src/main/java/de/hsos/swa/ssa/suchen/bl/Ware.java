@@ -7,4 +7,13 @@ public class Ware {
     private String beschreibung;
     private Produktinformation produktInfo;
 
+    // nur Test
+    public Ware(long warennummer){
+        this.warennummer = warennummer;
+    }
+
+    public long getWarennummer() {
+        return this.warennummer;
+    }
+
 }
