@@ -1,14 +1,16 @@
 package de.hsos.swa.ssa.suchen.bl;
 
+import de.hsos.swa.ssa.shared.*;
+
 public class Ware {
     private long warennummer;
     private String name;
-    private double preis;
+    private Geld preis;
     private String beschreibung;
     private Produktinformation produktInfo;
 
     // nur Test
-    public Ware(long warennummer){
+    public Ware(long warennummer) {
         this.warennummer = warennummer;
     }
 
@@ -16,4 +18,15 @@ public class Ware {
         return this.warennummer;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public Geld getPreis() {
+        return this.preis;
+    }
+
+    public String getBeschreibung() {
+        return beschreibung;
+    }
 }

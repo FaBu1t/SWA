@@ -3,10 +3,15 @@ package de.hsos.swa.ssa.suchen.al;
 import de.hsos.swa.ssa.suchen.bl.Katalog;
 
 import de.hsos.swa.ssa.suchen.bl.Ware;
+import de.hsos.swa.ssa.suchen.dal.WarenRepository;
 import de.hsos.swa.ssa.suchen.bl.Produktinformation;
 
 public class WarenSuchenUndPruefen {
     private Katalog katalog;
+
+    public WarenSuchenUndPruefen() {
+        katalog = new WarenRepository();
+    }
 
     public Ware[] sucheWare(String warenname) {
         return katalog.suchen(warenname);

@@ -5,6 +5,7 @@ import de.hsos.swa.ssa.suchen.bl.Produktinformation;
 import de.hsos.swa.ssa.suchen.bl.Ware;
 
 public class EinkaueferIn implements HoleWarenkorb, PruefeWare, SucheWare, WaehleWare {
+    private WarenSuchenUndPruefen warenSuP;
 
     @Override
     public boolean wareZuWarenkorbHinzufuegen(Ware ware) {
@@ -14,20 +15,20 @@ public class EinkaueferIn implements HoleWarenkorb, PruefeWare, SucheWare, Waehl
 
     @Override
     public Ware[] sucheWare(String warenname) {
-        // TODO Auto-generated method stub
-        return null;
+
+        return warenSuP.sucheWare(warenname);
     }
 
     @Override
     public Ware sucheWare(long warennummer) {
-        // TODO Auto-generated method stub
-        return null;
+
+        return warenSuP.sucheWare(warennummer);
     }
 
     @Override
     public Produktinformation[] holeDetailinformation(Ware ware) {
-        // TODO Auto-generated method stub
-        return null;
+
+        return warenSuP.holeDetailinformation(ware);
     }
 
     @Override
