@@ -1,10 +1,14 @@
 package de.hsos.swa.ssa.suchen.dal;
 
+import java.io.ObjectInputStream;
+import java.io.Serializable;
+import java.sql.Blob;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import de.hsos.swa.ssa.shared.Geld;
 import de.hsos.swa.ssa.shared.Waehrung;
@@ -26,7 +30,6 @@ public class WarenRepository implements Katalog {
 
     }
 
-    // Strategy Pattern nachschauen
     @Override
     public void legeSuchalgorithmusFest(Suchalgorithmus algo) {
         if (algo == Suchalgorithmus.KeywordMatching && !(suchalgorithmus instanceof KeywordMatching)) {
@@ -44,25 +47,9 @@ public class WarenRepository implements Katalog {
         int counter = 0;
         if (rs != null) {
             try {
-                ResultSetMetaData rsmd = rs.getMetaData();
                 while (rs.next()) {
                     counter++;
-                    // gar nicht gut! Wie geht das besser??
-                    Waehrung waehrung;
-                    switch (rs.getString("Waehrung")) {
-                    case "EURO":
-                        waehrung = Waehrung.EURO;
-                        break;
-                    case "DOLLAR":
-                        waehrung = Waehrung.DOLLAR;
-                        break;
-                    case "YEN":
-                        waehrung = Waehrung.YEN;
-                        break;
-                    default:
-                        waehrung = Waehrung.EURO;
-                    }
-
+                    Waehrung waehrung = Waehrung.fromString(rs.getString("Waehrung"));
                     Geld geld = new Geld(rs.getDouble("Preis"), waehrung);
                     Ware ware = new Ware(rs.getLong("Warennummer"), rs.getString("Name"), geld);
                     ware.setBeschreibung(rs.getString("Beschreibung"));
@@ -92,7 +79,7 @@ public class WarenRepository implements Katalog {
             int counter = 0;
             try {
                 while (rs.next()) {
-                    // TODO Mit Blob umgehen
+                    // TODO Blob handling
                     produktinfos.add(new Produktinformation(rs.getString("bezeichnung"), null));
                 }
                 return produktinfos.toArray(new Produktinformation[counter]);
@@ -104,13 +91,21 @@ public class WarenRepository implements Katalog {
         return null;
     }
 
-    public void insertData() {
+    public void insertWare(Ware ware) {
+        String sqlInsertWare = String.format(Locale.ROOT,
+                "Insert into Ware(Warennummer, Name, Preis, Waehrung, Beschreibung) values (%d, \'%s\', %.2f,\'%s\',\'%s\')",
+                ware.getWarennummer(), ware.getName(), ware.getPreis().getMenge(),
+                ware.getPreis().getWaehrung().toString(), ware.getBeschreibung());
 
+        tm.update(sqlInsertWare);
     }
 
-    public void deleteData() {
-
+    public void insertProduktinformation(int warennummer, Produktinformation info) {
+        if (info.getInformation() == null) {
+            String sqlInsertInfo = String.format(Locale.ROOT,
+                    "Insert into Produktinfos(Warennummer, Bezeichnung, Information) values (%d, \'%s\')", warennummer,
+                    info.getBezeichnung(), info.getInformation());
+            tm.update(sqlInsertInfo);
+        }
     }
-
-
 }

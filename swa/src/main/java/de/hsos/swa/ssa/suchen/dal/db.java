@@ -7,6 +7,7 @@ import java.util.Locale;
 
 import org.apache.derby.tools.sysinfo;
 
+import de.hsos.swa.ssa.shared.Geld;
 import de.hsos.swa.ssa.shared.Waehrung;
 import de.hsos.swa.ssa.suchen.bl.Ware;
 
@@ -25,23 +26,20 @@ public class db {
     public static String readSQLTest = "Select * From Ware";
     public static String deleteSQLTest = "Drop Table Ware";
 
-    public static String insertSQLInfoTest = "Insert into Produktinfos(Warennummer, Bezeichnung) values (2166, \'Sehr Cool\')";
+    public static String insertSQLInfoTest = "Insert into Produktinfos(Warennummer, Bezeichnung) values (2166, \'Ein bisschen Cool\')";
 
     public static void main(String[] args) throws Exception {
 
         try {
-            Serializable s = new Serializable() {
-                String s = "OKAY?";
-            };
-            
 
             WarenRepository wr = new WarenRepository();
             TransaktionPool tm = new TransaktionManagement(jdbcURL);
+            Geld geld = new Geld(243.55, Waehrung.YEN);
+            Ware ware = new Ware(23344, "Halloween Kostüm", geld);
 
-            tm.update("Insert into Produktinfos(Warennummer, Bezeichnung, Information) values (2166, \'Sehr Cool\', "+ s + ")");
-            printArray(wr.suchen(Waehrung.EURO.toString()));
-            printArray(wr.suchen(1232));
-            printArray(wr.suchen("Pullover"));
+            wr.insertWare(ware);
+
+            printArray(wr.suchen("YEN"));
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -58,8 +56,8 @@ public class db {
                 warennummer, ware, preis, waehrung, beschreibung);
     }
 
-    public static void printArray(Ware[] waren) {
-        for (Ware ware : waren) {
+    public static void printArray(Object[] waren) {
+        for (Object ware : waren) {
             System.out.println(ware);
         }
     }

@@ -20,4 +20,16 @@ public class Produktinformation {
         Produktinformation other = (Produktinformation) obj;
         return other.bezeichnung.equals(bezeichnung) && other.information.equals(information);
     }
+
+    public String toString() {
+        return bezeichnung + ", " + information;
+    }
+
+    public String getBezeichnung() {
+        return this.bezeichnung;
+    }
+
+    public Serializable getInformation() {
+        return this.information;
+    }
 }

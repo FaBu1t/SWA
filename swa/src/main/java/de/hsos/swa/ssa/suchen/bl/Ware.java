@@ -1,5 +1,8 @@
 package de.hsos.swa.ssa.suchen.bl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import de.hsos.swa.ssa.shared.*;
 
 public class Ware {
@@ -7,20 +10,17 @@ public class Ware {
     private String name;
     private Geld preis;
     private String beschreibung;
-    private Produktinformation produktInfo;
 
     public Ware(long warennummer, String name, Geld preis) {
         this.warennummer = warennummer;
         this.name = name;
         this.preis = preis;
+        this.beschreibung = null;
     }
+
 
     public void setBeschreibung(String beschreibung) {
         this.beschreibung = beschreibung;
-    }
-
-    public void setProduktInfo(Produktinformation produktinfo) {
-        this.produktInfo = produktinfo;
     }
 
     public long getWarennummer() {
@@ -39,7 +39,7 @@ public class Ware {
         return beschreibung;
     }
 
-    public String toString(){
+    public String toString() {
         return warennummer + ", " + name + ", " + preis + ", " + beschreibung;
     }
 
