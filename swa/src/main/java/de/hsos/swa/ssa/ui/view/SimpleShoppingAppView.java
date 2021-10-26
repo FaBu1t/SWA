@@ -2,9 +2,9 @@ package de.hsos.swa.ssa.ui.view;
 
 public class SimpleShoppingAppView {
 
-    public SimpleShoppingAppView() {
+    public void display() {
         BegruessungView bView = new BegruessungView();
-        bView.begruessung();
+        bView.display();
     }
 
 }
