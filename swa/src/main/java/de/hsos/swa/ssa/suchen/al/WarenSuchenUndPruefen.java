@@ -28,7 +28,11 @@ public class WarenSuchenUndPruefen {
 
     public Ware sucheWare(long warennummer) {
 
-        return katalog.suchen(warennummer)[0];
+        Ware[] waren = katalog.suchen(warennummer);
+        if (waren.length == 0) {
+            return null;
+        }
+        return waren[0];
     }
 
     public Produktinformation[] holeDetailinformation(Ware ware) {
