@@ -42,7 +42,8 @@ public class EinkaueferIn implements HoleWarenkorb, PruefeWare, SucheWare, Waehl
     @Override
     public WarenkorbFuerSuche holeWarenkorb() {
         WarenkorbVerwalten wKorbVerwalten = WarenkorbVerwalten.getWarenkorbVerwalten();
-        return wKorbVerwalten.holeWarenkorb();
+        WarenkorbFuerSuche warenkorb = wKorbVerwalten.holeWarenkorb();
+        return warenkorb;
     }
 
     @Override

@@ -23,7 +23,10 @@ public class WarenkorbVerwalten {
     }
 
     public WarenkorbFuerSuche holeWarenkorb() {
-        this.warenkorb = wStaender.holeWarenkorb();
+        if (this.warenkorb == null) {
+            this.warenkorb = wStaender.holeWarenkorb();
+        }
+
         return warenkorb;
 
     }
@@ -35,7 +38,9 @@ public class WarenkorbVerwalten {
 
     public boolean wareZuWarenkorbHinzufuegen(Ware ware) {
         if (warenkorb == null) {
+
             return false;
+
         } else {
             warenkorb.wareHinzufuegen(konverter.wareToDto(ware));
             return true;

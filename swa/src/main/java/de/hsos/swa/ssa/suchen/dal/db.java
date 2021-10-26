@@ -30,20 +30,7 @@ public class db {
 
     public static void main(String[] args) throws Exception {
 
-        try {
-
-            WarenRepository wr = new WarenRepository();
-            TransaktionPool tm = new TransaktionManagement(jdbcURL);
-            Geld geld = new Geld(243.55, Waehrung.YEN);
-            Ware ware = new Ware(23344, "Halloween Kostüm", geld);
-
-            wr.insertWare(ware);
-
-            printArray(wr.suchen("YEN"));
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+       
     }
 
     public static String helpInsert(int warennummer, String ware, double preis, Waehrung waehrung,
