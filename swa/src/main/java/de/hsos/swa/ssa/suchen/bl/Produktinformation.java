@@ -22,14 +22,14 @@ public class Produktinformation {
     }
 
     public String toString() {
-        return bezeichnung + ", " + information;
+        String toStringFormat = String.format("\n%1$-25s", this.bezeichnung);
+        toStringFormat += String.format(" |%1$-10s", this.information);
+        toStringFormat += "\n";
+        return toStringFormat;
     }
 
     public String getBezeichnung() {
         return this.bezeichnung;
     }
 
-    public Serializable getInformation() {
-        return this.information;
-    }
 }

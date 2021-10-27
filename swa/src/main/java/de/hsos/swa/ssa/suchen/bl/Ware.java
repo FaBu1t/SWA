@@ -36,7 +36,13 @@ public class Ware {
     }
 
     public String toString() {
-        return warennummer + ", " + name + ", " + preis + ", " + beschreibung;
+        String toStringFormat = String.format("\n%1$-11s", String.valueOf(warennummer));
+        toStringFormat += String.format(" |%1$-15s", this.name);
+        toStringFormat += String.format(" |%1$-7s", String.valueOf(preis.getMenge()));
+        toStringFormat += String.format(" |%1$-8s", this.preis.getWaehrung());
+        toStringFormat += String.format(" |%1$-20s", this.beschreibung);
+        toStringFormat += "\n";
+        return toStringFormat;
     }
 
 }
