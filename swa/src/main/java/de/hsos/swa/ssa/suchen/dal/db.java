@@ -1,6 +1,5 @@
 package de.hsos.swa.ssa.suchen.dal;
 
-import java.io.Serializable;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Locale;
@@ -30,7 +29,6 @@ public class db {
 
     public static void main(String[] args) throws Exception {
 
-       
     }
 
     public static String helpInsert(int warennummer, String ware, double preis, Waehrung waehrung,

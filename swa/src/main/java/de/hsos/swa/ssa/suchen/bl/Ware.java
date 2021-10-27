@@ -1,8 +1,5 @@
 package de.hsos.swa.ssa.suchen.bl;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import de.hsos.swa.ssa.shared.*;
 
 public class Ware {
@@ -17,7 +14,6 @@ public class Ware {
         this.preis = preis;
         this.beschreibung = null;
     }
-
 
     public void setBeschreibung(String beschreibung) {
         this.beschreibung = beschreibung;

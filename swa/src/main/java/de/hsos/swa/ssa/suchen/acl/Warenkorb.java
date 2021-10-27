@@ -23,4 +23,13 @@ public class Warenkorb implements WarenkorbFuerSuche {
         return this.warenkorbnummer;
     }
 
+    @Override
+    public String toString() {
+        String output = "Warenkorninhalt: ";
+        for (WareDTO w : waren) {
+            output = output + w.name + ", ";
+        }
+        return output;
+
+    }
 }
