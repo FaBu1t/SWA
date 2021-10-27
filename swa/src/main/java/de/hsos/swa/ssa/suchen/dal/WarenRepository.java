@@ -86,26 +86,7 @@ public class WarenRepository implements Katalog {
             } catch (Exception e) {
                 return null;
             }
-
         }
         return null;
-    }
-
-    public void insertWare(Ware ware) {
-        String sqlInsertWare = String.format(Locale.ROOT,
-                "Insert into Ware(Warennummer, Name, Preis, Waehrung, Beschreibung) values (%d, \'%s\', %.2f,\'%s\',\'%s\')",
-                ware.getWarennummer(), ware.getName(), ware.getPreis().getMenge(),
-                ware.getPreis().getWaehrung().toString(), ware.getBeschreibung());
-
-        tm.update(sqlInsertWare);
-    }
-
-    public void insertProduktinformation(int warennummer, Produktinformation info) {
-        if (info.getInformation() == null) {
-            String sqlInsertInfo = String.format(Locale.ROOT,
-                    "Insert into Produktinfos(Warennummer, Bezeichnung, Information) values (%d, \'%s\')", warennummer,
-                    info.getBezeichnung(), info.getInformation());
-            tm.update(sqlInsertInfo);
-        }
     }
 }

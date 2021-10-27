@@ -1,7 +1,6 @@
 package de.hsos.swa.ssa.suchen.al;
 
 import de.hsos.swa.ssa.suchen.bl.Katalog;
-
 import de.hsos.swa.ssa.suchen.bl.Ware;
 import de.hsos.swa.ssa.suchen.dal.WarenRepository;
 import de.hsos.swa.ssa.suchen.bl.Produktinformation;
@@ -27,7 +26,6 @@ public class WarenSuchenUndPruefen {
     }
 
     public Ware sucheWare(long warennummer) {
-
         Ware[] waren = katalog.suchen(warennummer);
         if (waren.length == 0) {
             return null;

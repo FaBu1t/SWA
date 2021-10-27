@@ -17,17 +17,17 @@ public class SuchView {
 
     }
 
-    public void displaySearch(Ware ware) {
+    public void zeigeSuchergebnisse(Ware ware) {
         System.out.println(ware.toString());
     }
 
-    public void displaySearch(Ware[] waren) {
+    public void zeigeSuchergebnisse(Ware[] waren) {
         for (Ware ware : waren) {
             System.out.println(ware.toString());
         }
     }
 
-    public void displayError() {
+    public void error() {
         System.out.println("Da hat etwas nicht geklappt. Probiere es nocheinmal:)");
     }
 }

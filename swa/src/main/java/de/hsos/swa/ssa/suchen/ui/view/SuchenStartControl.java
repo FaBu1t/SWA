@@ -7,69 +7,65 @@ import de.hsos.swa.ssa.suchen.bl.Ware;
 
 public class SuchenStartControl {
     private HoleWarenkorb einkauferIn;
-    private SuchenStartView ssv;
-    private PruefControl pC;
-    private SuchControl suchC;
-    private AuswahlControl auswahlC;
+    private SuchenStartView view;
+    private PruefControl pruefControl;
+    private SuchControl suchControl;
+    private AuswahlControl auswahlControl;
     private WarenkorbFuerSuche warenkorb;
 
     private Ware[] suchergebnisse;
 
     public SuchenStartControl() {
         einkauferIn = EinkaueferIn.getEinkaueferInObjekt();
-        ssv = new SuchenStartView();
-        suchC = new SuchControl();
-        pC = new PruefControl();
-        auswahlC = new AuswahlControl();
+        view = new SuchenStartView();
+        suchControl = new SuchControl();
+        pruefControl = new PruefControl();
+        auswahlControl = new AuswahlControl();
         unterMenuAuswahl(startDialog());
 
     }
 
     private int startDialog() {
-        int warenkorbnummer = ssv.userInputWarenkorb();
+        int warenkorbnummer = view.benutzerEingabeWarenkorb();
         if (warenkorbnummer > 0) {
             warenkorb = einkauferIn.holeWarenkorb(warenkorbnummer);
-
         } else {
             if (warenkorbnummer == 0) {
                 warenkorb = einkauferIn.holeWarenkorb();
             }
-
         }
-        suchergebnisse = suchC.start();
-        if (ssv.detailAbfrage()) {
-            pC.start(suchergebnisse);
+        suchergebnisse = suchControl.start();
+        if (view.detailAbfrage()) {
+            pruefControl.start(suchergebnisse);
         }
-        return ssv.menuInput();
-
+        return view.menuEingabe();
     }
 
     private void unterMenuAuswahl(int menuPunkt) {
         while (menuPunkt != -1) {
             switch (menuPunkt) {
             case (1):
-                suchergebnisse = suchC.start();
-                if (ssv.detailAbfrage()) {
-                    pC.start(suchergebnisse);
-                    menuPunkt = ssv.menuInput();
+                suchergebnisse = suchControl.start();
+                if (view.detailAbfrage()) {
+                    pruefControl.start(suchergebnisse);
+                    menuPunkt = view.menuEingabe();
                 } else {
-                    menuPunkt = ssv.menuInput();
+                    menuPunkt = view.menuEingabe();
                 }
                 break;
-
             case (2):
                 if (suchergebnisse != null) {
-                    pC.start(suchergebnisse);
+                    pruefControl.start(suchergebnisse);
                 }
-                menuPunkt = ssv.menuInput();
+                menuPunkt = view.menuEingabe();
                 break;
             case (3):
-                auswahlC.start(suchergebnisse);
-                menuPunkt = ssv.menuInput();
+                auswahlControl.start(suchergebnisse);
+                menuPunkt = view.menuEingabe();
                 break;
             default:
-                ssv.error();
-                menuPunkt = ssv.menuInput();
+                view.error();
+                menuPunkt = view.menuEingabe();
                 break;
             }
         }

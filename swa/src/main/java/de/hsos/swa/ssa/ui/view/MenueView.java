@@ -1,27 +1,26 @@
 package de.hsos.swa.ssa.ui.view;
 
-import java.util.Scanner;
-
-import de.hsos.swa.ssa.suchen.ui.view.SuchenStartControl;
+import de.hsos.swa.ssa.shared.Eingabe;
 
 public class MenueView {
-    SimpleShoppingAppView simpleShoppingAppView;
+    private final String[] MENU = { "Suchen", "Warenkorb", "Bezahlen" };
+    private SimpleShoppingAppView simpleShoppingAppView;
+    private Eingabe scanner;
 
     public MenueView() {
         simpleShoppingAppView = new SimpleShoppingAppView();
         simpleShoppingAppView.display();
+        scanner = new Eingabe();
     }
 
     public int display() {
-        Scanner scanner = new Scanner(System.in);
         System.out.println("Bitte waehlen Sie!");
         boolean validInput = false;
         int input;
 
         do {
-            System.out.println("Ware suchen: 1 ------------ Warenkorb anzeigen: 2 ------------ Bezahlen: 3");
-            input = scanner.nextInt();
-
+            printMenu();
+            input = scanner.leseInt();
             switch (input) {
             case 1:
                 validInput = true;
@@ -36,6 +35,13 @@ public class MenueView {
         } while (!validInput);
 
         return input;
+    }
+
+    private void printMenu() {
+        for (int i = 0; i < MENU.length; i++) {
+            int menupunkt = i + 1;
+            System.out.println("(" + menupunkt + "): " + MENU[i]);
+        }
     }
 
 }

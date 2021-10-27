@@ -1,14 +1,12 @@
 package de.hsos.swa.ssa.suchen.dal;
 
-import de.hsos.swa.ssa.suchen.bl.Ware;
-
 public class KeywordMatching implements WarenSuche {
 
     @Override
     public String sucheWare(String suchbegriff) {
-        
+
         String sqlCommand;
-        if (isNumeric(suchbegriff)) {
+        if (istZahl(suchbegriff)) {
             sqlCommand = "Select * From Ware Where " + suchbegriff + " IN (Warennummer, Preis)";
         } else {
             sqlCommand = "Select * From Ware Where \'" + suchbegriff + "\' IN (Name, Beschreibung, Waehrung)";
@@ -16,7 +14,7 @@ public class KeywordMatching implements WarenSuche {
         return sqlCommand;
     }
 
-    private boolean isNumeric(String suchbegriff) {
+    private boolean istZahl(String suchbegriff) {
         if (suchbegriff == null) {
             return false;
         }

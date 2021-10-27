@@ -1,37 +1,26 @@
 package de.hsos.swa.ssa.suchen.ui.view;
-
-import java.util.Scanner;
-
-import org.apache.derby.shared.common.security.SystemPermission;
-
 import de.hsos.swa.ssa.shared.Eingabe;
-import de.hsos.swa.ssa.suchen.acl.WarenkorbFuerSuche;
 
 public class SuchenStartView {
     private Eingabe reader;
     private final String[] MENU = { "Ware suchen", "Detailinformationen anzeigen", "Ware zu Warenkorb hinzufügen" };
-
+    
     public SuchenStartView() {
         reader = new Eingabe();
-        welcomeMessage();
     }
 
-    private void welcomeMessage() {
-        System.out.println("Hallo und Willkommen im Shop!");
-    }
-
-    public int userInputWarenkorb() {
+    public int benutzerEingabeWarenkorb() {
         System.out.println(
                 "Geben Sie bitte Ihre Warenkorbnummer ein. Wenn Sie noch keine Warenkorb haben, geben sie bitte 0 ein.");
         int eingabe = reader.leseInt();
         if (eingabe < 0) {
             error();
-            userInputWarenkorb();
+            benutzerEingabeWarenkorb();
         }
         return eingabe;
     }
 
-    public int menuInput() {
+    public int menuEingabe() {
 
         for (int i = 0; i < MENU.length; i++) {
             int menupunkt = i + 1;
@@ -41,7 +30,7 @@ public class SuchenStartView {
         int input = reader.leseInt();
         if (input < -1 || input == 0 || input > MENU.length) {
             error();
-            return menuInput();
+            return menuEingabe();
         }
         return input;
     }

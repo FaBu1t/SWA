@@ -20,20 +20,20 @@ public class SuchControl {
             int suchbegriffNumber = Integer.parseInt(suchbegriff);
             Ware ware = einkauferIn.sucheWare(suchbegriffNumber);
             if (ware == null) {
-                view.displayError();
+                view.error();
                 start();
             } else {
-                view.displaySearch(ware);
+                view.zeigeSuchergebnisse(ware);
                 suchergebnisse = new Ware[1];
                 suchergebnisse[0] = ware;
             }
         } catch (NumberFormatException nfe) {
             suchergebnisse = einkauferIn.sucheWare(suchbegriff);
             if (suchergebnisse == null) {
-                view.displayError();
+                view.error();
                 start();
             } else {
-                view.displaySearch(suchergebnisse);
+                view.zeigeSuchergebnisse(suchergebnisse);
             }
         }
         return suchergebnisse;

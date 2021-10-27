@@ -6,8 +6,8 @@ import de.hsos.swa.ssa.suchen.ui.view.SuchenStartControl;
 public class MenueControl {
 
     public static void main(String[] args) {
-        MenueControl mControl = new MenueControl();
-        mControl.startMenueControl();
+        MenueControl menuControl = new MenueControl();
+        menuControl.startMenueControl();
 
     }
 
@@ -18,10 +18,9 @@ public class MenueControl {
         switch (option) {
         case 1:
             System.out.println("Suchen");
-            SuchenStartControl sControl = new SuchenStartControl();
+            SuchenStartControl suchenStartControl = new SuchenStartControl();
             break;
         case 2:
-
             System.out.println("Warenkorb");
             break;
         case 3:
