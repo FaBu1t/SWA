@@ -22,8 +22,10 @@ public class SuchView {
     }
 
     public void zeigeSuchergebnisse(Ware[] waren) {
+        int counter = 0;
         for (Ware ware : waren) {
-            System.out.println(ware.toString());
+            counter++;
+            System.out.println(counter + ". " + ware.toString());
         }
     }
 
