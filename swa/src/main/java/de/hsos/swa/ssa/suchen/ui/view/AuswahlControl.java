@@ -18,7 +18,6 @@ public class AuswahlControl {
         for (Ware ware : waren) {
             System.out.println("waren>0");
             if (einkauferIn.wareZuWarenkorbHinzufuegen(ware)) {
-
                 view.display(ware);
             }
         }
