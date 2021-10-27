@@ -1,11 +1,11 @@
 ----------------------------------------------------------------
-Tue Oct 26 22:11:19 CEST 2021:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.15.2.0 - (1873585): instance a816c00e-017c-be3a-8819-00001f57ba98 
-on database directory J:\Studium\7.Semester\Software Architektur\Praktikum\AB_1\Warensuche\SWA_AB01\simpleShoppingAppDB with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@30946e09 
-Loaded from file:/C:/Users/fabbu/.m2/repository/org/apache/derby/derby/10.15.2.0/derby-10.15.2.0.jar
+Wed Oct 27 16:57:29 CEST 2021:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.15.2.0 - (1873585): instance a816c00e-017c-c241-8e91-0000076111f0 
+on database directory C:\Users\joana\Documents\GitHub\SWA\SWA_AB01\simpleShoppingAppDB with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@30946e09 
+Loaded from file:/C:/Users/joana/.m2/repository/org/apache/derby/derby/10.15.2.0/derby-10.15.2.0.jar
 java.vendor=Eclipse Foundation
 java.runtime.version=11.0.12+7
-user.dir=J:\Studium\7.Semester\Software Architektur\Praktikum\AB_1\Warensuche\SWA_AB01
+user.dir=C:\Users\joana\Documents\GitHub\SWA\SWA_AB01
 os.name=Windows 10
 os.arch=amd64
 os.version=10.0

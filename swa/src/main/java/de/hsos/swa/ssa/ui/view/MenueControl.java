@@ -1,3 +1,4 @@
+
 package de.hsos.swa.ssa.ui.view;
 
 import de.hsos.swa.ssa.suchen.ui.view.SuchenStartControl;
