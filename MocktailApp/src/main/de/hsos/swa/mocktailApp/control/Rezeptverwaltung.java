@@ -28,11 +28,11 @@ public class Rezeptverwaltung implements Create, Delete, Change, Read {
     }
 
     @Override
-    public boolean change(int id, String[] zutaten, String Autor) {
+    public boolean change(int id, String name, String[] zutaten, String Autor) {
         if (aenderenService == null) {
             aenderenService = new AendereMocktail();
         }
-        return aenderenService.aendere(id, zutaten, Autor);
+        return aenderenService.aendere(id, name, zutaten, Autor);
     }
 
     @Override

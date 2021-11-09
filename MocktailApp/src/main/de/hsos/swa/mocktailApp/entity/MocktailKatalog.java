@@ -3,9 +3,8 @@ package de.hsos.swa.mocktailApp.entity;
 import java.util.List;
 
 public interface MocktailKatalog {
-    public MocktailKatalog getInstance();
 
-    public List<Mocktail> mocktailSuchen(String name);
+    public Mocktail[] mocktailSuchen(String name);
 
     public boolean mocktailAendern(int id, String name, String[] zutaten, String autor);
 

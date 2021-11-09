@@ -14,14 +14,14 @@ public class MocktailRepository implements MocktailKatalog {
     private static MocktailKatalog instance;
 
     @Override
-    public List<Mocktail> mocktailSuchen(String name) {
+    public Mocktail[] mocktailSuchen(String name) {
         List<Mocktail> found = new ArrayList<Mocktail>();
         for (Map.Entry<Integer, Mocktail> entry : mocktails.entrySet()) {
             if (entry.getValue().getName() == name) {
                 found.add(entry.getValue());
             }
         }
-        return found;
+        return (Mocktail[]) found.toArray();
     }
 
     @Override
@@ -56,8 +56,7 @@ public class MocktailRepository implements MocktailKatalog {
         }
     }
 
-    @Override
-    public MocktailKatalog getInstance() {
+    public static MocktailKatalog getInstance() {
         if (instance == null) {
             instance = new MocktailRepository();
         }
