@@ -1,14 +1,67 @@
 package de.hsos.swa.mocktailApp.gateway;
 
 import de.hsos.swa.mocktailApp.entity.Mocktail;
+import de.hsos.swa.mocktailApp.entity.MocktailKatalog;
 
-public interface MocktailRepository {
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-    public Mocktail get(int id);
+public class MocktailRepository implements MocktailKatalog {
 
-    public boolean create(int id, String name, String[] zutaten, String autor);
+    private HashMap<Integer, Mocktail> mocktails = new HashMap<Integer, Mocktail>();
+    private static MocktailKatalog instance;
 
-    public boolean update(int id, String name, String[] zutaten, String autor);
+    @Override
+    public List<Mocktail> mocktailSuchen(String name) {
+        List<Mocktail> found = new ArrayList<Mocktail>();
+        for (Map.Entry<Integer, Mocktail> entry : mocktails.entrySet()) {
+            if (entry.getValue().getName() == name) {
+                found.add(entry.getValue());
+            }
+        }
+        return found;
+    }
 
-    public boolean delete(int id);
+    @Override
+    public boolean mocktailAendern(int id, String name, String[] zutaten, String autor) {
+        Mocktail mock = new Mocktail(id, name, zutaten, autor);
+        mocktails.put(id, mock);
+        return true;
+    }
+
+    @Override
+    public boolean mocktailHinzufuegen(int id, String name, String[] zutaten, String autor) {
+        Mocktail mock = new Mocktail(id, name, zutaten, autor);
+        mocktails.putIfAbsent(id, mock);
+        return true;
+    }
+
+    @Override
+    public boolean mocktailLoeschen(int id) {
+        if (mocktails.containsKey(id)) {
+            mocktails.remove(id);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public Mocktail mocktailSuchen(int id) {
+        if (mocktails.containsKey(id)) {
+            return mocktails.get(id);
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public MocktailKatalog getInstance() {
+        if (instance == null) {
+            instance = new MocktailRepository();
+        }
+        return instance;
+    }
+
 }

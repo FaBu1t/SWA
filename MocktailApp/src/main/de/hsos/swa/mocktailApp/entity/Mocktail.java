@@ -13,5 +13,8 @@ public class Mocktail {
         this.autor = autor;
     }
 
-    
+    public String getName() {
+        return this.name;
+    }
+
 }
