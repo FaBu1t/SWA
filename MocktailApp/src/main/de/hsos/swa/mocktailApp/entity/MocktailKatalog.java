@@ -1,4 +1,4 @@
-package de.hsos.swa.mocktail.entity;
+package de.hsos.swa.mocktailApp.entity;
 
 public interface MocktailKatalog {
     public Mocktail mocktailSuchen(String name);

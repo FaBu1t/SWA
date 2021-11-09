@@ -1,6 +1,6 @@
-package de.hsos.swa.mocktail.control;
+package de.hsos.swa.mocktailApp.control;
 
-import de.hsos.swa.mocktail.entity.Mocktail;
+import de.hsos.swa.mocktailApp.entity.Mocktail;
 
 public interface Read {
 

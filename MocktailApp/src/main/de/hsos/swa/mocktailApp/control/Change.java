@@ -1,4 +1,4 @@
-package de.hsos.swa.mocktail.control;
+package de.hsos.swa.mocktailApp.control;
 
 public interface Change {
 

@@ -1,4 +1,4 @@
-package de.hsos.swa.mocktail.entity;
+package de.hsos.swa.mocktailApp.entity;
 
 public class Mocktail {
     private int id;

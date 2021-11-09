@@ -1,7 +1,8 @@
-package de.hsos.swa.mocktail.gateway;
+package de.hsos.swa.mocktailApp.gateway;
+
+import de.hsos.swa.mocktailApp.entity.Mocktail;
 
 public interface MocktailRepository {
-    public Collection<Mocktail> allMocktails();
 
     public Mocktail get(int id);
 
