@@ -1,5 +1,14 @@
 package de.hsos.swa.mocktailApp.control;
 
-public class sucheMocktail {
+import de.hsos.swa.mocktailApp.entity.Mocktail;
 
+public class SucheMocktail {
+    public Mocktail[] suchen(String name) {
+        return null;
+    }
+
+    public Mocktail suchen(int id) {
+        return null;
+
+    }
 }
