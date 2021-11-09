@@ -1,3 +1,5 @@
-public class MocktailRepository{
-    
+package de.hsos.swa.mocktail.gateway;
+
+public class MocktailRepository {
+
 }
