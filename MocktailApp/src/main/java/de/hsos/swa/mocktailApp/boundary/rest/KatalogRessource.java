@@ -20,10 +20,10 @@ public class KatalogRessource {
 
     @GET
     @Produces(MediaType.TEXT_PLAIN)
-    @Path("/suchen")
+    @Path("/suchen/name/{name}")
     public String suchen(@PathParam String name) {
-        // return verwaltung.suchen(name).toString();
-        return "suchen";
+
+        return verwaltung.suchen(name).toString();
     }
 
     @GET
