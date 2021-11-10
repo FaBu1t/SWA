@@ -17,4 +17,15 @@ public class Mocktail {
         return this.name;
     }
 
+    @Override
+    public String toString() {
+        String ret;
+        ret = "{ " + this.name + ", " + this.id + " ,";
+        for (String s : zutaten) {
+            ret += s + " ,";
+        }
+        ret += autor;
+
+        return ret;
+    }
 }

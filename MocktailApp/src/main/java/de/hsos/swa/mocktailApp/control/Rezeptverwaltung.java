@@ -1,7 +1,9 @@
 package de.hsos.swa.mocktailApp.control;
 
 import de.hsos.swa.mocktailApp.entity.Mocktail;
+import javax.enterprise.context.ApplicationScoped;
 
+@ApplicationScoped
 public class Rezeptverwaltung implements Create, Delete, Change, Read {
     SucheMocktail sucheService;
     EntferneMocktail entfernenService;

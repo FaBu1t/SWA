@@ -1,16 +1,18 @@
 package de.hsos.swa.mocktailApp.gateway;
 
-import java.util.HashMap;
-
 import de.hsos.swa.mocktailApp.entity.Mocktail;
+import java.util.HashMap;
 
 public class MockMocktailRepository {
     private HashMap<Integer, Mocktail> mocktails = new HashMap<Integer, Mocktail>();
 
     public Mocktail get(int id) {
         if (mocktails.containsKey(id)) {
+
             return mocktails.get(id);
+
         } else {
+
             return null;
         }
     }

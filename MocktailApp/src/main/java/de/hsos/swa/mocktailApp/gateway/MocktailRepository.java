@@ -2,7 +2,6 @@ package de.hsos.swa.mocktailApp.gateway;
 
 import de.hsos.swa.mocktailApp.entity.Mocktail;
 import de.hsos.swa.mocktailApp.entity.MocktailKatalog;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,6 +11,13 @@ public class MocktailRepository implements MocktailKatalog {
 
     private HashMap<Integer, Mocktail> mocktails = new HashMap<Integer, Mocktail>();
     private static MocktailKatalog instance;
+
+    public MocktailRepository() {
+        String zutat[] = { "orange" };
+        Mocktail startMocktail = new Mocktail(1, "orangensaft", zutat, "KA");
+        mocktails.putIfAbsent(1, startMocktail);
+
+    }
 
     @Override
     public Mocktail[] mocktailSuchen(String name) {
