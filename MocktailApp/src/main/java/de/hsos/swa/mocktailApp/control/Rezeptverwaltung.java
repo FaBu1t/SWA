@@ -1,6 +1,9 @@
 package de.hsos.swa.mocktailApp.control;
 
 import de.hsos.swa.mocktailApp.entity.Mocktail;
+
+import java.util.List;
+
 import javax.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
@@ -11,11 +14,11 @@ public class Rezeptverwaltung implements Create, Delete, Change, Read {
     AendereMocktail aenderenService;
 
     @Override
-    public Mocktail[] suchen(String name) {
+    public List<Mocktail> suchen(String name) {
         if (sucheService == null)
             sucheService = new SucheMocktail();
 
-        Mocktail[] mocktails = sucheService.suchen(name);
+        List<Mocktail> mocktails = sucheService.suchen(name);
         return mocktails;
     }
 

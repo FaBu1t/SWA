@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface MocktailKatalog {
 
-    public Mocktail[] mocktailSuchen(String name);
+    public List<Mocktail> mocktailSuchen(String name);
 
     public boolean mocktailAendern(int id, String name, String[] zutaten, String autor);
 

@@ -20,14 +20,15 @@ public class MocktailRepository implements MocktailKatalog {
     }
 
     @Override
-    public Mocktail[] mocktailSuchen(String name) {
+    public List<Mocktail> mocktailSuchen(String name) {
         List<Mocktail> found = new ArrayList<Mocktail>();
         for (Map.Entry<Integer, Mocktail> entry : mocktails.entrySet()) {
-            if (entry.getValue().getName() == name) {
+
+            if (entry.getValue().getName().equals(name)) {
                 found.add(entry.getValue());
             }
         }
-        return (Mocktail[]) found.toArray();
+        return found;
     }
 
     @Override

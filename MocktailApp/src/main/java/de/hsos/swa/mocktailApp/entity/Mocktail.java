@@ -24,7 +24,7 @@ public class Mocktail {
         for (String s : zutaten) {
             ret += s + " ,";
         }
-        ret += autor;
+        ret += autor + "}";
 
         return ret;
     }
