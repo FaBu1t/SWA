@@ -11,23 +11,23 @@ public class KatalogRessourceTest {
 
     @Test
     public void testAddMocktail() {
-        given().when().get("/mocktails/add/2/Apfelsaft/apfel-saft/ich").then().body(is("Mocktail hinzugefuegt!"));
+        given().when().put("/mocktails/2/Apfelsaft/apfel-saft/ich").then().body(is("Mocktail hinzugefuegt!"));
     }
 
     @Test
     public void testChangeMocktail() {
-        given().when().get("/mocktails/change/1/keinOrangensaft/wasser/auchIch").then().body(is("Mocktail geändert!"));
+        given().when().post("/mocktails/1/keinOrangensaft/wasser/auchIch").then().body(is("Mocktail geändert!"));
     }
 
     @Test
     public void testAddWrongMocktail() {
-        given().when().get("/mocktails/add/1/Apfelsaft/apfel-saft/ich").then()
+        given().when().put("/mocktails/1/Apfelsaft/apfel-saft/ich").then()
                 .body(is("Mocktail wurde nicht hinzugefügt"));
     }
 
     @Test
     public void testChangeWrongMocktail() {
-        given().when().get("/mocktails/change/11/keinOrangensaft/wasser/auchIch").then()
+        given().when().post("/mocktails/11/keinOrangensaft/wasser/auchIch").then()
                 .body(is("Mocktail konnte nicht geändert werden"));
     }
 }
