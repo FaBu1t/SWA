@@ -50,10 +50,12 @@ public class KatalogRessource {
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     @Path("/add/{id}/{name}/{zutaten}/{autor}")
-    public void add(@PathParam int id, @PathParam String name, @PathParam String zutaten, @PathParam String autor) {
-        System.out.println("adding");
+    public String add(@PathParam int id, @PathParam String name, @PathParam String zutaten, @PathParam String autor) {
         String[] MockZutaten = zutaten.split("-");
-        verwaltung.create(id, name, MockZutaten, autor);
+        if (verwaltung.create(id, name, MockZutaten, autor)) {
+            return "Mocktail hinzugefuegt!";
+        }
+        return "Mocktail wurde nicht hinzugefügt";
     }
 
     @GET
@@ -71,9 +73,13 @@ public class KatalogRessource {
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     @Path("/change/{id}/{name}/{zutaten}/{autor}")
-    public void change(@PathParam int id, @PathParam String name, @PathParam String zutaten, @PathParam String autor) {
+    public String change(@PathParam int id, @PathParam String name, @PathParam String zutaten,
+            @PathParam String autor) {
         String[] MockZutaten = zutaten.split("-");
-        verwaltung.change(id, name, MockZutaten, autor);
+        if (verwaltung.change(id, name, MockZutaten, autor)) {
+            return "Mocktail geändert!";
+        }
+        return "Mocktail konnte nicht geändert werden";
 
     }
 }

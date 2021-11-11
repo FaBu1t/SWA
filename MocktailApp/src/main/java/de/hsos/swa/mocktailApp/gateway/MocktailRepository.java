@@ -34,13 +34,19 @@ public class MocktailRepository implements MocktailKatalog {
     @Override
     public boolean mocktailAendern(int id, String name, String[] zutaten, String autor) {
         Mocktail mock = new Mocktail(id, name, zutaten, autor);
-        mocktails.put(id, mock);
-        return true;
+        if (mocktails.containsKey(id)) {
+            mocktails.put(id, mock);
+            return true;
+        }
+        return false;
     }
 
     @Override
     public boolean mocktailHinzufuegen(int id, String name, String[] zutaten, String autor) {
         Mocktail mock = new Mocktail(id, name, zutaten, autor);
+        if(mocktails.containsKey(id)){
+            return false;
+        }
         mocktails.putIfAbsent(id, mock);
         return true;
     }
