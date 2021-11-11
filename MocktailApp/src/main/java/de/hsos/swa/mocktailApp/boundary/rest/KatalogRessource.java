@@ -22,7 +22,7 @@ public class KatalogRessource {
 
     @GET
     @Produces(MediaType.TEXT_PLAIN)
-    @Path("/suchen/name/{name}")
+    @Path("/name/{name}")
     public String suchen(@PathParam String name) {
         System.out.println("Get suchen " + name);
         List<Mocktail> mocktail = verwaltung.suchen(name);
@@ -38,7 +38,7 @@ public class KatalogRessource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("/suchen/id/{id}")
+    @Path("/id/{id}")
     public String suchen(@PathParam int id) {
         Mocktail mocktail = verwaltung.suchen(id);
         if (mocktail == null) {
@@ -47,9 +47,9 @@ public class KatalogRessource {
         return mocktail.toString();
     }
 
-    @GET
+    @PUT
     @Produces(MediaType.TEXT_PLAIN)
-    @Path("/add/{id}/{name}/{zutaten}/{autor}")
+    @Path("/{id}/{name}/{zutaten}/{autor}")
     public String add(@PathParam int id, @PathParam String name, @PathParam String zutaten, @PathParam String autor) {
         String[] MockZutaten = zutaten.split("-");
         if (verwaltung.create(id, name, MockZutaten, autor)) {
@@ -58,8 +58,8 @@ public class KatalogRessource {
         return "Mocktail wurde nicht hinzugefügt";
     }
 
-    @GET
-    @Path("/delete/{id}")
+    @DELETE
+    @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public String delete(@PathParam int id) {
 
@@ -70,9 +70,9 @@ public class KatalogRessource {
 
     }
 
-    @GET
+    @POST
     @Produces(MediaType.TEXT_PLAIN)
-    @Path("/change/{id}/{name}/{zutaten}/{autor}")
+    @Path("/{id}/{name}/{zutaten}/{autor}")
     public String change(@PathParam int id, @PathParam String name, @PathParam String zutaten,
             @PathParam String autor) {
         String[] MockZutaten = zutaten.split("-");
