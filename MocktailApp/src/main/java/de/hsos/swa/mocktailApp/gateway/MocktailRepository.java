@@ -13,7 +13,7 @@ public class MocktailRepository implements MocktailKatalog {
     private static MocktailKatalog instance;
 
     public MocktailRepository() {
-        String zutat[] = { "orange" };
+        String zutat = "orange";
         Mocktail startMocktail = new Mocktail(1, "orangensaft", zutat, "KA");
         mocktails.putIfAbsent(1, startMocktail);
 
@@ -32,22 +32,21 @@ public class MocktailRepository implements MocktailKatalog {
     }
 
     @Override
-    public boolean mocktailAendern(int id, String name, String[] zutaten, String autor) {
-        Mocktail mock = new Mocktail(id, name, zutaten, autor);
-        if (mocktails.containsKey(id)) {
-            mocktails.put(id, mock);
+    public boolean mocktailAendern(Mocktail mocktail) {
+
+        if (mocktails.containsKey(mocktail.getId())) {
+            mocktails.put(mocktail.getId(), mocktail);
             return true;
         }
         return false;
     }
 
     @Override
-    public boolean mocktailHinzufuegen(int id, String name, String[] zutaten, String autor) {
-        Mocktail mock = new Mocktail(id, name, zutaten, autor);
-        if(mocktails.containsKey(id)){
+    public boolean mocktailHinzufuegen(Mocktail mocktail) {
+        if (mocktails.containsKey(mocktail.getId())) {
             return false;
         }
-        mocktails.putIfAbsent(id, mock);
+        mocktails.putIfAbsent(mocktail.getId(), mocktail);
         return true;
     }
 

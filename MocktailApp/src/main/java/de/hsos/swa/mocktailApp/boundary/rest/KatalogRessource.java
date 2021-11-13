@@ -2,10 +2,12 @@ package de.hsos.swa.mocktailApp.boundary.rest;
 
 import de.hsos.swa.mocktailApp.control.Rezeptverwaltung;
 import de.hsos.swa.mocktailApp.entity.Mocktail;
+import io.quarkus.vertx.http.runtime.devmode.Json;
 
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.json.bind.*;
 import javax.ws.rs.GET;
 import javax.ws.rs.*;
 import javax.ws.rs.Path;
@@ -21,10 +23,10 @@ public class KatalogRessource {
     Rezeptverwaltung verwaltung;
 
     @GET
-    @Produces(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
     @Path("/name/{name}")
     public String suchen(@PathParam String name) {
-        System.out.println("Get suchen " + name);
+        Jsonb jsonb = JsonbBuilder.create();
         List<Mocktail> mocktail = verwaltung.suchen(name);
         if (mocktail == null) {
             return "Nichts Gefunden";
@@ -32,27 +34,38 @@ public class KatalogRessource {
         if (mocktail.size() == 0) {
             return "is empty";
         }
+        String result = jsonb.toJson(mocktail);
 
-        return mocktail.toString();
+        return result;
     }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/id/{id}")
     public String suchen(@PathParam int id) {
+        Jsonb jsonb = JsonbBuilder.create();
         Mocktail mocktail = verwaltung.suchen(id);
         if (mocktail == null) {
             return "Nicht Gefunden";
         }
-        return mocktail.toString();
+        return jsonb.toJson(mocktail);
     }
 
     @PUT
-    @Produces(MediaType.TEXT_PLAIN)
-    @Path("/{id}/{name}/{zutaten}/{autor}")
-    public String add(@PathParam int id, @PathParam String name, @PathParam String zutaten, @PathParam String autor) {
-        String[] MockZutaten = zutaten.split("-");
-        if (verwaltung.create(id, name, MockZutaten, autor)) {
+    @Produces(MediaType.APPLICATION_JSON)
+
+    public String add(String mocktailInput) {
+        Jsonb jsonb = JsonbBuilder.create();
+        System.out.println(mocktailInput);
+        Mocktail newMocktail = jsonb.fromJson(mocktailInput, Mocktail.class);
+
+        if (newMocktail != null) {
+            System.out.println(newMocktail.toString());
+        } else {
+            System.out.println("Is Null");
+        }
+
+        if (verwaltung.create(newMocktail)) {
             return "Mocktail hinzugefuegt!";
         }
         return "Mocktail wurde nicht hinzugefügt";
@@ -71,12 +84,11 @@ public class KatalogRessource {
     }
 
     @POST
-    @Produces(MediaType.TEXT_PLAIN)
-    @Path("/{id}/{name}/{zutaten}/{autor}")
-    public String change(@PathParam int id, @PathParam String name, @PathParam String zutaten,
-            @PathParam String autor) {
-        String[] MockZutaten = zutaten.split("-");
-        if (verwaltung.change(id, name, MockZutaten, autor)) {
+    @Produces(MediaType.APPLICATION_JSON)
+    public String change(String mocktailInput) {
+        Jsonb jsonb = JsonbBuilder.create();
+        Mocktail newMocktail = jsonb.fromJson(mocktailInput, Mocktail.class);
+        if (verwaltung.change(newMocktail)) {
             return "Mocktail geändert!";
         }
         return "Mocktail konnte nicht geändert werden";

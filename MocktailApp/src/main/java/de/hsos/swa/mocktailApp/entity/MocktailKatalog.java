@@ -6,9 +6,9 @@ public interface MocktailKatalog {
 
     public List<Mocktail> mocktailSuchen(String name);
 
-    public boolean mocktailAendern(int id, String name, String[] zutaten, String autor);
+    public boolean mocktailAendern(Mocktail mocktail);
 
-    public boolean mocktailHinzufuegen(int id, String name, String[] zutaten, String autor);
+    public boolean mocktailHinzufuegen(Mocktail mocktail);
 
     public boolean mocktailLoeschen(int id);
 

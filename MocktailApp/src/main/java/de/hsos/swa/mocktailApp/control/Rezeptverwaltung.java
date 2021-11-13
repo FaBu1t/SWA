@@ -33,11 +33,11 @@ public class Rezeptverwaltung implements Create, Delete, Change, Read {
     }
 
     @Override
-    public boolean change(int id, String name, String[] zutaten, String Autor) {
+    public boolean change(Mocktail mocktail) {
         if (aenderenService == null) {
             aenderenService = new AendereMocktail();
         }
-        return aenderenService.aendere(id, name, zutaten, Autor);
+        return aenderenService.aendere(mocktail);
     }
 
     @Override
@@ -49,11 +49,11 @@ public class Rezeptverwaltung implements Create, Delete, Change, Read {
     }
 
     @Override
-    public boolean create(int id, String name, String[] zutaten, String autor) {
+    public boolean create(Mocktail mocktail) {
         if (hinzufuegenService == null) {
             hinzufuegenService = new FuegeMocktailHinzu();
         }
-        return hinzufuegenService.create(id, name, zutaten, autor);
+        return hinzufuegenService.create(mocktail);
     }
 
 }

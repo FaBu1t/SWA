@@ -1,6 +1,8 @@
 package de.hsos.swa.mocktailApp.control;
 
+import de.hsos.swa.mocktailApp.entity.Mocktail;
+
 public interface Create {
 
-    public boolean create(int id, String name, String[] zutaten, String Autor);
+    public boolean create(Mocktail mocktail);
 }
