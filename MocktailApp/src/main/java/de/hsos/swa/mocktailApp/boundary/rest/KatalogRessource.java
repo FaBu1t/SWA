@@ -1,7 +1,7 @@
 package de.hsos.swa.mocktailApp.boundary.rest;
 
+import de.hsos.swa.mocktailApp.control.MocktailDTO;
 import de.hsos.swa.mocktailApp.control.Rezeptverwaltung;
-import de.hsos.swa.mocktailApp.entity.Mocktail;
 
 import java.util.List;
 
@@ -32,16 +32,16 @@ public class KatalogRessource {
     public Response suchen(
             @Parameter(description = "Der Name des gesuchten Mocktails", required = true) @PathParam String name) {
         Jsonb jsonb = JsonbBuilder.create();
-        List<Mocktail> mocktail = verwaltung.suchen(name);
-        if (mocktail == null) {
+        List<MocktailDTO> mocktailDTOs = verwaltung.suchen(name);
+        if (mocktailDTOs == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
-        if (mocktail.size() == 0)
+        if (mocktailDTOs.size() == 0)
 
         {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
-        String result = jsonb.toJson(mocktail);
+        String result = jsonb.toJson(mocktailDTOs);
 
         return Response.ok(result).build();
     }
@@ -53,7 +53,7 @@ public class KatalogRessource {
     public Response suchen(
             @Parameter(description = "Die ID des gesuchten Mocktails", required = true) @PathParam int id) {
         Jsonb jsonb = JsonbBuilder.create();
-        Mocktail mocktail = verwaltung.suchen(id);
+        MocktailDTO mocktail = verwaltung.suchen(id);
         if (mocktail == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
@@ -67,7 +67,7 @@ public class KatalogRessource {
     public Response add(String mocktailInput) {
         Jsonb jsonb = JsonbBuilder.create();
         System.out.println(mocktailInput);
-        Mocktail newMocktail = jsonb.fromJson(mocktailInput, Mocktail.class);
+        MocktailDTO newMocktail = jsonb.fromJson(mocktailInput, MocktailDTO.class);
         /*
          * if (newMocktail != null) { System.out.println(newMocktail.toString()); } else
          * { System.out.println("Is Null"); }
@@ -97,7 +97,7 @@ public class KatalogRessource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response change(String mocktailInput) {
         Jsonb jsonb = JsonbBuilder.create();
-        Mocktail newMocktail = jsonb.fromJson(mocktailInput, Mocktail.class);
+        MocktailDTO newMocktail = jsonb.fromJson(mocktailInput, MocktailDTO.class);
         if (verwaltung.change(newMocktail)) {
             return Response.ok(newMocktail).build();
         }
