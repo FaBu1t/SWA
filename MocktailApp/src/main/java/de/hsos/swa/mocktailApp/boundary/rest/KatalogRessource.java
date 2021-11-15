@@ -2,7 +2,6 @@ package de.hsos.swa.mocktailApp.boundary.rest;
 
 import de.hsos.swa.mocktailApp.control.Rezeptverwaltung;
 import de.hsos.swa.mocktailApp.entity.Mocktail;
-import io.quarkus.vertx.http.runtime.devmode.Json;
 
 import java.util.List;
 
