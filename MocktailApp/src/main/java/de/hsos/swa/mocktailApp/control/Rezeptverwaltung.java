@@ -2,42 +2,52 @@ package de.hsos.swa.mocktailApp.control;
 
 import de.hsos.swa.mocktailApp.entity.Mocktail;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
 public class Rezeptverwaltung implements Create, Delete, Change, Read {
+    DTOFactory dtoFactory;
     SucheMocktail sucheService;
     EntferneMocktail entfernenService;
     FuegeMocktailHinzu hinzufuegenService;
     AendereMocktail aenderenService;
 
+    public Rezeptverwaltung() {
+        this.dtoFactory = new DTOFactory();
+    }
+
     @Override
-    public List<Mocktail> suchen(String name) {
+    public List<MocktailDTO> suchen(String name) {
         if (sucheService == null)
             sucheService = new SucheMocktail();
 
         List<Mocktail> mocktails = sucheService.suchen(name);
-        return mocktails;
+        List<MocktailDTO> mocktailDTOs = new ArrayList<MocktailDTO>();
+        for (Mocktail m : mocktails) {
+            mocktailDTOs.add(dtoFactory.getMocktailDtoFromMocktail(m));
+        }
+        return mocktailDTOs;
     }
 
     @Override
-    public Mocktail suchen(int id) {
+    public MocktailDTO suchen(int id) {
         if (sucheService == null)
             sucheService = new SucheMocktail();
 
         Mocktail mocktail = sucheService.suchen(id);
 
-        return mocktail;
+        return dtoFactory.getMocktailDtoFromMocktail(mocktail);
     }
 
     @Override
-    public boolean change(Mocktail mocktail) {
+    public boolean change(MocktailDTO mocktailDTO) {
         if (aenderenService == null) {
             aenderenService = new AendereMocktail();
         }
-        return aenderenService.aendere(mocktail);
+        return aenderenService.aendere(dtoFactory.getMocktailFromMocktailDto(mocktailDTO));
     }
 
     @Override
@@ -49,11 +59,11 @@ public class Rezeptverwaltung implements Create, Delete, Change, Read {
     }
 
     @Override
-    public boolean create(Mocktail mocktail) {
+    public boolean create(MocktailDTO mocktail) {
         if (hinzufuegenService == null) {
             hinzufuegenService = new FuegeMocktailHinzu();
         }
-        return hinzufuegenService.create(mocktail);
+        return hinzufuegenService.create(dtoFactory.getMocktailFromMocktailDto(mocktail));
     }
 
 }

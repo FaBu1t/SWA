@@ -1,8 +1,7 @@
 package de.hsos.swa.mocktailApp.boundary.rest;
 
+import de.hsos.swa.mocktailApp.control.MocktailDTO;
 import de.hsos.swa.mocktailApp.control.Rezeptverwaltung;
-import de.hsos.swa.mocktailApp.entity.Mocktail;
-import io.quarkus.vertx.http.runtime.devmode.Json;
 
 import java.util.List;
 
@@ -15,6 +14,10 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import javax.ws.rs.core.Response.Status;
+
+import org.eclipse.microprofile.openapi.annotations.parameters.Parameter;
+import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 import org.jboss.resteasy.annotations.jaxrs.PathParam;
 
 @Path("/mocktails")
@@ -23,91 +26,83 @@ public class KatalogRessource {
     @Inject
     Rezeptverwaltung verwaltung;
 
+    @Tag(name = "search Mocktail (name)", description = "Search Mocktails with name")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/name/{name}")
-    public String suchen(@PathParam String name) {
+    public Response suchen(
+            @Parameter(description = "Der Name des gesuchten Mocktails", required = true) @PathParam String name) {
         Jsonb jsonb = JsonbBuilder.create();
-        List<Mocktail> mocktail = verwaltung.suchen(name);
-        if (mocktail == null) {
-            return "Nichts Gefunden";
+        List<MocktailDTO> mocktailDTOs = verwaltung.suchen(name);
+        if (mocktailDTOs == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
         }
-        if (mocktail.size() == 0) {
-            return "is empty";
-        }
-        String result = jsonb.toJson(mocktail);
+        if (mocktailDTOs.size() == 0)
 
-        return result;
+        {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+        String result = jsonb.toJson(mocktailDTOs);
+
+        return Response.ok(result).build();
     }
 
+    @Tag(name = "search Mocktail (ID)", description = "Search Mocktails with ID")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/id/{id}")
-    public String suchen(@PathParam int id) {
+    public Response suchen(
+            @Parameter(description = "Die ID des gesuchten Mocktails", required = true) @PathParam int id) {
         Jsonb jsonb = JsonbBuilder.create();
-        Mocktail mocktail = verwaltung.suchen(id);
+        MocktailDTO mocktail = verwaltung.suchen(id);
         if (mocktail == null) {
-            return "Nicht Gefunden";
+            return Response.status(Response.Status.NOT_FOUND).build();
         }
-        return jsonb.toJson(mocktail);
+        return Response.ok(jsonb.toJson(mocktail)).build();
     }
 
+    @Tag(name = "add Mocktail")
     @PUT
-<<<<<<< Updated upstream
     @Produces(MediaType.APPLICATION_JSON)
 
-    public String add(String mocktailInput) {
+    public Response add(String mocktailInput) {
         Jsonb jsonb = JsonbBuilder.create();
         System.out.println(mocktailInput);
-        Mocktail newMocktail = jsonb.fromJson(mocktailInput, Mocktail.class);
-
-        if (newMocktail != null) {
-            System.out.println(newMocktail.toString());
-        } else {
-            System.out.println("Is Null");
-        }
-
+        MocktailDTO newMocktail = jsonb.fromJson(mocktailInput, MocktailDTO.class);
+        /*
+         * if (newMocktail != null) { System.out.println(newMocktail.toString()); } else
+         * { System.out.println("Is Null"); }
+         */
         if (verwaltung.create(newMocktail)) {
-=======
-    @Produces(MediaType.TEXT_PLAIN)
-    @Path("/{id}/{name}/{zutaten}/{autor}")
-    public String add(Mocktail mocktail) {
-        if (verwaltung.create(mocktail)) {
->>>>>>> Stashed changes
-            return "Mocktail hinzugefuegt!";
+            return Response.status(Response.Status.CREATED).build();
         }
-        return "Mocktail wurde nicht hinzugefügt";
+        return Response.status(Response.Status.BAD_REQUEST).build();
     }
 
+    @Tag(name = "delete Mocktail")
     @DELETE
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public String delete(@PathParam int id) {
+    public Response delete(
+            @Parameter(description = "Die ID des zu löschenden Mocktails", required = true) @PathParam int id) {
 
         if (verwaltung.delete(id)) {
-            return "deleted";
+            return Response.ok().build();
         } else
-            return "not deleted";
+            return Response.status(Status.BAD_REQUEST).build();
 
     }
 
+    @Tag(name = "change existing Mocktail")
     @POST
-<<<<<<< Updated upstream
     @Produces(MediaType.APPLICATION_JSON)
-    public String change(String mocktailInput) {
+    public Response change(String mocktailInput) {
         Jsonb jsonb = JsonbBuilder.create();
-        Mocktail newMocktail = jsonb.fromJson(mocktailInput, Mocktail.class);
+        MocktailDTO newMocktail = jsonb.fromJson(mocktailInput, MocktailDTO.class);
         if (verwaltung.change(newMocktail)) {
-            return "Mocktail geändert!";
+            return Response.ok(newMocktail).build();
         }
-        return "Mocktail konnte nicht geändert werden";
+        return Response.status(Status.BAD_REQUEST).build();
 
-=======
-    @Produces(MediaType.TEXT_PLAIN)
-    @Path("/{Mocktail}")
-    public Response change(Mocktail mocktail) {
-        verwaltung.change(mocktail);
-        return null;
->>>>>>> Stashed changes
     }
 }
