@@ -33,9 +33,14 @@ public class MocktailRepository implements MocktailKatalog {
 
     @Override
     public boolean mocktailAendern(Mocktail mocktail) {
+<<<<<<< Updated upstream
 
         if (mocktails.containsKey(mocktail.getId())) {
             mocktails.put(mocktail.getId(), mocktail);
+=======
+        if (mocktails.containsKey(mocktail.getId())) {
+            mocktails.put(mocktail.getId(),mocktail);
+>>>>>>> Stashed changes
             return true;
         }
         return false;
@@ -43,7 +48,11 @@ public class MocktailRepository implements MocktailKatalog {
 
     @Override
     public boolean mocktailHinzufuegen(Mocktail mocktail) {
+<<<<<<< Updated upstream
         if (mocktails.containsKey(mocktail.getId())) {
+=======
+        if(mocktails.containsKey(mocktail.getId())){
+>>>>>>> Stashed changes
             return false;
         }
         mocktails.putIfAbsent(mocktail.getId(), mocktail);

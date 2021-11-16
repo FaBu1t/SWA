@@ -13,6 +13,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import org.jboss.resteasy.annotations.jaxrs.PathParam;
 
@@ -52,6 +53,7 @@ public class KatalogRessource {
     }
 
     @PUT
+<<<<<<< Updated upstream
     @Produces(MediaType.APPLICATION_JSON)
 
     public String add(String mocktailInput) {
@@ -66,6 +68,12 @@ public class KatalogRessource {
         }
 
         if (verwaltung.create(newMocktail)) {
+=======
+    @Produces(MediaType.TEXT_PLAIN)
+    @Path("/{id}/{name}/{zutaten}/{autor}")
+    public String add(Mocktail mocktail) {
+        if (verwaltung.create(mocktail)) {
+>>>>>>> Stashed changes
             return "Mocktail hinzugefuegt!";
         }
         return "Mocktail wurde nicht hinzugefügt";
@@ -84,6 +92,7 @@ public class KatalogRessource {
     }
 
     @POST
+<<<<<<< Updated upstream
     @Produces(MediaType.APPLICATION_JSON)
     public String change(String mocktailInput) {
         Jsonb jsonb = JsonbBuilder.create();
@@ -93,5 +102,12 @@ public class KatalogRessource {
         }
         return "Mocktail konnte nicht geändert werden";
 
+=======
+    @Produces(MediaType.TEXT_PLAIN)
+    @Path("/{Mocktail}")
+    public Response change(Mocktail mocktail) {
+        verwaltung.change(mocktail);
+        return null;
+>>>>>>> Stashed changes
     }
 }
