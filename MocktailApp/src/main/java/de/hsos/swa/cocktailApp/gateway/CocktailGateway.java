@@ -32,9 +32,9 @@ public class CocktailGateway {
         WebTarget target = restClient.target(anfrage);
 
         CocktailDTO cocktail = target.request().accept(MediaType.APPLICATION_JSON).get(CocktailDTO.class);
-        System.out.println(test);
+        System.out.println(cocktail);
         restClient.close();
-        return test;
+        return cocktail;
     }
 
     public CocktailDTO searchByIngredient(String ingredient) {
