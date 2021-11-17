@@ -1,7 +1,8 @@
 package de.hsos.swa.mocktailApp.boundary.rest;
 
-import de.hsos.swa.mocktailApp.control.MocktailDTO;
+import de.hsos.swa.cocktailApp.gateway.CocktailGateway;
 import de.hsos.swa.mocktailApp.control.Rezeptverwaltung;
+import de.hsos.swa.mocktailApp.entity.MocktailDTO;
 
 import java.util.List;
 
@@ -31,12 +32,17 @@ import org.jboss.resteasy.annotations.jaxrs.PathParam;
 public class KatalogRessource {
 
     @Inject
+    CocktailGateway cocktailGateway;
+
+    @Inject
     Rezeptverwaltung verwaltung;
 
     @GET
     @Timeout(250)
-    @Tag(name = "get Mocktail (name)", description = "Search Mocktails with name")
-    @Operation(summary = "gets Mocktails", description = "gets Mocktails with name")
+    @Timed(name = "getMocktailTime", description = "Metrics to monitor the times of processItem method.", unit = MetricUnits.MINUTES, absolute = true)
+    @Tag(name = "get Mocktail (name)", description = "Mocktail searchth name")
+    @Operation(summary =s.MINUTES,ktails", description = "gets Mocktails with name")
+
     @Path("/name/{name}")
     @APIResponses(value = {
             @APIResponse(responseCode = "404", description = "Mocktail nicht gefunden", content = @Content(mediaType = "application/json")),
@@ -59,11 +65,13 @@ public class KatalogRessource {
         return Response.ok(result).build();
     }
 
-    @GET
+    @GET 
     @Timeout(250)
-    @Tag(name = "get Mocktail (ID)", description = "Search Mocktails with ID")
-    @Operation(summary = "gets Mocktails", description = "gets Mocktails with ID")
-    @Path("/id/{id}")
+    @Tag(name="get Mocktail (ID)",description="Search Mocktails with ID")@Operation(summary="gets Mocktails",description="gets Mocktails with ID")@Path("/id/{i@Timed(name="getMocktailTime",description="Metrics to
+    monitor the
+    timeas of
+    Mocktail search",unit=MetricUnits.MINUTES,absolute=true)d}")
+
     @APIResponses(value = {
             @APIResponse(responseCode = "404", description = "Mocktail nicht gefunden", content = @Content(mediaType = "application/json")),
             @APIResponse(responseCode = "200", description = "Mocktail gefunden", content = @Content(mediaType = "application/json")) })
@@ -77,13 +85,10 @@ public class KatalogRessource {
         return Response.ok(jsonb.toJson(mocktail)).build();
     }
 
-    @PUT
-    @Retry(maxRetries = 4)
-    @Tag(name = "add Mocktail")
-    @Operation(summary = "add Mocktail", description = "add Mocktail with id, name, Zutaten, Autor")
-    @APIResponses(value = {
+    @PUT @Retry(maxRetries=4)@Tag(name="add Mocktail")@Operation(summary="add Mocktail",description="add Mocktail with id, name, Zutaten, Autor")@APIResponses(value=@Counted(name="newMocktailTries",description="How many times mocktail creation has been attemted."){
             @APIResponse(responseCode = "201", description = "Erfolgreich erstellt", content = @Content(mediaType = "application/json")),
             @APIResponse(responseCode = "400", description = "Nicht erstellt", content = @Content(mediaType = "application/json")) })
+
     public Response add(MocktailDTO mocktailInput) {
         // Jsonb jsonb = JsonbBuilder.create();
         // MocktailDTO newMocktail = jsonb.fromJson(mocktailInput, MocktailDTO.class);
@@ -131,4 +136,5 @@ public class KatalogRessource {
         }
         return Response.status(Status.BAD_REQUEST).build();
     }
+
 }

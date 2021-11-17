@@ -1,4 +1,4 @@
-package de.hsos.swa.mocktailApp.control;
+package de.hsos.swa.mocktailApp.entity;
 
 import javax.validation.constraints.NotBlank;
 

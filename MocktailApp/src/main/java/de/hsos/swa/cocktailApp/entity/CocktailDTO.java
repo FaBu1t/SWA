@@ -1,4 +1,4 @@
-package de.hsos.swa.mocktailApp.entity;
+package de.hsos.swa.cocktailApp.entity;
 
 public class CocktailDTO {
     public int id;

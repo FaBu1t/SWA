@@ -1,6 +1,7 @@
 package de.hsos.swa.mocktailApp.control;
 
 import de.hsos.swa.mocktailApp.entity.Mocktail;
+import de.hsos.swa.mocktailApp.entity.MocktailDTO;
 
 import java.util.ArrayList;
 import java.util.List;
