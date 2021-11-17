@@ -41,7 +41,8 @@ public class KatalogRessource {
 
     @GET
     @Timeout(250)
-    @Timed(name = "getMocktailTime", description = "Metrics to monitor the times of processItem method.", unit = MetricUnits.MINUTES, absolute = true)
+    // @Timed(name = "getMocktailTime", description = "Metrics to monitor the times
+    // of processItem method.", unit = MetricUnits.MINUTES, absolute = true)
     @Tag(name = "get Mocktail (name)", description = "Mocktail searchth name")
 
     @Path("/name/{name}")
@@ -70,7 +71,8 @@ public class KatalogRessource {
     @Timeout(250)
     @Tag(name = "get Mocktail (ID)", description = "Search Mocktails with ID")
     @Operation(summary = "gets Mocktails", description = "gets Mocktails with ID")
-    @Timed(name = "getMocktailTime", description = "Metrics to monitor the timeas of Mocktail search", unit = MetricUnits.MINUTES, absolute = true)
+    // @Timed(name = "getMocktailTime", description = "Metrics to monitor the timeas
+    // of Mocktail search", unit = MetricUnits.MINUTES, absolute = true)
     @Path("/id/{id}")
     @APIResponses(value = {
             @APIResponse(responseCode = "404", description = "Mocktail nicht gefunden", content = @Content(mediaType = "application/json")),

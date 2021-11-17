@@ -40,10 +40,10 @@ public class CocktailRessource {
     public Response getCocktailByName(@PathParam String name) {
         // System.out.println(name);
         Jsonb jsonb = JsonbBuilder.create();
-        CocktailDTO cocktail = control.getCocktailByName(name);
-        System.out.println(cocktail);
-        String result = jsonb.toJson(cocktail);
-        if (cocktail != null) {
+        List<CocktailDTO> cocktails = control.getCocktailByName(name);
+        System.out.println(cocktails);
+        String result = jsonb.toJson(cocktails);
+        if (cocktails != null) {
             return Response.ok(result).build();
         } else {
             return Response.status(Status.BAD_REQUEST).build();
@@ -55,10 +55,10 @@ public class CocktailRessource {
     public Response getCocktailByIngredient(@PathParam String name) {
         // System.out.println(name);
 
-        CocktailDTO cocktail = control.searchCocktailByIngredient(name);
-        System.out.println(cocktail);
-        if (cocktail != null) {
-            return Response.ok(cocktail).build();
+        List<CocktailDTO> cocktails = control.searchCocktailByIngredient(name);
+        System.out.println(cocktails);
+        if (cocktails != null) {
+            return Response.ok(cocktails).build();
         } else {
             return Response.status(Status.BAD_REQUEST).build();
         }
@@ -69,9 +69,9 @@ public class CocktailRessource {
     public Response getCocktailByID(@PathParam int id) {
         // System.out.println(name);
 
-        CocktailDTO cocktail = control.getCocktailByID(id);
-        if (cocktail != null) {
-            return Response.ok(cocktail).build();
+        List<CocktailDTO> cocktails = control.getCocktailByID(id);
+        if (cocktails != null) {
+            return Response.ok(cocktails).build();
         } else {
             return Response.status(Status.BAD_REQUEST).build();
         }

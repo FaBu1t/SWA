@@ -1,5 +1,7 @@
 package de.hsos.swa.cocktailApp.control;
 
+import java.util.List;
+
 import javax.enterprise.context.ApplicationScoped;
 
 import de.hsos.swa.cocktailApp.entity.CocktailDTO;
@@ -9,15 +11,15 @@ import de.hsos.swa.cocktailApp.gateway.CocktailGateway;
 public class Controler {
     CocktailGateway cocktailGateway = new CocktailGateway();
 
-    public CocktailDTO getCocktailByName(String name) {
+    public List<CocktailDTO> getCocktailByName(String name) {
         return cocktailGateway.getCocktailByName(name);
     }
 
-    public CocktailDTO getCocktailByID(int id) {
+    public List<CocktailDTO> getCocktailByID(int id) {
         return cocktailGateway.getCocktailByID(id);
     }
 
-    public CocktailDTO searchCocktailByIngredient(String name) {
+    public List<CocktailDTO> searchCocktailByIngredient(String name) {
         return cocktailGateway.searchByIngredient(name);
     }
 }
