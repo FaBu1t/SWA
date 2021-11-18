@@ -32,12 +32,12 @@ public class CocktailGateway {
 
     public List<CocktailDTO> getCocktailByName(String name) {
         String anfrage = PATH + "search.php?s=" + name;
-        System.out.println(anfrage);
+        //System.out.println(anfrage);
         Client restClient = ClientBuilder.newClient();
         WebTarget target = restClient.target(anfrage);
 
         JsonObject JsonCocktail = target.request().accept(MediaType.APPLICATION_JSON).get(JsonObject.class);
-        System.out.println(JsonCocktail);
+        //System.out.println(JsonCocktail);
         restClient.close();
         return factory.getCocktailDto(JsonCocktail);
     }

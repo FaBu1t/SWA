@@ -33,8 +33,6 @@ import org.jboss.resteasy.annotations.jaxrs.PathParam;
 @Produces(MediaType.APPLICATION_JSON)
 public class KatalogRessource {
 
-    @Inject
-    CocktailGateway cocktailGateway;
 
     @Inject
     Rezeptverwaltung verwaltung;
