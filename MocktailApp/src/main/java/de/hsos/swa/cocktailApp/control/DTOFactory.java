@@ -28,7 +28,7 @@ public class DTOFactory {
         String[] zutaten = new String[15];
         for (int i = 0; i < 15; i++) {
             String ingredient = cocktail.getString("strIngredient" + String.valueOf(i + 1));
-            System.out.println(ingredient);
+            //System.out.println(ingredient);
             if (ingredient != null) {
                 zutaten[i] = ingredient;
             }
