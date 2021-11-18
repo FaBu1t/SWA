@@ -37,6 +37,8 @@ public class CocktailRessource {
 
     @GET
     @Path("/{name}")
+    @Retry(maxRetries = 3)
+    @Tag(name = "get Cocktail (name)", description = "Get Cocktail with name")
     public Response getCocktailByName(@PathParam String name) {
         // System.out.println(name);
         Jsonb jsonb = JsonbBuilder.create();
@@ -52,6 +54,8 @@ public class CocktailRessource {
 
     @GET
     @Path("/ingedient/{name}")
+    @Retry(maxRetries = 3)
+    @Tag(name = "get Cocktail with Ingredient", description = "Get Cocktail with ingredient")
     public Response getCocktailByIngredient(@PathParam String name) {
         // System.out.println(name);
 
@@ -66,6 +70,8 @@ public class CocktailRessource {
 
     @GET
     @Path("/id/{id}")
+    @Retry(maxRetries = 3)
+    @Tag(name = "get Cocktail (ID)", description = "Get Cocktails with ID")
     public Response getCocktailByID(@PathParam int id) {
         // System.out.println(name);
 

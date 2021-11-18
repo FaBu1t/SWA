@@ -58,7 +58,6 @@ public class KatalogRessource {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
         if (mocktailDTOs.size() == 0)
-
         {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
