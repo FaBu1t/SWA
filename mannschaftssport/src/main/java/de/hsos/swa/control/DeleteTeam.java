@@ -1,5 +1,7 @@
 package de.hsos.swa.control;
 
-public interface DeleteTeam {
+import de.hsos.swa.entity.DTOs.Data;
 
+public interface DeleteTeam {
+    public Data deleteTeam(int id);
 }
