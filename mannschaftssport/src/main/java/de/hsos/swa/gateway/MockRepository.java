@@ -33,37 +33,43 @@ public class MockRepository {
     }
 
     public Optional<TeamDTO> getTeam(int id) {
-        // TODO
-        return null;
+        return Optional.ofNullable(Team.Converter.toDTO(teams.get(id)));
     }
 
     public Optional<PersonDTO> deletePerson(int id) {
-        // TODO
-        return null;
+        return Optional.ofNullable(Person.Converter.toDTO(persons.remove(id)));
     }
 
     public Optional<TeamDTO> deleteTeam(int id) {
-        // TODO
-        return null;
+        return Optional.ofNullable(Team.Converter.toDTO(teams.remove(id)));
     }
 
-    public Optional<PersonDTO> changePerson(PersonDTO newPerson) {
-        // TODO
-        return null;
+    public boolean changePerson(PersonDTO newPerson) {
+        if (persons.containsKey(newPerson.id)) {
+            persons.put(newPerson.id, Person.Converter.toPerson(newPerson));
+            return true;
+        }
+        return false;
     }
 
-    public Optional<TeamDTO> changeTeam(TeamDTO newTeam) {
-        // TODO
-        return null;
+    public boolean changeTeam(TeamDTO newTeam) {
+        if (teams.containsKey(newTeam.id)) {
+            teams.put(newTeam.id, Team.Converter.toTeam(newTeam);
+            return true;
+        }
+        return false;    }
+
+    public boolean createPerson(PersonDTO newPerson) {
+        if (persons.putIfAbsent(newPerson.id, Person.Converter.toPerson(newPerson)) == null) {
+            return false;
+        }
+        return true;
     }
 
-    public Optional<PersonDTO> createPerson(PersonDTO newPerson) {
-        // TODO
-        return null;
-    }
-
-    public Optional<TeamDTO> createTeam(TeamDTO newTeam) {
-        // TODO
-        return null;
+    public boolean createTeam(TeamDTO newTeam) {
+        if (teams.putIfAbsent(newTeam.id, Team.Converter.toTeam(newTeam)) == null) {
+            return false;
+        }
+        return true;
     }
 }
