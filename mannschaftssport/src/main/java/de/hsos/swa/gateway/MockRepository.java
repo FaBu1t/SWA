@@ -1,5 +1,6 @@
 package de.hsos.swa.gateway;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,13 +19,17 @@ public class MockRepository {
     private Map<Integer, Team> teams = new HashMap<>();
 
     public Optional<PersonDTO> getPerson(int id) {
-        // TODO
-        return null;
+        return Optional.ofNullable(Person.Converter.toDTO(persons.get(id)));
     }
 
-    public Optional<PersonDTO> getPerson(String name) {
-        // TODO
-        return null;
+    public Optional<ArrayList<PersonDTO>> getPerson(String name) {
+        ArrayList<PersonDTO> result = new ArrayList<>();
+        for (Map.Entry<Integer, Person> entry : persons.entrySet()) {
+            if (entry.getValue().getName() == name) {
+                result.add(Person.Converter.toDTO(entry.getValue()));
+            }
+        }
+        return Optional.ofNullable(result);
     }
 
     public Optional<TeamDTO> getTeam(int id) {

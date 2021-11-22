@@ -31,6 +31,7 @@ public class Person {
 
         public static PersonDTO toDTO(Person person) {
             return new PersonDTO(person.getId(), person.getName());
+
         }
 
         public static Person toPerson(PersonDTO person) {
