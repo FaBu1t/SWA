@@ -4,12 +4,15 @@ import java.util.ArrayList;
 
 import de.hsos.swa.entity.DTOs.PersonDTO;
 import de.hsos.swa.entity.DTOs.TeamDTO;
+import io.smallrye.common.constraint.NotNull;
 
 public class Team {
+    @NotNull
     private int id;
     private String name;
-    private ArrayList<Person> player;
+    private ArrayList<Person> players;
     private Person manager;
+    public String category;
 
     public int getId() {
         return id;
@@ -20,7 +23,7 @@ public class Team {
     }
 
     public ArrayList<Person> getPlayer() {
-        return player;
+        return players;
     }
 
     public Person getManager() {
@@ -44,7 +47,7 @@ public class Team {
 
             ArrayList<Person> players = new ArrayList<Person>();
 
-            for (PersonDTO p : teamDTO.player) {
+            for (PersonDTO p : teamDTO.players) {
                 players.add(Person.Converter.toPerson(p));
             }
 
@@ -56,7 +59,7 @@ public class Team {
     public Team(int id, String name, ArrayList<Person> player, Person manager) {
         this.id = id;
         this.name = name;
-        this.player = player;
+        this.players = player;
         this.manager = manager;
     }
 

@@ -1,5 +1,5 @@
 package de.hsos.swa.entity.DTOs;
 
-public class Relationships {
+public class Error {
 
 }

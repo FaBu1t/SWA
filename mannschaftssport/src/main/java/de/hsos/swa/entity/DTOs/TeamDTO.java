@@ -5,14 +5,25 @@ import java.util.ArrayList;
 public class TeamDTO {
     public int id;
     public String name;
-    public ArrayList<PersonDTO> player;
+    public ArrayList<PersonDTO> players;
     public PersonDTO manager;
+    public String category;
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
 
     public TeamDTO(int id, String name, ArrayList<PersonDTO> player, PersonDTO manager) {
         this.id = id;
         this.name = name;
-        this.player = player;
+        this.players = player;
         this.manager = manager;
     }
+
+    
 
 }
