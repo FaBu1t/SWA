@@ -7,5 +7,6 @@ import de.hsos.swa.entity.DTOs.PersonDTO;
 
 public interface SearchPerson {
     public Data searchPerson(int id);
+
     public ArrayList<Data> searchPerson(String name);
 }

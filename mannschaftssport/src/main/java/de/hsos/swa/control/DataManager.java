@@ -1,6 +1,7 @@
 package de.hsos.swa.control;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -145,4 +146,11 @@ public class DataManager implements SearchPerson, CreatePerson, ChangePerson, De
         // TODO Auto-generated method stub
         return null;
     }
+
+    @Override
+    public ArrayList<Data> searchAllTeams() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
 }

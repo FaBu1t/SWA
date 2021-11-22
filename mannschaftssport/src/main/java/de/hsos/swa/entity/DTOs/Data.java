@@ -7,23 +7,23 @@ import de.hsos.swa.entity.Type;
 public class Data {
 
     @NotNull
-    private int id;
+    public int id;
 
     @NotNull
-    private Type type;
-    
-    private Attribute attributes;
-    private Links links;
-    private Relationship relationship;
+    public Type type;
 
+    public Attribute attributes;
+    public Links links;
+    public Relationship relationships;
 
     public Relationship getRelationship() {
-        return relationship;
+        return relationships;
     }
 
     public void setRelationship(Relationship relationships) {
-        this.relationship = relationships;
+        this.relationships = relationships;
     }
+
     // evtl noch rausnehmen
     public Data() {
     }
