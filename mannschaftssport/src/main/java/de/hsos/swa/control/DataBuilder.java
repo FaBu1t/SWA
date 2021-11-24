@@ -2,8 +2,6 @@ package de.hsos.swa.control;
 
 import java.util.ArrayList;
 
-import javax.management.relation.Relation;
-
 import de.hsos.swa.entity.Type;
 import de.hsos.swa.entity.DTOs.Attribute;
 import de.hsos.swa.entity.DTOs.Data;
@@ -41,8 +39,8 @@ public class DataBuilder {
                     System.out.println("manager");
                     result = withRelationshipManager(result, team, rel);
                 }
-                if (string.equals("player")) {
-                    System.out.println("player");
+                if (string.equals("players")) {
+                    System.out.println("players");
                     result = withRelationshipPlayer(result, team, rel);
                 }
             }
@@ -87,7 +85,7 @@ public class DataBuilder {
             Attribute personAttr = new Attribute();
             if (person.name != null) {
                 personAttr.setName(person.name);
-                personData.setAttributes(personAttr);
+                personData.attributes = personAttr;
             }
             personsData.add(personData);
             // TODO: Player Links setzen
@@ -103,7 +101,7 @@ public class DataBuilder {
         Attribute personAttr = new Attribute();
         if (person.name != null) {
             personAttr.setName(person.name);
-            personData.setAttributes(personAttr);
+            personData.attributes = personAttr;
         }
         // TODO: Manager Links setzen
         return personData;

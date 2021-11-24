@@ -5,5 +5,5 @@ import de.hsos.swa.entity.DTOs.TeamDTO;
 import de.hsos.swa.entity.DTOs.DataObject;
 
 public interface ChangeTeam {
-    public DataObject changePerson(TeamDTO newTeam);
+    public DataObject changeTeam(TeamDTO newTeam);
 }

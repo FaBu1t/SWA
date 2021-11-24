@@ -47,30 +47,6 @@ public class Data {
         this.type = type;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public Type getType() {
-        return type;
-    }
-
-    public void setType(Type type) {
-        this.type = type;
-    }
-
-    public Attribute getAttributes() {
-        return attributes;
-    }
-
-    public void setAttributes(Attribute attributes) {
-        this.attributes = attributes;
-    }
-
     public void addLinks(String name, URI link) {
         this.links.put(name, link);
     }

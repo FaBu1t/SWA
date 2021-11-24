@@ -24,21 +24,22 @@ public class MockRepository {
         Person karl = new Person(3, "Karl");
         ArrayList<Person> a = new ArrayList<>();
         a.add(hubert);
-        Team team = new Team(1, "Team1", a, karl);
+        Team team = new Team(1111, "Team1", a, karl);
         this.createTeam(Team.Converter.toDTO(team));
 
         Person lisa = new Person(4, "Lisa");
         Person marge = new Person(5, "Marge");
         ArrayList<Person> b = new ArrayList<>();
         b.add(lisa);
-        Team team2 = new Team(2, "Team2", b, marge, "juniors");
+        b.add(marge);
+        Team team2 = new Team(2222, "Team2", b, marge, "juniors");
         this.createTeam(Team.Converter.toDTO(team2));
 
         Person grampa = new Person(4, "Grampa");
         Person homer = new Person(5, "Homer");
         ArrayList<Person> c = new ArrayList<>();
         c.add(grampa);
-        Team team3 = new Team(3, "Team3", c, homer, "seniors");
+        Team team3 = new Team(3333, "Team3", c, homer, "seniors");
         this.createTeam(Team.Converter.toDTO(team3));
     }
 
@@ -125,16 +126,16 @@ public class MockRepository {
         return true;
     }
 
-    public boolean createTeam(TeamDTO newTeam) {
+    public Optional<TeamDTO> createTeam(TeamDTO newTeam) {
         if (teams.putIfAbsent(newTeam.id, Team.Converter.toTeam(newTeam)) != null) {
-            return false;
+            return Optional.ofNullable(null);
         }
         if (newTeam.players != null) {
             for (PersonDTO player : newTeam.players) {
                 players.putIfAbsent(player.id, Person.Converter.toPerson(player));
             }
         }
-        return true;
+        return Optional.ofNullable(newTeam);
     }
 
     public Optional<ArrayList<TeamDTO>> getTeamByCategory(String category) {
@@ -143,9 +144,7 @@ public class MockRepository {
         for (Map.Entry<Integer, Team> entry : teams.entrySet()) {
             System.out.println(entry.getValue().getCategory());
             if (entry.getValue().getCategory() != null) {
-
                 if (entry.getValue().getCategory().equals(category)) {
-                    System.out.println("saaame");
                     result.add(Team.Converter.toDTO(entry.getValue()));
                 }
             }

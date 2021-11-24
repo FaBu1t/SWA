@@ -13,6 +13,9 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
+import javax.ws.rs.PATCH;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -27,6 +30,8 @@ import de.hsos.swa.control.DataManager;
 import de.hsos.swa.entity.Type;
 import de.hsos.swa.entity.DTOs.Data;
 import de.hsos.swa.entity.DTOs.DataObject;
+import de.hsos.swa.entity.DTOs.PersonDTO;
+import de.hsos.swa.entity.DTOs.TeamDTO;
 import de.hsos.swa.shared.UriBuilder;
 import javax.ws.rs.core.Response.Status;
 
@@ -71,10 +76,8 @@ public class TeamRessource {
                             d.addLinks("self", this.uriBuilder.forTeam(d.id, this.uriInfo));
                         }
                         responseObject.add(toAdd);
-
                     }
                 } else {
-
                     DataObject toAdd = manager.searchTeam(name);
                     for (Data d : toAdd.data) {
                         d.addLinks("self", this.uriBuilder.forTeam(d.id, this.uriInfo));
@@ -109,11 +112,81 @@ public class TeamRessource {
     @GET
     @Path("/{id}/relationship/{relationshipType}")
     public Response getTeamwithRelationship(@PathParam("id") int id, @PathParam("relationshipType") String relType) {
+        System.out.println(relType);
         DataObject responseObject = manager.searchTeam(id, relType);
-        for(Data d:responseObject.data){
-            d.
+        if (relType.equals("manager")) {
+            for (Data d : responseObject.data) {
+                Data managerToLink = d.getRelationship().manager;
+                if (managerToLink != null) {
+                    URI selfLink = this.uriBuilder.forRelationship(id, relType, this.uriInfo,
+                            "getTeamwithRelationship");
+                    URI relatedLink = this.uriBuilder.forRelationship(id, relType, this.uriInfo,
+                            "getPersonFromRelationship");
+                    managerToLink.addLinks("self", selfLink);
+                    managerToLink.addLinks("related", relatedLink);
+                }
+            }
+        } else {
+            if (relType.equals("players")) {
+                if (responseObject.data.size() == 1) {
+                    System.out.println(responseObject.data.get(0));
+                    if (responseObject.data.get(0).relationship.players != null) {
+                        ArrayList<Data> players = responseObject.data.get(0).relationship.players;
+
+                        for (Data d : players) {
+                            if (players != null) {
+                                URI relatedLink = this.uriBuilder.forRelationship(id, relType, this.uriInfo,
+                                        "getPersonFromRelationship");
+                                d.addLinks("related", relatedLink);
+                            }
+                        }
+
+                        responseObject.data.get(0).relationship.players = players;
+                    }
+
+                }
+            }
         }
+
         return Response.ok(responseObject).build();
+    }
+
+    @GET
+    @Path("/{id}/{relationshipType}")
+    public Response getPersonFromRelationship(@PathParam("id") int id, @PathParam("relationshipType") String relType) {
+        DataObject responseObj = manager.searchTeam(id, relType);
+        Data responseObjTemp = null;
+        if (relType.equals("manager")) {
+            if (responseObj.data.size() == 1) {
+                for (Data d : responseObj.data) {
+                    responseObjTemp = d.getRelationship().manager;
+                    if (responseObj != null) {
+                        URI selfLink = this.uriBuilder.forRelationship(id, relType, this.uriInfo,
+                                "getPersonFromRelationship");
+                        responseObjTemp.addLinks("self", selfLink);
+                    }
+                }
+            }
+            responseObj = new DataObject();
+            responseObj.data.add(responseObjTemp);
+
+        } else {
+            ArrayList<Data> players = responseObj.data.get(0).relationship.players;
+            if (responseObj.data.size() == 1) {
+                for (Data d : players) {
+                    if (players != null) {
+                        URI relatedLink = this.uriBuilder.forRelationship(id, relType, this.uriInfo,
+                                "getPersonFromRelationship");
+                        d.addLinks("related", relatedLink);
+                    }
+                }
+            }
+            responseObj = new DataObject();
+            responseObj.data = players;
+        }
+
+        return Response.ok(responseObj).build();
+
     }
 
     @DELETE
@@ -125,11 +198,20 @@ public class TeamRessource {
         return Response.status(Status.BAD_REQUEST).build();
     }
 
-    /*
-     * @GET
-     * 
-     * @Path("/{name}") public Response getTeam(@PathParam("name") String name) {
-     * return Response.ok(manager.searchTeam(name)).build(); }
-     */
+    @PUT
+    public Response createTeam(TeamDTO team) {
+        return Response.ok(manager.createTeam(team)).build();
+    }
+
+    @POST
+    @Path("/{id}/relationships/manager")
+    public Response addRelManager(@PathParam("id") int id, PersonDTO relManager) {
+        DataObject responseObject = manager.addManager(id, relManager);
+
+        if (responseObject != null) {
+            return Response.ok(responseObject).build();
+        }
+        return Response.status(Status.BAD_REQUEST).build();
+    }
 
 }
