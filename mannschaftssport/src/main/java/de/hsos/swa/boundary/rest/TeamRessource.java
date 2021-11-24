@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.crypto.NullCipher;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -54,17 +55,31 @@ public class TeamRessource {
             @QueryParam("category[category]") String category) {
 
         if (name == null && category == null) {
-            return Response.ok(manager.searchAllTeams()).build();
+            DataObject allTeams = manager.searchAllTeams();
+            for (Data d : allTeams.data) {
+                d.addLinks("self", this.uriBuilder.forTeam(d.id, this.uriInfo));
+            }
+            return Response.ok(allTeams).build();
         } else {
             Set<DataObject> responseObject = new HashSet<>();
             if (name != null) {
                 String names[] = name.split(",");
                 if (names.length > 0) {
                     for (String filterName : names) {
-                        responseObject.add(manager.searchTeam(filterName));
+                        DataObject toAdd = manager.searchTeam(filterName);
+                        for (Data d : toAdd.data) {
+                            d.addLinks("self", this.uriBuilder.forTeam(d.id, this.uriInfo));
+                        }
+                        responseObject.add(toAdd);
+
                     }
                 } else {
-                    responseObject.add(manager.searchTeam(name));
+
+                    DataObject toAdd = manager.searchTeam(name);
+                    for (Data d : toAdd.data) {
+                        d.addLinks("self", this.uriBuilder.forTeam(d.id, this.uriInfo));
+                    }
+                    responseObject.add(toAdd);
                 }
             }
             if (category != null) {
@@ -84,7 +99,11 @@ public class TeamRessource {
     @GET
     @Path("/{id}")
     public Response getTeam(@PathParam("id") int id) {
-        return Response.ok(manager.searchTeam(id, null)).build();
+        DataObject dObject = manager.searchTeam(id, null);
+        for (Data d : dObject.data) {
+            d.addLinks("self", this.uriBuilder.forTeam(d.id, this.uriInfo));
+        }
+        return Response.ok(dObject).build();
     }
 
     @GET
@@ -110,11 +129,4 @@ public class TeamRessource {
      * return Response.ok(manager.searchTeam(name)).build(); }
      */
 
-    private URI buildSelfLinkforTeam(int id) {
-
-        URI uri = uriBuilder.forTeam(id, this.uriInfo);
-        Link linkToTeam = Link.fromUri(uri).build();
-
-        return uri;
-    }
 }

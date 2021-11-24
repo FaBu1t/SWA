@@ -3,6 +3,7 @@ package de.hsos.swa.entity.DTOs;
 import java.util.ArrayList;
 
 public class DataObject {
+
     public ArrayList<Data> data = new ArrayList<Data>();
     public Included included;
     public Error error;
@@ -59,5 +60,4 @@ public class DataObject {
         return true;
     }
 
-    
 }
