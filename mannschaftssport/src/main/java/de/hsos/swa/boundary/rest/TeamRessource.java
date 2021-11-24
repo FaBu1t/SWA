@@ -99,7 +99,6 @@ public class TeamRessource {
                 }
             }
             if (included != null) {
-
                 for (DataObject dataObject : responseObject) {
                     Included incl = new Included();
                     for (Data data : dataObject.data) {
@@ -109,7 +108,11 @@ public class TeamRessource {
                             }
 
                         } else if (included.equals("players")) {
-                            
+                            if (data.relationship.players != null) {
+                                for (Data playerData : data.relationship.players) {
+                                    incl.data.add(playerData);
+                                }
+                            }
                         }
                         dataObject.included = incl;
                     }
