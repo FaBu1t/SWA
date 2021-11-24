@@ -31,8 +31,15 @@ public class MockRepository {
         Person marge = new Person(5, "Marge");
         ArrayList<Person> b = new ArrayList<>();
         b.add(lisa);
-        Team team2 = new Team(2, "Team2", b, marge);
+        Team team2 = new Team(2, "Team2", b, marge, "juniors");
         this.createTeam(Team.Converter.toDTO(team2));
+
+        Person grampa = new Person(4, "Grampa");
+        Person homer = new Person(5, "Homer");
+        ArrayList<Person> c = new ArrayList<>();
+        c.add(grampa);
+        Team team3 = new Team(3, "Team3", c, homer, "seniors");
+        this.createTeam(Team.Converter.toDTO(team3));
     }
 
     public Optional<PersonDTO> getPerson(int id) {
@@ -50,7 +57,6 @@ public class MockRepository {
     }
 
     public Optional<TeamDTO> getTeam(int id) {
-        System.out.println("getTeam: " + teams.get(id).toString());
         return Optional.ofNullable(Team.Converter.toDTO(teams.get(id)));
     }
 
@@ -129,5 +135,21 @@ public class MockRepository {
             }
         }
         return true;
+    }
+
+    public Optional<ArrayList<TeamDTO>> getTeamByCategory(String category) {
+        System.out.println(category);
+        ArrayList<TeamDTO> result = new ArrayList<>();
+        for (Map.Entry<Integer, Team> entry : teams.entrySet()) {
+            System.out.println(entry.getValue().getCategory());
+            if (entry.getValue().getCategory() != null) {
+
+                if (entry.getValue().getCategory().equals(category)) {
+                    System.out.println("saaame");
+                    result.add(Team.Converter.toDTO(entry.getValue()));
+                }
+            }
+        }
+        return Optional.ofNullable(result);
     }
 }

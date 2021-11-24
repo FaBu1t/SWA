@@ -31,23 +31,33 @@ public class DataBuilder {
             result.attributes = attr;
         }
 
-        // Relationships setzen
-        if (team.manager != null || team.players != null) {
-            Relationship rel = new Relationship();
-            if (team.manager != null) {
-                rel.manager = buildPersonData(team.manager, Type.MANAGER);
-            }
-            if (team.players != null) {
-                rel.players = buildPersonsData(team.players, Type.PLAYER);
-            }
-            result.relationship = rel;
-        }
         // Links setzen
         return result;
     }
 
-    public Data addRelationship(TeamDTO team) {
-        return null;
+    public Data addRelationshipManager(Data data, TeamDTO team) {
+        // Relationships setzen
+        if (team.manager != null) {
+            Relationship rel = new Relationship();
+            if (team.manager != null) {
+                rel.manager = buildPersonData(team.manager, Type.MANAGER);
+            }
+
+            data.relationship = rel;
+        }
+        return data;
+    }
+
+    public Data addRelationshipPlayer(Data data, TeamDTO team) {
+        // Relationships setzen
+        if (team.players != null) {
+            Relationship rel = new Relationship();
+            if (team.players != null) {
+                rel.players = buildPersonsData(team.players, Type.PLAYER);
+            }
+            data.relationship = rel;
+        }
+        return data;
     }
 
     public static ArrayList<Data> buildPersonsData(ArrayList<PersonDTO> persons, Type type) {
