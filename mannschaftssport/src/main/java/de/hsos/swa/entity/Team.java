@@ -14,6 +14,14 @@ public class Team {
     private Person manager;
     public String category;
 
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
     public int getId() {
         return id;
     }
@@ -44,8 +52,7 @@ public class Team {
             for (Person p : team.getPlayer()) {
                 playerDTOs.add(Person.Converter.toDTO(p));
             }
-
-            return new TeamDTO(team.getId(), team.getName(), playerDTOs, manager);
+            return new TeamDTO(team.getId(), team.getName(), playerDTOs, manager, team.category);
         }
 
         public static Team toTeam(TeamDTO teamDTO) {
@@ -57,16 +64,24 @@ public class Team {
                 players.add(Person.Converter.toPerson(p));
             }
 
-            return new Team(teamDTO.id, teamDTO.name, players, manager);
+            return new Team(teamDTO.id, teamDTO.name, players, manager, teamDTO.category);
         }
 
     }
 
-    public Team(int id, String name, ArrayList<Person> player, Person manager) {
+    public Team(int id, String name, ArrayList<Person> player, Person manager, String category) {
         this.id = id;
         this.name = name;
         this.players = player;
         this.manager = manager;
+        this.category = category;
     }
 
+    public Team(int id, String name, ArrayList<Person> players, Person manager) {
+        this.id = id;
+        this.name = name;
+        this.players = players;
+        this.manager = manager;
+    }
+    
 }

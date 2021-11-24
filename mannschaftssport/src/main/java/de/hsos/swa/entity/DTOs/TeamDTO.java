@@ -23,11 +23,12 @@ public class TeamDTO {
         this.category = category;
     }
 
-    public TeamDTO(int id, String name, ArrayList<PersonDTO> player, PersonDTO manager) {
+    public TeamDTO(int id, String name, ArrayList<PersonDTO> player, PersonDTO manager, String category) {
         this.id = id;
         this.name = name;
         this.players = player;
         this.manager = manager;
+        this.category = category;
     }
 
 }

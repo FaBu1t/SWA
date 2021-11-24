@@ -85,12 +85,24 @@ public class DataManager implements SearchPerson, CreatePerson, ChangePerson, De
 
         DataObject resultDataObject = new DataObject();
         Optional<ArrayList<TeamDTO>> opt = repository.getAllTeam();
-        ArrayList<Data> result = new ArrayList<Data>();
-        System.out.println(opt.isPresent());
         if (opt.isPresent()) {
             for (TeamDTO team : opt.get()) {
 
                 resultDataObject.data.add(DataBuilder.buildTeamData(team));
+            }
+            return resultDataObject;
+        }
+        // TODO Send Error
+        resultDataObject.error = new Error("ERRORRRR");
+        return resultDataObject;
+    }
+
+    public DataObject searchTeamByCategory(String category) {
+        Optional<ArrayList<TeamDTO>> opt = repository.getTeamByCategory(category);
+        DataObject resultDataObject = new DataObject();
+        if (opt.isPresent()) {
+            for (TeamDTO team : opt.get()) {
+                resultDataObject.data.add((DataBuilder.buildTeamData(team)));
             }
             return resultDataObject;
         }

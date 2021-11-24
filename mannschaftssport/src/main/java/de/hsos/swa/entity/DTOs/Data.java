@@ -75,4 +75,47 @@ public class Data {
         this.links.put(name, link);
     }
 
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((attributes == null) ? 0 : attributes.hashCode());
+        result = prime * result + id;
+        result = prime * result + ((links == null) ? 0 : links.hashCode());
+        result = prime * result + ((relationship == null) ? 0 : relationship.hashCode());
+        result = prime * result + ((type == null) ? 0 : type.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Data other = (Data) obj;
+        if (attributes == null) {
+            if (other.attributes != null)
+                return false;
+        } else if (!attributes.equals(other.attributes))
+            return false;
+        if (id != other.id)
+            return false;
+        if (links == null) {
+            if (other.links != null)
+                return false;
+        } else if (!links.equals(other.links))
+            return false;
+        if (relationship == null) {
+            if (other.relationship != null)
+                return false;
+        } else if (!relationship.equals(other.relationship))
+            return false;
+        if (type != other.type)
+            return false;
+        return true;
+    }
+
 }
