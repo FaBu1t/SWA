@@ -1,10 +1,15 @@
 package de.hsos.swa.control;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Optional;
-
+import javax.ws.rs.core.MediaType;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.validation.constraints.AssertTrue.List;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.Link;
+import javax.ws.rs.core.UriInfo;
 
 import de.hsos.swa.entity.Type;
 import de.hsos.swa.entity.DTOs.Data;
@@ -13,6 +18,7 @@ import de.hsos.swa.entity.DTOs.Error;
 import de.hsos.swa.entity.DTOs.PersonDTO;
 import de.hsos.swa.entity.DTOs.TeamDTO;
 import de.hsos.swa.gateway.MockRepository;
+import de.hsos.swa.shared.UriBuilder;
 
 @ApplicationScoped
 public class DataManager implements SearchPerson, CreatePerson, ChangePerson, DeletePerson, SearchTeam, CreateTeam,
@@ -20,6 +26,9 @@ public class DataManager implements SearchPerson, CreatePerson, ChangePerson, De
 
     @Inject
     MockRepository repository;
+
+    @Context
+    UriInfo uriInfo;
 
     @Override
     public boolean deleteTeam(int id) {
@@ -34,6 +43,7 @@ public class DataManager implements SearchPerson, CreatePerson, ChangePerson, De
 
     @Override
     public boolean createTeam(TeamDTO newTeam) {
+
         return repository.changeTeam(newTeam);
 
     }
@@ -42,8 +52,11 @@ public class DataManager implements SearchPerson, CreatePerson, ChangePerson, De
     public DataObject searchTeam(int id) {
         DataObject resultDataObject = new DataObject();
         Optional<TeamDTO> opt = repository.getTeam(id);
+
         if (opt.isPresent()) {
+
             System.out.println("ID: " + id);
+
             resultDataObject.data.add(DataBuilder.buildTeamData(opt.get()));
             return resultDataObject;
         }
@@ -57,6 +70,7 @@ public class DataManager implements SearchPerson, CreatePerson, ChangePerson, De
         DataObject resultDataObject = new DataObject();
         if (opt.isPresent()) {
             for (TeamDTO team : opt.get()) {
+
                 resultDataObject.data.add((DataBuilder.buildTeamData(team)));
             }
             return resultDataObject;
@@ -68,12 +82,14 @@ public class DataManager implements SearchPerson, CreatePerson, ChangePerson, De
 
     @Override
     public DataObject searchAllTeams() {
+
         DataObject resultDataObject = new DataObject();
         Optional<ArrayList<TeamDTO>> opt = repository.getAllTeam();
         ArrayList<Data> result = new ArrayList<Data>();
         System.out.println(opt.isPresent());
         if (opt.isPresent()) {
             for (TeamDTO team : opt.get()) {
+
                 resultDataObject.data.add(DataBuilder.buildTeamData(team));
             }
             return resultDataObject;
