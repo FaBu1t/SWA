@@ -46,6 +46,10 @@ public class DataBuilder {
         return result;
     }
 
+    public Data addRelationship(TeamDTO team) {
+        return null;
+    }
+
     public static ArrayList<Data> buildPersonsData(ArrayList<PersonDTO> persons, Type type) {
         // TODO PlayersData setzen
         ArrayList<Data> personsData = new ArrayList<Data>();
