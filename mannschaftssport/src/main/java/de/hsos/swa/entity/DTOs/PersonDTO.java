@@ -1,5 +1,11 @@
 package de.hsos.swa.entity.DTOs;
 
+import java.net.URI;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.json.bind.annotation.JsonbProperty;
+
 public class PersonDTO {
     public int id;
     public String name;

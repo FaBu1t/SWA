@@ -110,6 +110,9 @@ public class TeamRessource {
     @Path("/{id}/relationship/{relationshipType}")
     public Response getTeamwithRelationship(@PathParam("id") int id, @PathParam("relationshipType") String relType) {
         DataObject responseObject = manager.searchTeam(id, relType);
+        for(Data d:responseObject.data){
+            d.
+        }
         return Response.ok(responseObject).build();
     }
 
