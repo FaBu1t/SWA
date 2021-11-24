@@ -103,6 +103,17 @@ public class TeamRessource {
         return Response.ok(dObject).build();
     }
 
+    @GET
+    @Path("/{id}/relationship/{name}")
+    public Response getRelationship(@PathParam("id") int id, @PathParam("name") String name) {
+        // TODO
+        DataObject dObject = manager.searchTeam(id);
+        for (Data d : dObject.data) {
+            d.addLinks("self", this.uriBuilder.forTeam(d.id, this.uriInfo));
+        }
+        return Response.ok(dObject).build();
+    }
+
     @DELETE
     @Path("/{id}")
     public Response deleteTeam(@PathParam("id") int id) {
