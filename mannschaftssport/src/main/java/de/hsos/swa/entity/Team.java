@@ -30,6 +30,12 @@ public class Team {
         return manager;
     }
 
+    @Override
+    public String toString() {
+        return "Team [category=" + category + ", id=" + id + ", manager=" + manager + ", name=" + name + ", players="
+                + players + "]";
+    }
+
     public static class Converter {
 
         public static TeamDTO toDTO(Team team) {

@@ -40,7 +40,7 @@ public class DataBuilder {
             if (team.players != null) {
                 rel.players = buildPersonsData(team.players, Type.PLAYER);
             }
-            result.relationships = rel;
+            result.relationship = rel;
         }
         // Links setzen
         return result;
@@ -60,6 +60,7 @@ public class DataBuilder {
                 personAttr.setName(person.name);
                 personData.setAttributes(personAttr);
             }
+            personsData.add(personData);
             // TODO: Player Links setzen
         }
         return personsData;

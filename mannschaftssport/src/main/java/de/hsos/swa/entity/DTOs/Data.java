@@ -14,14 +14,20 @@ public class Data {
 
     public Attribute attributes;
     public Links links;
-    public Relationship relationships;
+    public Relationship relationship;
+
+    @Override
+    public String toString() {
+        return "Data [attributes=" + attributes + ", id=" + id + ", links=" + links + ", relationships=" + relationship
+                + ", type=" + type + "]";
+    }
 
     public Relationship getRelationship() {
-        return relationships;
+        return relationship;
     }
 
     public void setRelationship(Relationship relationships) {
-        this.relationships = relationships;
+        this.relationship = relationships;
     }
 
     // evtl noch rausnehmen

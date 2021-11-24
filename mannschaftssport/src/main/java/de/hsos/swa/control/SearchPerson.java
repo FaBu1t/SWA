@@ -4,9 +4,10 @@ import java.util.ArrayList;
 
 import de.hsos.swa.entity.DTOs.Data;
 import de.hsos.swa.entity.DTOs.PersonDTO;
+import de.hsos.swa.entity.DTOs.DataObject;
 
 public interface SearchPerson {
-    public Data searchPerson(int id);
+    public DataObject searchPerson(int id);
 
-    public ArrayList<Data> searchPerson(String name);
+    public DataObject searchPerson(String name);
 }

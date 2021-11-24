@@ -3,12 +3,12 @@ package de.hsos.swa.control;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.hsos.swa.entity.DTOs.Data;
+import de.hsos.swa.entity.DTOs.DataObject;
 
 public interface SearchTeam {
-    public Data searchTeam(int id);
+    public DataObject searchTeam(int id);
 
-    public ArrayList<Data> searchAllTeams();
+    public DataObject searchAllTeams();
 
-    public ArrayList<Data> searchTeam(String name);
+    public DataObject searchTeam(String name);
 }

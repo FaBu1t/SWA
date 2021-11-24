@@ -19,6 +19,22 @@ public class MockRepository {
     private Map<Integer, Person> players = new HashMap<>();
     private Map<Integer, Team> teams = new HashMap<>();
 
+    public MockRepository() {
+        Person hubert = new Person(2, "Hubert");
+        Person karl = new Person(3, "Karl");
+        ArrayList<Person> a = new ArrayList<>();
+        a.add(hubert);
+        Team team = new Team(1, "Team1", a, karl);
+        this.createTeam(Team.Converter.toDTO(team));
+
+        Person lisa = new Person(4, "Lisa");
+        Person marge = new Person(5, "Marge");
+        ArrayList<Person> b = new ArrayList<>();
+        b.add(lisa);
+        Team team2 = new Team(2, "Team2", b, marge);
+        this.createTeam(Team.Converter.toDTO(team2));
+    }
+
     public Optional<PersonDTO> getPerson(int id) {
         return Optional.ofNullable(Person.Converter.toDTO(persons.get(id)));
     }
@@ -34,13 +50,14 @@ public class MockRepository {
     }
 
     public Optional<TeamDTO> getTeam(int id) {
+        System.out.println("getTeam: " + teams.get(id).toString());
         return Optional.ofNullable(Team.Converter.toDTO(teams.get(id)));
     }
 
     public Optional<ArrayList<TeamDTO>> getTeam(String name) {
         ArrayList<TeamDTO> result = new ArrayList<>();
         for (Map.Entry<Integer, Team> entry : teams.entrySet()) {
-            if (entry.getValue().getName() == name) {
+            if (entry.getValue().getName().equals(name)) {
                 result.add(Team.Converter.toDTO(entry.getValue()));
             }
         }
@@ -71,12 +88,12 @@ public class MockRepository {
         return Optional.ofNullable(result);
     }
 
-    public Optional<PersonDTO> deletePerson(int id) {
-        return Optional.ofNullable(Person.Converter.toDTO(persons.remove(id)));
+    public boolean deletePerson(int id) {
+        return persons.remove(id) != null;
     }
 
-    public Optional<TeamDTO> deleteTeam(int id) {
-        return Optional.ofNullable(Team.Converter.toDTO(teams.remove(id)));
+    public boolean deleteTeam(int id) {
+        return teams.remove(id) != null;
     }
 
     public boolean changePerson(PersonDTO newPerson) {
@@ -103,7 +120,7 @@ public class MockRepository {
     }
 
     public boolean createTeam(TeamDTO newTeam) {
-        if (teams.putIfAbsent(newTeam.id, Team.Converter.toTeam(newTeam)) == null) {
+        if (teams.putIfAbsent(newTeam.id, Team.Converter.toTeam(newTeam)) != null) {
             return false;
         }
         if (newTeam.players != null) {
