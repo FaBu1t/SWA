@@ -1,5 +1,10 @@
 package de.hsos.swa.entity.DTOs;
 
+import java.net.URI;
+import java.util.HashMap;
+import java.util.Map;
+import javax.ws.rs.core.Link;
+import javax.json.bind.annotation.JsonbProperty;
 import javax.validation.constraints.NotNull;
 
 import de.hsos.swa.entity.Type;
@@ -13,8 +18,11 @@ public class Data {
     public Type type;
 
     public Attribute attributes;
-    public Links links;
+    // public Links links;
     public Relationship relationship;
+
+    @JsonbProperty("links")
+    public Map<String, URI> links = new HashMap<>();
 
     @Override
     public String toString() {
@@ -63,12 +71,8 @@ public class Data {
         this.attributes = attributes;
     }
 
-    public Links getLinks() {
-        return links;
-    }
-
-    public void setLinks(Links links) {
-        this.links = links;
+    public void addLinks(String name, URI link) {
+        this.links.put(name, link);
     }
 
     @Override
