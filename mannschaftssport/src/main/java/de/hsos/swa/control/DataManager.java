@@ -39,12 +39,12 @@ public class DataManager implements SearchPerson, CreatePerson, ChangePerson, De
     }
 
     @Override
-    public DataObject searchTeam(int id) {
+    public DataObject searchTeam(int id, String relType) {
         DataObject resultDataObject = new DataObject();
         Optional<TeamDTO> opt = repository.getTeam(id);
         if (opt.isPresent()) {
             System.out.println("ID: " + id);
-            resultDataObject.data.add(DataBuilder.buildTeamData(opt.get()));
+            resultDataObject.data.add(DataBuilder.buildTeamData(opt.get(), relType));
             return resultDataObject;
         }
         resultDataObject.error = new Error("ERRORRRR");
@@ -57,7 +57,7 @@ public class DataManager implements SearchPerson, CreatePerson, ChangePerson, De
         DataObject resultDataObject = new DataObject();
         if (opt.isPresent()) {
             for (TeamDTO team : opt.get()) {
-                resultDataObject.data.add((DataBuilder.buildTeamData(team)));
+                resultDataObject.data.add((DataBuilder.buildTeamData(team, null)));
             }
             return resultDataObject;
         }
@@ -72,7 +72,7 @@ public class DataManager implements SearchPerson, CreatePerson, ChangePerson, De
         Optional<ArrayList<TeamDTO>> opt = repository.getAllTeam();
         if (opt.isPresent()) {
             for (TeamDTO team : opt.get()) {
-                resultDataObject.data.add(DataBuilder.buildTeamData(team));
+                resultDataObject.data.add(DataBuilder.buildTeamData(team, null));
             }
             return resultDataObject;
         }
@@ -86,7 +86,7 @@ public class DataManager implements SearchPerson, CreatePerson, ChangePerson, De
         DataObject resultDataObject = new DataObject();
         if (opt.isPresent()) {
             for (TeamDTO team : opt.get()) {
-                resultDataObject.data.add((DataBuilder.buildTeamData(team)));
+                resultDataObject.data.add((DataBuilder.buildTeamData(team, null)));
             }
             return resultDataObject;
         }

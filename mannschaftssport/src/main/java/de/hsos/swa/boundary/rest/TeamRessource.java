@@ -18,7 +18,9 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import de.hsos.swa.control.DataBuilder;
 import de.hsos.swa.control.DataManager;
+import de.hsos.swa.entity.DTOs.Data;
 import de.hsos.swa.entity.DTOs.DataObject;
 
 @Path("/teams")
@@ -64,7 +66,14 @@ public class TeamRessource {
     @GET
     @Path("/{id}")
     public Response getTeam(@PathParam("id") int id) {
-        return Response.ok(manager.searchTeam(id)).build();
+        return Response.ok(manager.searchTeam(id, null)).build();
+    }
+
+    @GET
+    @Path("/{id}/relationship/{relationshipType}")
+    public Response getTeamwithRelationship(@PathParam("id") int id, @PathParam("relationshipType") String relType) {
+        DataObject responseObject = manager.searchTeam(id, relType);
+        return Response.ok(responseObject).build();
     }
 
     @DELETE

@@ -6,7 +6,7 @@ import java.util.List;
 import de.hsos.swa.entity.DTOs.DataObject;
 
 public interface SearchTeam {
-    public DataObject searchTeam(int id);
+    public DataObject searchTeam(int id, String relType);
 
     public DataObject searchAllTeams();
 

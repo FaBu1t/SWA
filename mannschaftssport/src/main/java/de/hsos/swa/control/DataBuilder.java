@@ -2,6 +2,8 @@ package de.hsos.swa.control;
 
 import java.util.ArrayList;
 
+import javax.management.relation.Relation;
+
 import de.hsos.swa.entity.Type;
 import de.hsos.swa.entity.DTOs.Attribute;
 import de.hsos.swa.entity.DTOs.Data;
@@ -10,7 +12,7 @@ import de.hsos.swa.entity.DTOs.Relationship;
 import de.hsos.swa.entity.DTOs.TeamDTO;
 
 public class DataBuilder {
-    public static Data buildTeamData(TeamDTO team) {
+    public static Data buildTeamData(TeamDTO team, String relType) {
         Data result = new Data();
         // id setzen
         result.id = team.id;
@@ -31,14 +33,28 @@ public class DataBuilder {
             result.attributes = attr;
         }
 
+        if (relType != null) {
+            String rels[] = relType.split(",");
+            Relationship rel = new Relationship();
+            for (String string : rels) {
+                if (string.equals("manager")) {
+                    System.out.println("manager");
+                    result = withRelationshipManager(result, team, rel);
+                }
+                if (string.equals("player")) {
+                    System.out.println("player");
+                    result = withRelationshipPlayer(result, team, rel);
+                }
+            }
+        }
+
         // Links setzen
         return result;
     }
 
-    public Data addRelationshipManager(Data data, TeamDTO team) {
+    public static Data withRelationshipManager(Data data, TeamDTO team, Relationship rel) {
         // Relationships setzen
         if (team.manager != null) {
-            Relationship rel = new Relationship();
             if (team.manager != null) {
                 rel.manager = buildPersonData(team.manager, Type.MANAGER);
             }
@@ -48,10 +64,9 @@ public class DataBuilder {
         return data;
     }
 
-    public Data addRelationshipPlayer(Data data, TeamDTO team) {
+    public static Data withRelationshipPlayer(Data data, TeamDTO team, Relationship rel) {
         // Relationships setzen
         if (team.players != null) {
-            Relationship rel = new Relationship();
             if (team.players != null) {
                 rel.players = buildPersonsData(team.players, Type.PLAYER);
             }
