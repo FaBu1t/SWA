@@ -6,7 +6,7 @@ public class DataObject {
 
     public ArrayList<Data> data = new ArrayList<Data>();
     public Included included;
-    public Error error;
+    public ErrorDTO error;
 
     public DataObject(Data data) {
         this.data.add(data);
@@ -16,7 +16,7 @@ public class DataObject {
         this.included = included;
     }
 
-    public DataObject(Error error) {
+    public DataObject(ErrorDTO error) {
         this.error = error;
     }
 

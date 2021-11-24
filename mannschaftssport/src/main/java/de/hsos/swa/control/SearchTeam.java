@@ -1,7 +1,5 @@
 package de.hsos.swa.control;
 
-import java.util.ArrayList;
-import java.util.List;
 
 import de.hsos.swa.entity.DTOs.DataObject;
 
@@ -10,5 +8,5 @@ public interface SearchTeam {
 
     public DataObject searchAllTeams();
 
-    public DataObject searchTeam(String name);
+    public DataObject searchTeam(String name, String relType);
 }

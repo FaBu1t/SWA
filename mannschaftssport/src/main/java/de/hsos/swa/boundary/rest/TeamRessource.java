@@ -30,6 +30,7 @@ import de.hsos.swa.control.DataManager;
 import de.hsos.swa.entity.Type;
 import de.hsos.swa.entity.DTOs.Data;
 import de.hsos.swa.entity.DTOs.DataObject;
+import de.hsos.swa.entity.DTOs.Included;
 import de.hsos.swa.entity.DTOs.PersonDTO;
 import de.hsos.swa.entity.DTOs.TeamDTO;
 import de.hsos.swa.shared.UriBuilder;
@@ -56,29 +57,31 @@ public class TeamRessource {
     UriInfo uriInfo;
 
     @GET
-    public Response getTeams(@QueryParam("filter[name]") String name,
-            @QueryParam("category[category]") String category) {
+    public Response getTeams(@QueryParam("filter[name]") String name, @QueryParam("category[category]") String category,
+            @QueryParam("included[included]") String included) {
 
         if (name == null && category == null) {
+
             DataObject allTeams = manager.searchAllTeams();
             for (Data d : allTeams.data) {
                 d.addLinks("self", this.uriBuilder.forTeam(d.id, this.uriInfo));
             }
             return Response.ok(allTeams).build();
+
         } else {
             Set<DataObject> responseObject = new HashSet<>();
             if (name != null) {
                 String names[] = name.split(",");
                 if (names.length > 0) {
                     for (String filterName : names) {
-                        DataObject toAdd = manager.searchTeam(filterName);
+                        DataObject toAdd = manager.searchTeam(filterName, included);
                         for (Data d : toAdd.data) {
                             d.addLinks("self", this.uriBuilder.forTeam(d.id, this.uriInfo));
                         }
                         responseObject.add(toAdd);
                     }
                 } else {
-                    DataObject toAdd = manager.searchTeam(name);
+                    DataObject toAdd = manager.searchTeam(name, included);
                     for (Data d : toAdd.data) {
                         d.addLinks("self", this.uriBuilder.forTeam(d.id, this.uriInfo));
                     }
@@ -95,18 +98,39 @@ public class TeamRessource {
                     responseObject.add(manager.searchTeamByCategory(category));
                 }
             }
+            if (included != null) {
+
+                for (DataObject dataObject : responseObject) {
+                    Included incl = new Included();
+                    for (Data data : dataObject.data) {
+                        if (included.equals("manager")) {
+                            if (data.relationship.manager != null) {
+                                incl.data.add(data.relationship.manager);
+                            }
+
+                        } else if (included.equals("players")) {
+                            
+                        }
+                        dataObject.included = incl;
+                    }
+                }
+            }
             return Response.ok(responseObject).build();
         }
+
     }
 
     @GET
     @Path("/{id}")
     public Response getTeam(@PathParam("id") int id) {
         DataObject dObject = manager.searchTeam(id, null);
-        for (Data d : dObject.data) {
-            d.addLinks("self", this.uriBuilder.forTeam(d.id, this.uriInfo));
+        if (dObject != null) {
+            for (Data d : dObject.data) {
+                d.addLinks("self", this.uriBuilder.forTeam(d.id, this.uriInfo));
+            }
+            return Response.ok(dObject).build();
         }
-        return Response.ok(dObject).build();
+        return Response.status(Status.BAD_REQUEST).build();
     }
 
     @GET
@@ -140,14 +164,12 @@ public class TeamRessource {
                                 d.addLinks("related", relatedLink);
                             }
                         }
-
                         responseObject.data.get(0).relationship.players = players;
                     }
 
                 }
             }
         }
-
         return Response.ok(responseObject).build();
     }
 
@@ -184,9 +206,7 @@ public class TeamRessource {
             responseObj = new DataObject();
             responseObj.data = players;
         }
-
         return Response.ok(responseObj).build();
-
     }
 
     @DELETE

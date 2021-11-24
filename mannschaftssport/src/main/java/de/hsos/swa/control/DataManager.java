@@ -12,7 +12,7 @@ import javax.ws.rs.core.UriInfo;
 
 import de.hsos.swa.entity.Type;
 import de.hsos.swa.entity.DTOs.DataObject;
-import de.hsos.swa.entity.DTOs.Error;
+import de.hsos.swa.entity.DTOs.ErrorDTO;
 import de.hsos.swa.entity.DTOs.PersonDTO;
 import de.hsos.swa.entity.DTOs.TeamDTO;
 import de.hsos.swa.gateway.MockRepository;
@@ -36,8 +36,13 @@ public class DataManager implements SearchPerson, CreatePerson, ChangePerson, De
 
     @Override
     public DataObject changeTeam(TeamDTO newTeam) {
-        // TODO Auto-generated method stub
-        return null;
+        Optional<TeamDTO> changed = repository.changeTeam(newTeam);
+        DataObject resultDataObject = new DataObject();
+        if (changed.isPresent()) {
+            resultDataObject.data.add(DataBuilder.buildTeamData(changed.get(), null));
+            return resultDataObject;
+        }
+        return resultDataObject;
     }
 
     @Override
@@ -49,7 +54,7 @@ public class DataManager implements SearchPerson, CreatePerson, ChangePerson, De
             resultDataObject.data.add(DataBuilder.buildTeamData(opt.get(), null));
             return resultDataObject;
         }
-        return null;
+        return resultDataObject;
 
     }
 
@@ -62,22 +67,19 @@ public class DataManager implements SearchPerson, CreatePerson, ChangePerson, De
             resultDataObject.data.add(DataBuilder.buildTeamData(opt.get(), relType));
             return resultDataObject;
         }
-        resultDataObject.error = new Error("ERRORRRR");
         return resultDataObject;
     }
 
     @Override
-    public DataObject searchTeam(String name) {
+    public DataObject searchTeam(String name,String relType) {
         Optional<ArrayList<TeamDTO>> opt = repository.getTeam(name);
         DataObject resultDataObject = new DataObject();
         if (opt.isPresent()) {
             for (TeamDTO team : opt.get()) {
-                resultDataObject.data.add((DataBuilder.buildTeamData(team, null)));
+                resultDataObject.data.add((DataBuilder.buildTeamData(team, relType)));
             }
             return resultDataObject;
         }
-        // TODO Send Error
-        resultDataObject.error = new Error("ERRORRRR");
         return resultDataObject;
     }
 
@@ -92,8 +94,6 @@ public class DataManager implements SearchPerson, CreatePerson, ChangePerson, De
             }
             return resultDataObject;
         }
-        // TODO Send Error
-        resultDataObject.error = new Error("ERRORRRR");
         return resultDataObject;
     }
 
@@ -106,8 +106,6 @@ public class DataManager implements SearchPerson, CreatePerson, ChangePerson, De
             }
             return resultDataObject;
         }
-        // TODO Send Error
-        resultDataObject.error = new Error("ERRORRRR");
         return resultDataObject;
     }
 
@@ -135,8 +133,6 @@ public class DataManager implements SearchPerson, CreatePerson, ChangePerson, De
             resultDataObject.data.add(DataBuilder.buildPersonData(opt.get(), Type.PERSON));
             return resultDataObject;
         }
-        // TODO Send Error
-        resultDataObject.error = new Error("ERRORRRR");
         return resultDataObject;
     }
 
@@ -148,21 +144,19 @@ public class DataManager implements SearchPerson, CreatePerson, ChangePerson, De
             resultDataObject.data.addAll(DataBuilder.buildPersonsData(opt.get(), Type.PERSON));
             return resultDataObject;
         }
-        // TODO Send Error
-        resultDataObject.error = new Error("ERRORRRR");
         return resultDataObject;
     }
 
     public DataObject addManager(int id, PersonDTO manager) {
         Optional<TeamDTO> opt = repository.getTeam(id);
+        DataObject resultDataObject = new DataObject();
         if (opt.isPresent()) {
             opt.get().manager = manager;
             this.changeTeam(opt.get());
-            DataObject resultDataObject = new DataObject();
             resultDataObject.data.add(DataBuilder.buildPersonData(opt.get().manager, null));
             return resultDataObject;
         }
-        return null;
+        return resultDataObject;
     }
 
 }

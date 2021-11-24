@@ -111,12 +111,12 @@ public class MockRepository {
         return false;
     }
 
-    public boolean changeTeam(TeamDTO newTeam) {
+    public Optional<TeamDTO> changeTeam(TeamDTO newTeam) {
         if (teams.containsKey(newTeam.id)) {
             teams.put(newTeam.id, Team.Converter.toTeam(newTeam));
-            return true;
+            return Optional.ofNullable(newTeam);
         }
-        return false;
+        return Optional.ofNullable(null);
     }
 
     public boolean createPerson(PersonDTO newPerson) {

@@ -28,4 +28,10 @@ public class TeamDTO {
         this.category = category;
     }
 
+    @Override
+    public String toString() {
+        return "TeamDTO [category=" + category + ", id=" + id + ", manager=" + manager + ", name=" + name + ", players="
+                + players + "]";
+    }
+
 }
