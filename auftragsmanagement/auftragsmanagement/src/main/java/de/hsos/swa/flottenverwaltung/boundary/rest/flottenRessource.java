@@ -1,5 +1,6 @@
 package de.hsos.swa.flottenverwaltung.boundary.rest;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -13,6 +14,7 @@ import javax.ws.rs.core.Response;
 
 import org.jboss.resteasy.annotations.jaxrs.PathParam;
 
+import de.hsos.swa.flottenverwaltung.boundary.dto.SchiffDTO;
 import de.hsos.swa.flottenverwaltung.control.Flottenmanagement;
 import de.hsos.swa.flottenverwaltung.entity.Schiff;
 
@@ -27,14 +29,21 @@ public class flottenRessource {
     @GET
     public Response sucheAlleSchiffe() {
         List<Schiff> schiffe = flottenManagement.sucheAlleSchiffe();
-
+        if (schiffe.isEmpty()) {
+            return Response.noContent().build();
+        }
+        List<SchiffDTO> schiffDTOs = new ArrayList<>();
+        for (Schiff s : schiffe) {
+            schiffDTOs.add(Schiff.Converter.toDTO(s));
+        }
         return Response.ok(schiffe).build();
     }
 
     @GET
     @Path("/{id}")
     public Response sucheSchiff(@PathParam Long id) {
-        Schiff resSchiff = flottenManagement.findById(id);
+        Schiff schiff = flottenManagement.findById(id);
+        SchiffDTO resSchiff = Schiff.Converter.toDTO(schiff);
         if (resSchiff == null) {
             return Response.noContent().build();
         }
@@ -46,19 +55,29 @@ public class flottenRessource {
     @Path("/freieschiffe")
     public Response sucheFreieSchiffe() {
         List<Schiff> schiffe = flottenManagement.sucheFreieSchiffe();
+        if (schiffe.isEmpty()) {
+            return Response.noContent().build();
+        }
+        List<SchiffDTO> schiffDTOs = new ArrayList<>();
+        for (Schiff s : schiffe) {
+            schiffDTOs.add(Schiff.Converter.toDTO(s));
+        }
 
-        return Response.ok(schiffe).build();
+        return Response.ok(schiffDTOs).build();
     }
 
     @POST
-    @Path("/{id}")
-    public Response setGebucht(@PathParam Long id) {
-        flottenManagement.setSchiffGebucht(id);
+    @Path("/gebucht/{id}/{status}")
+    public Response setGebucht(@PathParam Long id, @PathParam boolean status) {
+        flottenManagement.setSchiffGebucht(id, status);
         return Response.ok().build();
     }
 
     @PUT
-    public void erstelleSchiff(Schiff neuesSchiff) {
+    public void erstelleSchiff(SchiffDTO neuesSchiffDTO) {
+        Schiff neuesSchiff = new Schiff();
+        neuesSchiff.setName(neuesSchiffDTO.name);
+        neuesSchiff.setGebucht(neuesSchiffDTO.gebucht);
         flottenManagement.erstelleSchiff(neuesSchiff);
     }
 
@@ -68,7 +87,6 @@ public class flottenRessource {
         neuesSchiff.setName("SchiffEins");
         neuesSchiff.setGebucht(false);
         flottenManagement.erstelleSchiff(neuesSchiff);
-
         return Response.ok().build();
     }
 

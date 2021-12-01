@@ -19,7 +19,7 @@ import de.hsos.swa.auftragsverwaltung.entity.Order;
 @Path("/order")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
-public class AuftragsRessource {
+public class AuftragsRessource{
 
     @Inject
     OrderService orderService;

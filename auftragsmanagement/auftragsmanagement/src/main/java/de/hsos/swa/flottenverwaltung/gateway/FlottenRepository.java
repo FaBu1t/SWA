@@ -18,8 +18,13 @@ public class FlottenRepository implements PanacheRepository<Schiff> {
         return list("gebucht", false);
     }
 
-    public void setGebucht(Long Id) {
-        update("gebucht = true where id =?1", Id);
+    public void setGebucht(Long Id, boolean status) {
+        if (status) {
+            update("gebucht = true where id =?1", Id);
+        } else {
+            update("gebucht = false where id =?1", Id);
+        }
+
     }
 
 }

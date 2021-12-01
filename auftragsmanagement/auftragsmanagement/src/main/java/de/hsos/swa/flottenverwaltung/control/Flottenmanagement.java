@@ -34,8 +34,8 @@ public class Flottenmanagement {
     }
 
     @Transactional
-    public void setSchiffGebucht(Long id) {
-        this.flottenRepository.setGebucht(id);
+    public void setSchiffGebucht(Long id, boolean status) {
+        this.flottenRepository.setGebucht(id, status);
     }
 
 }
