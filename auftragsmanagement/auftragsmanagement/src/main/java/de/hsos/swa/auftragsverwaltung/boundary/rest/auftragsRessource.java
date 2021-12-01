@@ -11,9 +11,10 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-
+import javax.ws.rs.core.Response.Status;
 import de.hsos.swa.auftragsverwaltung.boundary.dto.OrderDTO;
 import de.hsos.swa.auftragsverwaltung.control.OrderService;
+import de.hsos.swa.auftragsverwaltung.entity.Order;
 
 @Path("/order")
 @Consumes(MediaType.APPLICATION_JSON)
@@ -24,24 +25,42 @@ public class AuftragsRessource {
     OrderService orderService;
 
     @GET
+    public Response getAll() {
+        return Response.ok(orderService.findAll()).build();
+    }
+
+    @GET
     @Path("/{id}")
     public Response getOrder(@PathParam("id") int id) {
-        return null;
+        OrderDTO foundOrder = Order.Converter.toDto(orderService.getOrder(id));
+        if (foundOrder != null) {
+            return Response.ok(foundOrder).build();
+        }
+        return Response.status(Status.BAD_REQUEST).build();
     }
 
     @PUT
-    public Response addOrder(OrderDTO newOrder) {
-        return Response.ok(orderService.createOrder(newOrder)).build();
+    @Path("/{description}")
+    public Response addOrder(@PathParam("description") String description) {
+        return Response.ok(Order.Converter.toDto(orderService.createOrder(description))).build();
     }
 
     @PATCH
     public Response changeOrder(OrderDTO newOrder) {
-        return null;
+        Order order = orderService.changeOrder(newOrder);
+        if (order != null) {
+            return Response.ok(Order.Converter.toDto(order)).build();
+        }
+        return Response.status(Status.BAD_REQUEST).build();
     }
 
     @DELETE
     @Path("/{id}")
     public Response deleteOrder(@PathParam("id") int id) {
-        return null;
+        Order order = orderService.deleteOrder(id);
+        if (order != null) {
+            return Response.ok(Order.Converter.toDto(order)).build();
+        }
+        return Response.status(Status.BAD_REQUEST).build();
     }
 }
