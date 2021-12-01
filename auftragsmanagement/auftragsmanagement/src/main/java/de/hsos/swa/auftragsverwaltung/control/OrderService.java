@@ -3,10 +3,13 @@ package de.hsos.swa.auftragsverwaltung.control;
 import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.event.Event;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
+import de.hsos.swa.Events.NewOrder;
+import de.hsos.swa.Events.OrderDeleted;
 import de.hsos.swa.auftragsverwaltung.boundary.dto.OrderDTO;
 import de.hsos.swa.auftragsverwaltung.entity.Order;
 
@@ -16,10 +19,17 @@ public class OrderService {
     @Inject
     EntityManager em;
 
+    @Inject
+    Event<NewOrder> newOrderEvent;
+
+    @Inject
+    Event<OrderDeleted> orderDeletedEvent;
+
     @Transactional
     public Order createOrder(String description) {
         Order order = new Order(description);
         em.persist(order);
+        newOrderEvent.fire(new NewOrder(order.getOrderId()));
         return order;
     }
 
@@ -46,6 +56,7 @@ public class OrderService {
         Order entity = em.find(Order.class, id);
         if (entity != null) {
             em.remove(entity);
+            orderDeletedEvent.fire(new OrderDeleted(entity.getOrderId(), entity.getShipURL()));
         }
         return entity;
     }
@@ -55,9 +66,4 @@ public class OrderService {
                 .getResultList();
     }
 
-    // Event
-    public void setShipURL(int shipId){
-         String url = "localhost:8080/flottenmanagement/" + shipId;
-    }
 }
-
