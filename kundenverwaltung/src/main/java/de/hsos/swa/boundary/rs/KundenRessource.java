@@ -6,6 +6,7 @@ import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -40,7 +41,7 @@ public class KundenRessource {
     }
 
     @GET
-    @Path("/kunde/{id}")
+    @Path("/kunden/{id}")
     public Response sucheKundeNachId(@PathParam Long id){
         Kunde kunde = kundenService.kundeAbfragen(id);
         if (kunde==null){
@@ -75,6 +76,31 @@ public class KundenRessource {
         }
         return Response.ok().entity(adresse).build();
 
+    }
+
+    @PUT
+    @Path("/adresse/{kundennr}")
+    public Response neueAdresse(@PathParam long kundennr, Adresse adresse){
+        this.kundenService.adresseAnlegen(kundennr, adresse);
+        return Response.noContent().build();
+    }
+
+    @DELETE
+    public Response loescheAdresse(long kundennr){
+        boolean geloescht=this.kundenService.adresseLoeschen(kundennr);
+        if(geloescht){
+            return Response.ok().build();
+        }
+        return Response.status(Status.BAD_REQUEST).build();
+    }
+
+    @POST
+    @Path("/adresse/{kundennr}")
+    public Response aendereAdresse(@PathParam long kundennr,Adresse adresse){
+        this.kundenService.adresseAendern(kundennr, adresse);
+        
+            return Response.ok().build();
+        
     }
     
 
