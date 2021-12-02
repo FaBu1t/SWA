@@ -14,6 +14,7 @@ import javax.ws.rs.core.Response.Status;
 
 import org.jboss.resteasy.annotations.jaxrs.PathParam;
 
+import de.hsos.swa.entity.Adresse;
 import de.hsos.swa.entity.Kunde;
 import de.hsos.swa.control.KundenService;
 
@@ -49,8 +50,8 @@ public class KundenRessource {
     }
 
     @PUT
-    @Path("/kunde")
-    public Response neuerKunde(String vorname,String nachname){
+    @Path("/neuerkunde/{vorname}/{nachname}")
+    public Response neuerKunde(@PathParam String vorname,@PathParam String nachname){
         this.kundenService.kundenAnlegen(vorname, nachname);
         return Response.ok().build();
     }
@@ -62,6 +63,18 @@ public class KundenRessource {
             return Response.ok().build();
         }
         return Response.status(Status.BAD_REQUEST).build();
+    }
+
+
+    @GET
+    @Path("/adresse/{id}")
+    public Response sucheAdresseNachId(@PathParam long id ){
+        Adresse adresse=this.kundenService.adresseAbfragen(id);
+        if(adresse==null){
+            return Response.noContent().build();
+        }
+        return Response.ok().entity(adresse).build();
+
     }
     
 
