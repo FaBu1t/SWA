@@ -1,5 +1,7 @@
 package de.hsos.swa.entity;
 
+import javax.enterprise.context.Dependent;
+
 public class Kunde {
     private String vorname;
     private String nachname;

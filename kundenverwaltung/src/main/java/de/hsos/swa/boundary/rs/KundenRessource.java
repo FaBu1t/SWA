@@ -66,7 +66,6 @@ public class KundenRessource {
         return Response.status(Status.BAD_REQUEST).build();
     }
 
-
     @GET
     @Path("/adresse/{id}")
     public Response sucheAdresseNachId(@PathParam long id ){
