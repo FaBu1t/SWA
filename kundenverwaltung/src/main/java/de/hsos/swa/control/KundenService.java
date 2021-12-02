@@ -40,19 +40,30 @@ public class KundenService {
 
     public void adresseAnlegen(long kundennr, Adresse adr) {
         if (kunden.containsKey(kundennr)) {
-            
+            if (kunden.get(kundennr).getAdresse() == null) {
+                kunden.get(kundennr).setAdresse(adr);
+            }
         }
     }
 
     public void adresseAendern(long kundennr, Adresse neueAdr) {
-
+        if (kunden.containsKey(kundennr)) {
+            kunden.get(kundennr).setAdresse(neueAdr);
+        }
     }
 
     public Adresse adresseAbfragen(long kundennr) {
+        if (kunden.containsKey(kundennr)) {
+            return kunden.get(kundennr).getAdresse();    
+        }
         return null;
     }
 
-    public boolean adresseLoeschen(long kundenr) {
+    public boolean adresseLoeschen(long kundennr) {
+        if (kunden.containsKey(kundennr)) {
+            kunden.get(kundennr).setAdresse(null);
+            return true;
+        }
         return false;
     }
 }
