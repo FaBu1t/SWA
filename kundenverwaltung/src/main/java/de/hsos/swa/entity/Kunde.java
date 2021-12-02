@@ -7,6 +7,10 @@ public class Kunde {
 
 
     
+    public Kunde(String vorname, String nachname) {
+        this.vorname = vorname;
+        this.nachname = nachname;
+    }
     public Adresse getAdresse() {
         return adresse;
     }
