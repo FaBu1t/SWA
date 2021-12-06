@@ -19,6 +19,7 @@ import org.jboss.resteasy.annotations.jaxrs.PathParam;
 
 import de.hsos.swa.entity.Adresse;
 import de.hsos.swa.entity.Kunde;
+import de.hsos.swa.gateway.KundenRepository;
 import de.hsos.swa.control.KundenService;
 
 @Path("/kundenvw")
