@@ -2,9 +2,15 @@ package de.hsos.swa.pizza4me.gateway;
 
 import java.util.List;
 
+import javax.enterprise.context.RequestScoped;
+import javax.inject.Named;
+
 import de.hsos.swa.pizza4me.control.PizzaService;
 import de.hsos.swa.pizza4me.entity.Pizza;
 
+
+@RequestScoped
+@Named("PizzaRepo")
 public class PizzaRepository implements PizzaService{
 
     @Override
