@@ -1,5 +1,6 @@
 package de.hsos.swa.pizza4me.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.enterprise.inject.Vetoed;
@@ -32,6 +33,7 @@ public class Kunde {
     private Adresse adresse;
 
     public Kunde() {
+        bestellungen = new ArrayList<Bestellung>();
     }
 
     public Adresse getAdresse() {
@@ -52,6 +54,10 @@ public class Kunde {
 
     public int getId() {
         return id;
+    }
+
+    public void addBestellung(Bestellung bestellung) {
+        this.bestellungen.add(bestellung);
     }
 
 }
