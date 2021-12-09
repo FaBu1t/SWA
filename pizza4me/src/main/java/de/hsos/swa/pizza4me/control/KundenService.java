@@ -5,7 +5,7 @@ import de.hsos.swa.pizza4me.entity.Bestellung;
 public interface KundenService {
     public Bestellung bestellungHinzufuegen();
 
-    public boolean bestellungLoeschen();
+    public boolean bestellungLoeschen(int bestellungId);
 
     public Bestellung pizzaHinzufuegen(int bestellungId, int pizzaId, int menge);
 

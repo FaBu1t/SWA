@@ -43,4 +43,8 @@ public class Bestellposten {
         this.menge = menge;
     }
 
+    public int getId() {
+        return id;
+    }
+
 }
