@@ -1,5 +1,6 @@
 package de.hsos.swa.pizza4me.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -15,7 +16,7 @@ public class Bestellposten {
     @GeneratedValue(generator = "bestellpostenSequenz")
     private int id;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Pizza pizza;
     private int menge;
 

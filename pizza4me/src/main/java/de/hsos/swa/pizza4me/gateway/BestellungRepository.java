@@ -9,7 +9,6 @@ import javax.persistence.TransactionRequiredException;
 import javax.transaction.Transactional;
 
 import de.hsos.swa.pizza4me.control.BestellungService;
-import de.hsos.swa.pizza4me.control.KundenService;
 import de.hsos.swa.pizza4me.entity.Bestellposten;
 import de.hsos.swa.pizza4me.entity.Bestellung;
 import de.hsos.swa.pizza4me.entity.Kunde;
@@ -24,6 +23,11 @@ public class BestellungRepository implements BestellungService {
 
     @Override
     public Bestellung bestellungHinzufuegen(int kundenId) {
+        // nur für Testen!!
+        Kunde k = new Kunde();
+        em.persist(k);
+        System.out.println(k.getId());
+
         try {
             Kunde kunde = em.find(Kunde.class, kundenId);
             Bestellung bestellung = new Bestellung();
@@ -115,6 +119,5 @@ public class BestellungRepository implements BestellungService {
             return null;
         }
     }
-
 
 }

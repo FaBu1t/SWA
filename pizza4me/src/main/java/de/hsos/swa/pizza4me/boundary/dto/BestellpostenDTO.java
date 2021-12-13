@@ -1,5 +1,5 @@
 package de.hsos.swa.pizza4me.boundary.dto;
 
-public class Bestellposten {
-    
+public class BestellpostenDTO {
+
 }

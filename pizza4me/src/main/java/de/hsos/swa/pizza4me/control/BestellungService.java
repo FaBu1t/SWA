@@ -1,7 +1,10 @@
 package de.hsos.swa.pizza4me.control;
 
+import javax.enterprise.context.RequestScoped;
+
 import de.hsos.swa.pizza4me.entity.Bestellung;
 
+@RequestScoped
 public interface BestellungService {
 
     public Bestellung bestellungHinzufuegen(int kundenId);
