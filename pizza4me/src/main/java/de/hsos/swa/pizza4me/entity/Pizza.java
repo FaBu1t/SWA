@@ -37,6 +37,10 @@ public class Pizza {
         this.name = name;
     }
 
+    public int getId() {
+        return this.id;
+    }
+
     public double getPreis() {
         return preis;
     }
