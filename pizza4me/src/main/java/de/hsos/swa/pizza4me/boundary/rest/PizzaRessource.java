@@ -27,6 +27,7 @@ public class PizzaRessource {
     @GET
     public Response allePizzen(){
         List<Pizza> allePizzen= pizzaService.allePizzenAbfragen();
+        
 
         return Response.noContent().build();
     }

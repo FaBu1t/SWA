@@ -10,34 +10,33 @@ public class BestellungDTO {
     public List<BestellpostenDTO> bDto;
     public boolean bestellt;
 
-    public BestellungDTO(){
+    public BestellungDTO() {
     }
 
-    public BestellungDTO(List<BestellpostenDTO> bDto, boolean bestellt){
-        this.bDto= bDto;
-        this.bestellt=bestellt;
+    public BestellungDTO(List<BestellpostenDTO> bDto, boolean bestellt) {
+        this.bDto = bDto;
+        this.bestellt = bestellt;
     }
 
-    public static class Converter{
-        public static BestellungDTO toBestellungDTO(Bestellung bestellung){
-            List<BestellpostenDTO> bestellpostenDTOs= new ArrayList<>();
-            for(Bestellposten b: bestellung.getBestellposten()){
+    public static class Converter {
+        public static BestellungDTO toBestellungDTO(Bestellung bestellung) {
+            List<BestellpostenDTO> bestellpostenDTOs = new ArrayList<>();
+            for (Bestellposten b : bestellung.getBestellposten()) {
                 bestellpostenDTOs.add(BestellpostenDTO.Converter.toBestellpostenDTO(b));
             }
-            BestellungDTO bestellungDTO= new BestellungDTO(bestellpostenDTOs, bestellung.isBestellt());
+            BestellungDTO bestellungDTO = new BestellungDTO(bestellpostenDTOs, bestellung.isBestellt());
             return bestellungDTO;
         }
 
-        public static Bestellung toBestellung(BestellungDTO bestellungDto){
+        public static Bestellung toBestellung(BestellungDTO bestellungDto) {
             Bestellung bestellung = new Bestellung();
             bestellung.setBestellt(bestellungDto.bestellt);
-            List<Bestellposten> bestellposten = new ArrayList<>();
-            for(BestellpostenDTO b: bestellungDto.bDto){
-                bestellposten.add(BestellpostenDTO.Converter.toBestellposten(b));
+            for (BestellpostenDTO b : bestellungDto.bDto) {
+                bestellung.addBestellposten(BestellpostenDTO.Converter.toBestellposten(b));
             }
-            bestellung.setBestellposten(bestellposten);
+
             return bestellung;
         }
     }
-    
+
 }
