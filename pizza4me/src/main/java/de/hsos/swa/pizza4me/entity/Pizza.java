@@ -15,7 +15,7 @@ public class Pizza {
     @Id
     @SequenceGenerator(name = "pizzaSequenz", sequenceName = "pizzen_id_seq", allocationSize = 1, initialValue = 1000)
     @GeneratedValue(generator = "pizzaSequenz")
-    private int id;
+    private long id;
     private String name;
     private double preis;
     private String beschreibung;
@@ -37,7 +37,7 @@ public class Pizza {
         this.name = name;
     }
 
-    public int getId() {
+    public long getId() {
         return this.id;
     }
 

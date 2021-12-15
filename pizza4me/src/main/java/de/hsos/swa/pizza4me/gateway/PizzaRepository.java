@@ -9,6 +9,7 @@ import javax.persistence.EntityManager;
 
 import de.hsos.swa.pizza4me.control.PizzaService;
 import de.hsos.swa.pizza4me.entity.Pizza;
+import io.quarkus.security.User;
 
 @RequestScoped
 @Named("PizzaRepo")
@@ -25,14 +26,15 @@ public class PizzaRepository implements PizzaService {
 
     @Override
     public List<Pizza> suchePizzaNachName(String name) {
-        // TODO Auto-generated method stub
-        return null;
+
+        return em.createQuery("Select p from Pizza p where p.name=:name", Pizza.class).setParameter("name", name)
+                .getResultList();
     }
 
     @Override
     public Pizza suchePizzaNachId(Long id) {
-        // TODO Auto-generated method stub
-        return null;
+
+        return em.find(Pizza.class, id);
     }
 
     @Override
