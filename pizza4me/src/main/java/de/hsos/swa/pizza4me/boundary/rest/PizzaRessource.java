@@ -97,7 +97,7 @@ public class PizzaRessource {
 
 
     @PUT
-    public PizzaDTO pizzaAendern(PizzaDTO pizzaDTO){
+    public Response pizzaAendern(PizzaDTO pizzaDTO){
 
         Long id = pizzaDTO.id;
 
@@ -119,7 +119,7 @@ public class PizzaRessource {
         pizzaToChange.setBeschreibung(pizzaDTO.beschreibung);
         pizzaToChange.setPreis(pizzaDTO.preis);
 
-        return PizzaDTO.Converter.toPizzaDTO(pizzaToChange);
+        return Response.ok(PizzaDTO.Converter.toPizzaDTO(pizzaToChange)).build();
 
     }
 
