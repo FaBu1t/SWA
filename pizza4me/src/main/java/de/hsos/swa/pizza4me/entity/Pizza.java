@@ -13,7 +13,7 @@ import javax.persistence.Table;
 @NamedQuery(name = "Pizza.findAll", query = "SELECT p FROM Pizza p ORDER BY p.id", hints = @QueryHint(name = "org.hibernate.cacheable", value = "true"))
 public class Pizza {
     @Id
-    @SequenceGenerator(name = "pizzaSequenz", sequenceName = "pizzen_id_seq", allocationSize = 1, initialValue = 1000)
+    @SequenceGenerator(name = "pizzaSequenz", sequenceName = "pizzen_id_seq", allocationSize = 1, initialValue = 1006)
     @GeneratedValue(generator = "pizzaSequenz")
     private long id;
     private String name;

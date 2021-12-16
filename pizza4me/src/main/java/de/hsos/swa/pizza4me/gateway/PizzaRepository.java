@@ -39,7 +39,7 @@ public class PizzaRepository implements PizzaService {
 
     @Override
     public void pizzaAnlegen(Pizza pizza) {
-        // TODO Auto-generated method stub
+        em.persist(pizza);
 
     }
 
