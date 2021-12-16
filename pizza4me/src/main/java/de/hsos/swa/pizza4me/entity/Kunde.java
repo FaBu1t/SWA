@@ -25,7 +25,7 @@ public class Kunde {
     @GeneratedValue(generator = "kundenSequenz")
     private int id;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Bestellung> bestellungen;
 
     @OneToOne(cascade = CascadeType.ALL)

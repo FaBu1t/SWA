@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
 import javax.persistence.TransactionRequiredException;
 import javax.transaction.Transactional;
@@ -22,21 +23,24 @@ public class BestellungRepository implements BestellungService {
     EntityManager em;
 
     @Override
-    public Bestellung bestellungHinzufuegen(int kundenId) {
-        // nur für Testen!!
-        Kunde k = new Kunde();
-        em.persist(k);
-        System.out.println(k.getId());
-
+    public boolean bestellungHinzufuegen(int kundenId) {
         try {
             Kunde kunde = em.find(Kunde.class, kundenId);
             Bestellung bestellung = new Bestellung();
-            kunde.addBestellung(bestellung);
-            em.persist(kunde);
-            return bestellung;
-        } catch (IllegalArgumentException | TransactionRequiredException e) {
+            em.persist(bestellung);
+            System.out.println("BestestellungId: " + bestellung.getId());
+
+            if (kunde != null) {
+                kunde.addBestellung(bestellung);
+                em.persist(kunde);
+                return true;
+            }
+            return false;
+
+        } catch (IllegalArgumentException | TransactionRequiredException | EntityExistsException e) {
+            System.out.println("Catch");
             // Logger?
-            return null;
+            return false;
         }
     }
 
@@ -56,11 +60,20 @@ public class BestellungRepository implements BestellungService {
     public Bestellung pizzaHinzufuegen(int bestellungId, int pizzaId, int menge) {
         try {
             Pizza pizza = em.find(Pizza.class, pizzaId);
+            if (pizza == null) {
+                System.out.println("Pizza = NULL");
+                return null;
+            }
             Bestellposten bestellposten = new Bestellposten(pizza, menge);
+            em.persist(bestellposten);
             Bestellung bestellung = em.find(Bestellung.class, bestellungId);
-            bestellung.addBestellposten(bestellposten);
-            em.persist(bestellung);
-            return bestellung;
+            if (bestellung != null) {
+                bestellung.addBestellposten(bestellposten);
+                em.persist(bestellung);
+                return bestellung;
+            }
+            return null;
+
         } catch (IllegalArgumentException | TransactionRequiredException e) {
             return null;
         }
@@ -113,11 +126,19 @@ public class BestellungRepository implements BestellungService {
     public Bestellung bestellungAnzeigen(int bestellungId) {
         try {
             Bestellung bestellung = em.find(Bestellung.class, bestellungId);
-            return bestellung;
-
+            if (bestellung != null) {
+                return bestellung;
+            }
+            return null;
         } catch (IllegalArgumentException | TransactionRequiredException e) {
             return null;
         }
+    }
+
+    public void importKunde() {
+        Kunde kunde = new Kunde();
+        em.persist(kunde);
+        System.out.println("KundenId:" + kunde.getId());
     }
 
 }

@@ -13,7 +13,6 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
-import de.hsos.swa.pizza4me.control.BestellungService;
 import de.hsos.swa.pizza4me.entity.Bestellung;
 import de.hsos.swa.pizza4me.gateway.BestellungRepository;
 
@@ -39,9 +38,28 @@ public class BestellungRessource {
     @PUT
     @Path("/{kundenId}")
     public Response addBestellung(@PathParam("kundenId") int kundenId) {
-        if (service.bestellungHinzufuegen(kundenId) == null) {
+        if (service.bestellungHinzufuegen(kundenId) != false) {
             return Response.ok().build();
         }
         return Response.status(Status.BAD_REQUEST).build();
+    }
+
+    @PUT
+    @Path("/addPizza/{bestellungId}/{pizzaId}/{menge}")
+    public Response pizzaZuBestellungHinzufuegen(@PathParam("bestellungId") int bestellungId,
+            @PathParam("pizzaId") int pizzaId, @PathParam("menge") int menge) {
+        Bestellung neueBestellung = service.pizzaHinzufuegen(bestellungId, pizzaId, menge);
+        if (neueBestellung != null) {
+            return Response.ok(neueBestellung).build();
+        } else {
+            return Response.status(Status.BAD_REQUEST).build();
+        }
+    }
+
+    @GET
+    @Path("/Test/addKunde")
+    public Response addKunde() {
+        service.importKunde();
+        return Response.ok().build();
     }
 }
