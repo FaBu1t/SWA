@@ -4,3 +4,8 @@ INSERT INTO pizzen(id,name,preis,beschreibung) VALUES (1002,'Prosciutto e funghi
 INSERT INTO pizzen(id,name,preis,beschreibung) VALUES (1003,'Al Salmone',9.90,'Tomatensauce, Mozzarella, Lachs, Knoblauch');
 INSERT INTO pizzen(id,name,preis,beschreibung) VALUES (1004,'Mozzarella',9.90,'Tomatensauce, Büffelmozzarella');
 INSERT INTO pizzen(id,name,preis,beschreibung) VALUES (1005,'Carbonara',9.90,'Pecorino Romano Käse, Sahne, Frühlingszwiebeln, Eier, schwarzer Pfeffer');
+
+
+INSERT INTO kunden(id) VALUES (1);
+INSERT INTO kunden(id) VALUES (2);
+INSERT INTO kunden(id) VALUES (3);

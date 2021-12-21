@@ -21,7 +21,7 @@ import javax.persistence.Table;
 @Vetoed
 public class Kunde {
     @Id
-    @SequenceGenerator(name = "kundenSequenz", sequenceName = "kunden_id_seq", allocationSize = 1, initialValue = 1)
+    @SequenceGenerator(name = "kundenSequenz", sequenceName = "kunden_id_seq", allocationSize = 1, initialValue = 3)
     @GeneratedValue(generator = "kundenSequenz")
     private int id;
 
