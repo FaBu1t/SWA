@@ -1,23 +1,34 @@
 package de.hsos.swa.pizza4me.control;
 
-import javax.enterprise.context.RequestScoped;
+import java.util.List;
 
+import javax.enterprise.context.RequestScoped;
+import de.hsos.swa.pizza4me.entity.Bestellposten;
 import de.hsos.swa.pizza4me.entity.Bestellung;
+import de.hsos.swa.pizza4me.entity.Kunde;
 
 @RequestScoped
 public interface BestellungService {
 
-    public boolean bestellungHinzufuegen(int kundenId);
+    public int bestellungHinzufuegen(int kundenId);
 
-    public boolean bestellungLoeschen(int bestellungId);
+    public List<Kunde> bestellungLoeschen(int bestellungId);
 
-    public Bestellung pizzaHinzufuegen(int bestellungId, int pizzaId, int menge);
+    public Bestellung bestellpostenHinzufuegen(int bestellungId, Bestellposten bestellposten);
 
-    public Bestellung pizzaLoeschen(int bestellungId, int bestellpostenId);
+    public Bestellung bestellpostenLoeschen(int bestellpostenId);
 
-    public Bestellung bestellpostenAendern(int bestellungId, int bestellpostenId, int neueMenge);
+    public Bestellung bestellpostenAendern(int BestellpostenId, Bestellposten neuerBestellposten);
 
     public boolean bestellungAbschliessen(int bestellungId);
 
     public Bestellung bestellungAnzeigen(int bestellungId);
+
+    public List<Bestellung> alleBestellungenAnzeigen();
+
+    public boolean isAbgeschlossen(int bestellungId);
+
+    public List<List<Bestellung>> alleBestellungenfureKundenAnzeigen(int kundenId);
+
+    public int findBestellungId(int bestellpostenId);
 }

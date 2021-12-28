@@ -9,7 +9,6 @@ import javax.persistence.EntityManager;
 
 import de.hsos.swa.pizza4me.control.PizzaService;
 import de.hsos.swa.pizza4me.entity.Pizza;
-import io.quarkus.security.User;
 
 @RequestScoped
 @Named("PizzaRepo")

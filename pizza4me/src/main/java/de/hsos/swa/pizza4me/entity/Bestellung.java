@@ -7,6 +7,7 @@ import java.util.Optional;
 import javax.persistence.CascadeType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -23,7 +24,7 @@ public class Bestellung {
 
     private boolean bestellt;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     private List<Bestellposten> bestellposten;
 
     public Bestellung() {
@@ -64,7 +65,6 @@ public class Bestellung {
     public Optional<Bestellposten> findBestellposten(int bestellpostenId) {
         for (Bestellposten posten : bestellposten) {
             if (posten.getId() == bestellpostenId) {
-                bestellposten.remove(posten);
                 return Optional.ofNullable(posten);
             }
         }

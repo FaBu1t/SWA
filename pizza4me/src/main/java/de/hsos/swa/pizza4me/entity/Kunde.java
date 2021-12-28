@@ -7,6 +7,7 @@ import javax.enterprise.inject.Vetoed;
 import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -25,7 +26,7 @@ public class Kunde {
     @GeneratedValue(generator = "kundenSequenz")
     private int id;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Bestellung> bestellungen;
 
     @OneToOne(cascade = CascadeType.ALL)
@@ -58,6 +59,18 @@ public class Kunde {
 
     public void addBestellung(Bestellung bestellung) {
         this.bestellungen.add(bestellung);
+    }
+
+    public void deleteBestellung(int bestellungId) {
+        if (this.bestellungen == null) {
+            System.out.println("Bestellungen = null");
+            return;
+        }
+        for (int i = 0; i < bestellungen.size(); i++) {
+            if (bestellungen.get(i).getId() == bestellungId) {
+                bestellungen.remove(i);
+            }
+        }
     }
 
 }
