@@ -7,37 +7,46 @@ import de.hsos.swa.pizza4me.entity.Bestellung;
 import de.hsos.swa.pizza4me.entity.Kunde;
 
 public class KundeDTO {
+    public int id;
     public AdresseDTO adresse;
-    public List<BestellungDTO> bestellung; 
+    public List<BestellungDTO> bestellung;
 
-    public KundeDTO(){}
-
-    public KundeDTO(AdresseDTO adresseDTO, List<BestellungDTO> bestellungDTO){
-        this.bestellung=bestellungDTO;
-        this.adresse= adresseDTO;
+    public KundeDTO() {
     }
 
-    public static class Converter{
-        public static KundeDTO toKundeDTO(Kunde kunde){
+    public KundeDTO(int id, AdresseDTO adresseDTO, List<BestellungDTO> bestellungDTO) {
+        this.id = id;
+        this.bestellung = bestellungDTO;
+        this.adresse = adresseDTO;
+    }
+
+    public static class Converter {
+        public static KundeDTO toKundeDTO(Kunde kunde) {
             List<BestellungDTO> bestellungen = new ArrayList<>();
-            for(Bestellung b : kunde.getBestellungen()){
-                bestellungen.add(BestellungDTO.Converter.toBestellungDTO(b));
+            if (kunde.getBestellungen() != null) {
+                for (Bestellung b : kunde.getBestellungen()) {
+                    bestellungen.add(BestellungDTO.Converter.toBestellungDTO(b));
+                }
+            }
+            AdresseDTO adresse = null;
+            if (kunde.getAdresse() != null) {
+                adresse = AdresseDTO.Converter.toAdresseDTO(kunde.getAdresse());
             }
 
-            return new KundeDTO(AdresseDTO.Converter.toAdresseDTO(kunde.getAdresse()), bestellungen);
+            return new KundeDTO(kunde.getId(), adresse, bestellungen);
         }
 
-        public static Kunde toKunde(KundeDTO kundeDTO){
+        public static Kunde toKunde(KundeDTO kundeDTO) {
             List<Bestellung> bestellungen = new ArrayList<>();
-            for(BestellungDTO b :kundeDTO.bestellung){
+            for (BestellungDTO b : kundeDTO.bestellung) {
                 bestellungen.add(BestellungDTO.Converter.toBestellung(b));
             }
-            Kunde kunde= new Kunde();
+            Kunde kunde = new Kunde();
             kunde.setAdresse(AdresseDTO.Converter.toAdresse(kundeDTO.adresse));
             kunde.setBestellungen(bestellungen);
             return kunde;
-            
+
         }
     }
-    
+
 }

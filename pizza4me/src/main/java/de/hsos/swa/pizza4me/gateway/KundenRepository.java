@@ -3,6 +3,7 @@ package de.hsos.swa.pizza4me.gateway;
 import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.Entity;
@@ -12,10 +13,9 @@ import javax.transaction.Transactional;
 import de.hsos.swa.pizza4me.control.KundenService;
 import de.hsos.swa.pizza4me.entity.Kunde;
 
-
+@RequestScoped
 @Named("KundenRepo")
 @Transactional
-@ApplicationScoped
 public class KundenRepository implements KundenService {
 
     @Inject
@@ -23,13 +23,19 @@ public class KundenRepository implements KundenService {
 
     @Override
     public Kunde kundeHinzufuegen(Kunde kunde) {
-        // TODO Auto-generated method stub
-        return null;
+        entityManager.persist(kunde);
+        return kunde;
     }
 
     @Override
     public boolean kundeLoeschen(int id) {
-        // TODO Auto-generated method stub
+
+        Kunde kunde = entityManager.find(Kunde.class, id);
+        entityManager.remove(kunde);
+
+        if (entityManager.find(Kunde.class, id) == null) {
+            return true;
+        }
         return false;
     }
 
@@ -41,14 +47,14 @@ public class KundenRepository implements KundenService {
 
     @Override
     public Kunde kundeAnzeigen(int id) {
-        // TODO Auto-generated method stub
-        return null;
+        Kunde kunde = entityManager.find(Kunde.class, id);
+        return kunde;
     }
 
     @Override
     public List<Kunde> alleKundenAnzeigen() {
-        // TODO Auto-generated method stub
-        return null;
+        List<Kunde> kunden = entityManager.createQuery("Select k From Kunde k", Kunde.class).getResultList();
+        return kunden;
     }
 
 }
