@@ -50,8 +50,7 @@ public class BestellungBestellpostenIdRessource {
             BestellpostenDTOPizzaId neuerBestellposten) {
         int bestellungId = service.findBestellungId(id);
         if (service.isAbgeschlossen(bestellungId) == true) {
-            return Response.status(Status.FORBIDDEN)
-                    .entity("Bestellung ist bereits abgeschlossen und darf nicht mehr verändert werden").build();
+            return Response.status(Status.FORBIDDEN).entity("Bestellung ist bereits abgeschlossen und darf nicht mehr verändert werden").build();
         }
         Pizza pizza = servicePizza.suchePizzaNachId(neuerBestellposten.pizza);
         if (pizza != null) {
@@ -68,8 +67,7 @@ public class BestellungBestellpostenIdRessource {
     public Response deleteBestellposten(@PathParam("bestellpostenId") int id) {
         int bestellungId = service.findBestellungId(id);
         if (service.isAbgeschlossen(bestellungId) == true) {
-            return Response.status(Status.FORBIDDEN)
-                    .entity("Bestellung ist bereits abgeschlossen und darf nicht mehr verändert werden").build();
+            return Response.status(Status.FORBIDDEN).entity("Bestellung ist bereits abgeschlossen und darf nicht mehr verändert werden").build();
         }
         return Response.ok(service.bestellpostenLoeschen(id)).build();
     }

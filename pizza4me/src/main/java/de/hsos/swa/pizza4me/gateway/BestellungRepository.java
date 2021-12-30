@@ -1,7 +1,6 @@
 package de.hsos.swa.pizza4me.gateway;
 
 import java.util.List;
-import java.util.Optional;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -25,24 +24,22 @@ public class BestellungRepository implements BestellungService {
     EntityManager em;
 
     @Override
-    public int bestellungHinzufuegen(int kundenId) {
+    public Bestellung bestellungHinzufuegen(int kundenId) {
+        // nur für Tests: es wird jedesmal ein neuer Kunde erstellt
         kundenId = importKunde();
         try {
             Kunde kunde = em.find(Kunde.class, kundenId);
             if (kunde != null) {
                 Bestellung bestellung = new Bestellung();
-                em.persist(bestellung);
-                System.out.println("BestestellungId: " + bestellung.getId());
                 kunde.addBestellung(bestellung);
                 em.persist(kunde);
-                return bestellung.getId();
+                return bestellung;
             }
-            return -1;
+            return null;
 
         } catch (IllegalArgumentException | TransactionRequiredException | EntityExistsException e) {
-            System.out.println("Catch");
             // Logger?
-            return -1;
+            return null;
         }
     }
 
@@ -72,9 +69,7 @@ public class BestellungRepository implements BestellungService {
         try {
             em.persist(bestellposten);
             Bestellung bestellung = em.find(Bestellung.class, bestellungId);
-            System.out.println("1. true");
             if (bestellung != null) {
-                System.out.println("2. true");
                 bestellung.addBestellposten(bestellposten);
                 em.persist(bestellung);
                 return bestellung;
@@ -107,26 +102,17 @@ public class BestellungRepository implements BestellungService {
     }
 
     @Override
-    public Bestellung bestellpostenAendern(int bestellpostenId, Bestellposten neuerBestellposten) {
-        Kunde kunde = em
-                .createQuery(
-                        "Select k from Kunde k, IN (k.bestellungen) b, IN (b.bestellposten) bp WHERE bp.id = :bestellpostenId",
-                        Kunde.class)
-                .setParameter("bestellpostenId", bestellpostenId)
-                .getSingleResult();
-        for (Bestellung bestellung : kunde.getBestellungen()) {
-            if (bestellung.findBestellposten(bestellpostenId).isPresent()) {
-                for (Bestellposten bestellposten : bestellung.getBestellposten()) {
-                    if (bestellposten.getId() == bestellpostenId) {
-                        bestellposten.setMenge(neuerBestellposten.getMenge());
-                        bestellposten.setPizza(neuerBestellposten.getPizza());
-                        // em.persist(bestellposten);
-                        em.persist(bestellung);
-                        em.persist(kunde);
-                        return bestellung;
-                    }
-                }
+    public Bestellposten bestellpostenAendern(int bestellpostenId, Bestellposten neuerBestellposten) {
+        try {
+            Bestellposten bestellposten = em.find(Bestellposten.class, bestellpostenId);
+            if (bestellposten != null) {
+                bestellposten.setMenge(neuerBestellposten.getMenge());
+                bestellposten.setPizza(neuerBestellposten.getPizza());
+                em.persist(bestellposten);
+                return bestellposten;
             }
+        } catch (IllegalArgumentException | TransactionRequiredException e) {
+            return null;
         }
         return null;
     }
@@ -135,9 +121,12 @@ public class BestellungRepository implements BestellungService {
     public boolean bestellungAbschliessen(int bestellungId) {
         try {
             Bestellung bestellung = em.find(Bestellung.class, bestellungId);
-            bestellung.setBestellt(true);
-            em.persist(bestellung);
-            return true;
+            if (bestellung != null) {
+                bestellung.setBestellt(true);
+                em.persist(bestellung);
+                return true;
+            }
+            return false;
 
         } catch (IllegalArgumentException | TransactionRequiredException e) {
             return false;
@@ -175,7 +164,10 @@ public class BestellungRepository implements BestellungService {
     public boolean isAbgeschlossen(int bestellungId) {
         try {
             Bestellung bestellung = em.find(Bestellung.class, bestellungId);
-            return bestellung.isBestellt();
+            if (bestellung != null) {
+                return bestellung.isBestellt();
+            }
+            return false;
         } catch (IllegalArgumentException | TransactionRequiredException e) {
             return false;
         }

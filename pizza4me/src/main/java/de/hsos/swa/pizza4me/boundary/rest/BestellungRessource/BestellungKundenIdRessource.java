@@ -1,5 +1,7 @@
 package de.hsos.swa.pizza4me.boundary.rest.BestellungRessource;
 
+import java.util.List;
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -36,14 +38,18 @@ public class BestellungKundenIdRessource {
 
     @GET
     public Response getBestellung(@PathParam("kundenId") int kundenId) {
-        return Response.ok(service.alleBestellungenfureKundenAnzeigen(kundenId)).build();
+        List<List<Bestellung>> bestellung = service.alleBestellungenfureKundenAnzeigen(kundenId);
+        if (bestellung != null) {
+            return Response.ok(bestellung).build();
+        }
+        return Response.status(Status.BAD_REQUEST).build();
     }
 
     @PUT
     public Response addBestellung(@PathParam("kundenId") int kundenId) {
-        int done = service.bestellungHinzufuegen(kundenId);
-        if (done != -1) {
-            return Response.ok(done).build();
+        Bestellung bestellung = service.bestellungHinzufuegen(kundenId);
+        if (bestellung != null) {
+            return Response.ok(bestellung).build();
         }
         return Response.status(Status.BAD_REQUEST).build();
     }
@@ -52,11 +58,11 @@ public class BestellungKundenIdRessource {
     @Path("/pizza")
     public Response addBestellungMitPizza(@PathParam("kundenId") int kundenId,
             BestellpostenDTOPizzaId neuerBestellpostenDTO) {
-        int bestellungId = service.bestellungHinzufuegen(kundenId);
-        if (bestellungId != -1) {
+        Bestellung bestellung = service.bestellungHinzufuegen(kundenId);
+        if (bestellung != null) {
             Pizza pizza = servicePizza.suchePizzaNachId(neuerBestellpostenDTO.pizza);
             if (pizza != null) {
-                Bestellung neueBestellung = service.bestellpostenHinzufuegen(bestellungId,
+                Bestellung neueBestellung = service.bestellpostenHinzufuegen(bestellung.getId(),
                         BestellpostenDTOPizzaId.Converter
                                 .toBestellposten(neuerBestellpostenDTO, PizzaDTO.Converter.toPizzaDTO(pizza)));
                 if (neueBestellung != null) {

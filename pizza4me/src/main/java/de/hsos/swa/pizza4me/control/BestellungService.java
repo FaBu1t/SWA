@@ -10,7 +10,7 @@ import de.hsos.swa.pizza4me.entity.Kunde;
 @RequestScoped
 public interface BestellungService {
 
-    public int bestellungHinzufuegen(int kundenId);
+    public Bestellung bestellungHinzufuegen(int kundenId);
 
     public List<Kunde> bestellungLoeschen(int bestellungId);
 
@@ -18,7 +18,7 @@ public interface BestellungService {
 
     public Bestellung bestellpostenLoeschen(int bestellpostenId);
 
-    public Bestellung bestellpostenAendern(int BestellpostenId, Bestellposten neuerBestellposten);
+    public Bestellposten bestellpostenAendern(int BestellpostenId, Bestellposten neuerBestellposten);
 
     public boolean bestellungAbschliessen(int bestellungId);
 
