@@ -62,7 +62,7 @@ public class BestellungIdRessource {
         if (pizza != null) {
             Bestellung neueBestellung = service.bestellpostenHinzufuegen(bestellungId,
                     BestellpostenDTOPizzaId.Converter
-                            .toBestellposten(neuerBestellpostenDTO, PizzaDTO.Converter.toPizzaDTO(pizza)));
+                            .toBestellposten(neuerBestellpostenDTO, pizza));
             if (neueBestellung != null) {
                 return Response.ok(neueBestellung).build();
 

@@ -26,7 +26,7 @@ public class BestellungRepository implements BestellungService {
     @Override
     public Bestellung bestellungHinzufuegen(int kundenId) {
         // nur für Tests: es wird jedesmal ein neuer Kunde erstellt
-        kundenId = importKunde();
+        // kundenId = importKunde();
         try {
             Kunde kunde = em.find(Kunde.class, kundenId);
             if (kunde != null) {
@@ -35,6 +35,7 @@ public class BestellungRepository implements BestellungService {
                 em.persist(kunde);
                 return bestellung;
             }
+            System.out.println("Kunde ist null");
             return null;
 
         } catch (IllegalArgumentException | TransactionRequiredException | EntityExistsException e) {

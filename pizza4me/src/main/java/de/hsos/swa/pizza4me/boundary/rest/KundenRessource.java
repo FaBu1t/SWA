@@ -65,10 +65,9 @@ public class KundenRessource {
     }
 
     @POST
-    public Response kundeHinzufuegen(KundeDTO kundeDTO) {
-        Kunde kunde = KundeDTO.Converter.toKunde(kundeDTO);
+    public Response kundeHinzufuegen(String name) {
         Kunde kundeRet;
-        kundeRet = kundenService.kundeHinzufuegen(kunde);
+        kundeRet = kundenService.kundeHinzufuegen(name);
         return Response.ok().entity(KundeDTO.Converter.toKundeDTO(kundeRet)).build();
     }
 

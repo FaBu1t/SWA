@@ -22,11 +22,9 @@ public class BestellpostenDTOPizzaId {
             return retBestellpostenDTOPizzaId;
         }
 
-        public static Bestellposten toBestellposten(BestellpostenDTOPizzaId bDTO, PizzaDTO pizza) {
-            Bestellposten bestellPosten = new Bestellposten(PizzaDTO.Converter.toPizza(pizza), bDTO.menge);
+        public static Bestellposten toBestellposten(BestellpostenDTOPizzaId bDTO, Pizza pizza) {
+            Bestellposten bestellPosten = new Bestellposten(pizza, bDTO.menge);
             return bestellPosten;
         }
-
     }
-
 }

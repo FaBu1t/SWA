@@ -8,14 +8,16 @@ import de.hsos.swa.pizza4me.entity.Kunde;
 
 public class KundeDTO {
     public int id;
+    public String name;
     public AdresseDTO adresse;
     public List<BestellungDTO> bestellung;
 
     public KundeDTO() {
     }
 
-    public KundeDTO(int id, AdresseDTO adresseDTO, List<BestellungDTO> bestellungDTO) {
+    public KundeDTO(int id, AdresseDTO adresseDTO, String name, List<BestellungDTO> bestellungDTO) {
         this.id = id;
+        this.name = name;
         this.bestellung = bestellungDTO;
         this.adresse = adresseDTO;
     }
@@ -33,7 +35,7 @@ public class KundeDTO {
                 adresse = AdresseDTO.Converter.toAdresseDTO(kunde.getAdresse());
             }
 
-            return new KundeDTO(kunde.getId(), adresse, bestellungen);
+            return new KundeDTO(kunde.getId(), adresse, kunde.getName(), bestellungen);
         }
 
         public static Kunde toKunde(KundeDTO kundeDTO) {
@@ -42,6 +44,7 @@ public class KundeDTO {
                 bestellungen.add(BestellungDTO.Converter.toBestellung(b));
             }
             Kunde kunde = new Kunde();
+            kunde.setName(kundeDTO.name);
             kunde.setAdresse(AdresseDTO.Converter.toAdresse(kundeDTO.adresse));
             kunde.setBestellungen(bestellungen);
             return kunde;

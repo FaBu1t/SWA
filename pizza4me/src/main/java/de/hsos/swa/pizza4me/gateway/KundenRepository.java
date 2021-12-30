@@ -22,7 +22,9 @@ public class KundenRepository implements KundenService {
     EntityManager entityManager;
 
     @Override
-    public Kunde kundeHinzufuegen(Kunde kunde) {
+    public Kunde kundeHinzufuegen(String name) {
+        Kunde kunde = new Kunde();
+        kunde.setName(name);
         entityManager.persist(kunde);
         return kunde;
     }
