@@ -7,9 +7,11 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 
 import javax.ws.rs.Produces;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -68,6 +70,31 @@ public class KundenRessource {
         Kunde kundeRet;
         kundeRet = kundenService.kundeHinzufuegen(kunde);
         return Response.ok().entity(KundeDTO.Converter.toKundeDTO(kundeRet)).build();
+    }
+
+    @PUT
+    public Response kundeAendern(KundeDTO kundeDTO) {
+        int id = kundeDTO.id;
+
+        if (id == 0) {
+            throw new WebApplicationException("Pizza ID was not set on request.", 422);
+        }
+
+        if (kundeDTO.adresse == null) {
+            throw new WebApplicationException("Pizza Name was not set on request.", 422);
+        }
+
+        Kunde kundeToChange = kundenService.kundeAnzeigen(id);
+
+        if (kundeToChange == null) {
+            throw new WebApplicationException("No Pizza with ID: " + id + " found.", 422);
+        }
+
+        kundeToChange.setAdresse(KundeDTO.Converter.toKunde(kundeDTO).getAdresse());
+        kundeToChange.setBestellungen(KundeDTO.Converter.toKunde(kundeDTO).getBestellungen());
+
+        return Response.ok(KundeDTO.Converter.toKunde(kundeDTO)).build();
+
     }
 
 }

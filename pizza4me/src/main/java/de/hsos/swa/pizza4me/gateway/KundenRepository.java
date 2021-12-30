@@ -41,7 +41,7 @@ public class KundenRepository implements KundenService {
 
     @Override
     public Kunde kundeAendern(Kunde kunde) {
-        // TODO Auto-generated method stub
+
         return null;
     }
 
