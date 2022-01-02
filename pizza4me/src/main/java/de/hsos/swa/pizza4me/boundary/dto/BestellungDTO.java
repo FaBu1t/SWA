@@ -8,7 +8,7 @@ import de.hsos.swa.pizza4me.entity.Bestellung;
 
 public class BestellungDTO {
     public List<BestellpostenDTO> bDto;
-    public boolean bestellt;
+    public boolean bestellt = false;
 
     public BestellungDTO() {
     }
