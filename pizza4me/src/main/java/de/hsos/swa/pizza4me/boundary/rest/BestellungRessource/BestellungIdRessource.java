@@ -1,6 +1,7 @@
 package de.hsos.swa.pizza4me.boundary.rest.BestellungRessource;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -17,6 +18,8 @@ import javax.ws.rs.core.Response.Status;
 
 import org.eclipse.microprofile.openapi.annotations.Operation;
 
+import javax.transaction.Transactional;
+import javax.transaction.Transactional.TxType;
 import de.hsos.swa.pizza4me.boundary.dto.BestellpostenDTOPizzaId;
 import de.hsos.swa.pizza4me.boundary.dto.BestellungDTO;
 import de.hsos.swa.pizza4me.boundary.dto.PizzaDTO;
@@ -25,6 +28,8 @@ import de.hsos.swa.pizza4me.control.PizzaService;
 import de.hsos.swa.pizza4me.entity.Bestellung;
 import de.hsos.swa.pizza4me.entity.Pizza;
 
+@RequestScoped
+@Transactional(value = TxType.REQUIRES_NEW)
 @Path("/bestellung/{bestellungId}")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)

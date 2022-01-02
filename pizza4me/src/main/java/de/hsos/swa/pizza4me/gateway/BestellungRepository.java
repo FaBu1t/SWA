@@ -9,14 +9,14 @@ import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
 import javax.persistence.TransactionRequiredException;
 import javax.transaction.Transactional;
-
+import javax.transaction.Transactional.TxType;
 import de.hsos.swa.pizza4me.control.BestellungService;
 import de.hsos.swa.pizza4me.entity.Bestellposten;
 import de.hsos.swa.pizza4me.entity.Bestellung;
 import de.hsos.swa.pizza4me.entity.Kunde;
 
 @RequestScoped
-@Transactional
+@Transactional(value = TxType.REQUIRED)
 @Named("BestellungRepos")
 public class BestellungRepository implements BestellungService {
 
@@ -26,11 +26,7 @@ public class BestellungRepository implements BestellungService {
     @Override
     public Bestellung bestellungHinzufuegen(int kundenId) {
         // nur für Tests: es wird jedesmal ein neuer Kunde erstellt
-<<<<<<< HEAD
-
-=======
         // kundenId = importKunde();
->>>>>>> 86a328218a761f476237f0a34e6bb786c22603eb
         try {
             Kunde kunde = em.find(Kunde.class, kundenId);
             if (kunde != null) {

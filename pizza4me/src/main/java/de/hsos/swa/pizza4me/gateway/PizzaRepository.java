@@ -6,12 +6,14 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
 
 import de.hsos.swa.pizza4me.control.PizzaService;
 import de.hsos.swa.pizza4me.entity.Pizza;
 
 @RequestScoped
 @Named("PizzaRepo")
+@Transactional
 public class PizzaRepository implements PizzaService {
 
     @Inject

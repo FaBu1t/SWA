@@ -1,6 +1,7 @@
 package de.hsos.swa.pizza4me.boundary.rest.BestellungRessource;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.ws.rs.Consumes;
@@ -13,9 +14,12 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
-
+import javax.transaction.Transactional.TxType;
 import de.hsos.swa.pizza4me.control.BestellungService;
+
+@RequestScoped
 @Path("/bestellung")
+@Transactional(value = TxType.REQUIRES_NEW)
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 @ApplicationScoped
