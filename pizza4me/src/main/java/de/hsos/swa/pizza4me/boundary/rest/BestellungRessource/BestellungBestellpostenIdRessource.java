@@ -40,24 +40,27 @@ public class BestellungBestellpostenIdRessource {
         return null;
     }
 
+    //Bestellposten hinzufügen
     @PUT
     public Response putBestellposten(@PathParam("bestellpostenId") int id) {
         return null;
     }
 
+    // BestellpostenId = BestellungID !! Ressource ändern
     @POST
     public Response postBestellposten(@PathParam("bestellpostenId") int id,
             BestellpostenDTOPizzaId neuerBestellposten) {
         int bestellungId = service.findBestellungId(id);
         if (service.isAbgeschlossen(bestellungId) == true) {
-            return Response.status(Status.FORBIDDEN).entity("Bestellung ist bereits abgeschlossen und darf nicht mehr verändert werden").build();
+            return Response.status(Status.FORBIDDEN)
+                    .entity("Bestellung ist bereits abgeschlossen und darf nicht mehr verändert werden").build();
         }
         Pizza pizza = servicePizza.suchePizzaNachId(neuerBestellposten.pizza);
         if (pizza != null) {
             return Response
                     .ok(service.bestellpostenAendern(id,
                             BestellpostenDTOPizzaId.Converter.toBestellposten(neuerBestellposten,
-                                    PizzaDTO.Converter.toPizzaDTO(pizza))))
+                                    pizza)))
                     .build();
         }
         return Response.status(Status.BAD_REQUEST).build();
@@ -67,7 +70,8 @@ public class BestellungBestellpostenIdRessource {
     public Response deleteBestellposten(@PathParam("bestellpostenId") int id) {
         int bestellungId = service.findBestellungId(id);
         if (service.isAbgeschlossen(bestellungId) == true) {
-            return Response.status(Status.FORBIDDEN).entity("Bestellung ist bereits abgeschlossen und darf nicht mehr verändert werden").build();
+            return Response.status(Status.FORBIDDEN)
+                    .entity("Bestellung ist bereits abgeschlossen und darf nicht mehr verändert werden").build();
         }
         return Response.ok(service.bestellpostenLoeschen(id)).build();
     }

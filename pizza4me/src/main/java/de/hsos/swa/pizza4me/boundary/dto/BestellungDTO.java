@@ -11,6 +11,7 @@ public class BestellungDTO {
     public boolean bestellt = false;
 
     public BestellungDTO() {
+        this.bestellt = false;
     }
 
     public BestellungDTO(List<BestellpostenDTO> bDto, boolean bestellt) {

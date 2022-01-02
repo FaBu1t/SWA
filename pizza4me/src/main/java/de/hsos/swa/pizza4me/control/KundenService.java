@@ -6,7 +6,7 @@ import de.hsos.swa.pizza4me.entity.Kunde;
 
 public interface KundenService {
 
-    public Kunde kundeHinzufuegen(Kunde kunde);
+    public Kunde kundeHinzufuegen(String name);
 
     public boolean kundeLoeschen(int id);
 

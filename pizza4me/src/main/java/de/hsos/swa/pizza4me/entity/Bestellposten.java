@@ -16,7 +16,7 @@ public class Bestellposten {
     @GeneratedValue(generator = "bestellpostenSequenz")
     private int id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.MERGE)
     private Pizza pizza;
     private int menge;
 

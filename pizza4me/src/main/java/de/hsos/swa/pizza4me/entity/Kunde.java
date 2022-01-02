@@ -22,10 +22,12 @@ import javax.persistence.Table;
 @Vetoed
 public class Kunde {
     @Id
-    @SequenceGenerator(name = "kundenSequenz", sequenceName = "kunden_id_seq", allocationSize = 1, initialValue = 3)
+    @SequenceGenerator(name = "kundenSequenz", sequenceName = "kunden_id_seq", allocationSize = 1, initialValue = 1)
     @GeneratedValue(generator = "kundenSequenz")
     private int id;
 
+    private String name;
+    
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Bestellung> bestellungen;
 
@@ -39,6 +41,14 @@ public class Kunde {
 
     public Adresse getAdresse() {
         return adresse;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void setAdresse(Adresse adresse) {
