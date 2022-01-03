@@ -1,6 +1,8 @@
 package de.hsos.swa.pizza4me.boundary.rest.BestellungRessource;
 
+import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -17,6 +19,8 @@ import javax.ws.rs.core.Response.Status;
 
 import org.eclipse.microprofile.openapi.annotations.Operation;
 
+import javax.transaction.Transactional;
+import javax.transaction.Transactional.TxType;
 import de.hsos.swa.pizza4me.boundary.dto.BestellpostenDTOPizzaId;
 import de.hsos.swa.pizza4me.boundary.dto.BestellungDTO;
 import de.hsos.swa.pizza4me.boundary.dto.PizzaDTO;
@@ -25,10 +29,12 @@ import de.hsos.swa.pizza4me.control.PizzaService;
 import de.hsos.swa.pizza4me.entity.Bestellung;
 import de.hsos.swa.pizza4me.entity.Pizza;
 
+@RequestScoped
+@Transactional(value = TxType.REQUIRES_NEW)
 @Path("/bestellung/{bestellungId}")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
-@ApplicationScoped
+
 public class BestellungIdRessource {
 
     @Inject
@@ -40,6 +46,7 @@ public class BestellungIdRessource {
     PizzaService servicePizza;
 
     @GET
+    @RolesAllowed("KundIn")
     public Response getBestellung(@PathParam("bestellungId") int id) {
         Bestellung bestellung = service.bestellungAnzeigen(id);
         if (bestellung != null) {
@@ -49,6 +56,7 @@ public class BestellungIdRessource {
     }
 
     @POST
+    @RolesAllowed("KundIn")
     @Operation(description = "Pizza zu Bestellung hinzufügen")
     public Response pizzaZuBestellungHinzufuegen(@PathParam("bestellungId") int bestellungId,
             BestellpostenDTOPizzaId neuerBestellpostenDTO) {
@@ -72,6 +80,7 @@ public class BestellungIdRessource {
     }
 
     @POST
+    @RolesAllowed("KundIn")
     @Path("/abschliessen")
     @Operation(description = "Bestellung abschließen")
     public Response bestellungAbschliessen(@PathParam("bestellungId") int bestellungId) {
@@ -83,11 +92,13 @@ public class BestellungIdRessource {
     }
 
     @PUT
+    @RolesAllowed("KundIn")
     public Response putBestellung() {
         return Response.status(Status.NOT_IMPLEMENTED).build();
     }
 
     @DELETE
+    @RolesAllowed("KundIn")
     public Response deleteBestellung(@PathParam("bestellungId") int id) {
         if (service.isAbgeschlossen(id) == true) {
             return Response.status(Status.FORBIDDEN)

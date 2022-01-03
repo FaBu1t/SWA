@@ -8,7 +8,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "adressen")
+@Table(name = "adressen", schema = "DATA")
 @Vetoed
 public class Adresse {
     @Id

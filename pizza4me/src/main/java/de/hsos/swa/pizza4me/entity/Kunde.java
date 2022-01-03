@@ -17,7 +17,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "kunden")
+@Table(name = "kunden", schema = "DATA")
 @Cacheable
 @Vetoed
 public class Kunde {
@@ -27,7 +27,7 @@ public class Kunde {
     private int id;
 
     private String name;
-    
+
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Bestellung> bestellungen;
 

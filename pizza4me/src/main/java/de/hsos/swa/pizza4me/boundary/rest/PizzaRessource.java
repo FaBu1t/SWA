@@ -1,5 +1,6 @@
 package de.hsos.swa.pizza4me.boundary.rest;
 
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.transaction.Transactional;
@@ -13,6 +14,7 @@ import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
+import javax.transaction.Transactional.TxType;
 
 import org.jboss.resteasy.annotations.jaxrs.PathParam;
 
@@ -32,7 +34,8 @@ import io.quarkus.qute.TemplateInstance;
 @Path("/pizza")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-@Transactional
+@RequestScoped
+@Transactional(value = TxType.REQUIRES_NEW)
 public class PizzaRessource {
 
     @CheckedTemplate(requireTypeSafeExpressions = false)
