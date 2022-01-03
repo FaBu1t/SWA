@@ -10,7 +10,7 @@ public class CreateInitialSecEntities {
     @Transactional
 
     public void loadUsers(@Observes StartupEvent evt) {
-        // UserLogin.deleteAll();
+        UserLogin.deleteAll();
         UserLogin.add("login", "login", "KundIn");
     }
 

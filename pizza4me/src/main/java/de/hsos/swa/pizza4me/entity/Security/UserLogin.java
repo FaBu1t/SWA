@@ -3,6 +3,7 @@ package de.hsos.swa.pizza4me.entity.Security;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import io.quarkus.elytron.security.common.BcryptUtil;
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import io.quarkus.security.jpa.Password;
 import io.quarkus.security.jpa.Roles;
@@ -33,7 +34,7 @@ public class UserLogin extends PanacheEntity {
     public static void add(String username, String password, String role) {
         UserLogin user = new UserLogin();
         user.username = username;
-        user.password = password;
+        user.password = BcryptUtil.bcryptHash(password);
         user.role = role;
         user.persist();
     }
