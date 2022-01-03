@@ -24,12 +24,21 @@ import de.hsos.swa.pizza4me.boundary.dto.PizzaDTO;
 import de.hsos.swa.pizza4me.control.PizzaService;
 import de.hsos.swa.pizza4me.entity.Pizza;
 import io.quarkus.logging.Log;
+import io.quarkus.qute.CheckedTemplate;
+import io.quarkus.qute.Location;
+import io.quarkus.qute.Template;
+import io.quarkus.qute.TemplateInstance;
 
 @Path("/pizza")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 @Transactional
 public class PizzaRessource {
+
+    @CheckedTemplate(requireTypeSafeExpressions = false)
+    public static class Templates {
+        public static native TemplateInstance pizzen();
+    }
 
     @Inject
     @Named("PizzaRepo")
@@ -46,6 +55,24 @@ public class PizzaRessource {
         }
         if (!allePizzenDTOs.isEmpty()) {
             return Response.ok().entity(allePizzenDTOs).build();
+        }
+
+        return Response.noContent().build();
+    }
+
+    @GET
+    @Produces(MediaType.TEXT_HTML)
+    @Path("/{id}/html")
+    public Response allePizzenHTML() {
+        List<Pizza> allePizzen = pizzaService.allePizzenAbfragen();
+        List<PizzaDTO> allePizzenDTOs = new ArrayList<>();
+        if (allePizzen.isEmpty())
+            return Response.noContent().build();
+        for (Pizza p : allePizzen) {
+            allePizzenDTOs.add(PizzaDTO.Converter.toPizzaDTO(p));
+        }
+        if (!allePizzenDTOs.isEmpty()) {
+            return Response.ok(Templates.pizzen().data("pizzen", allePizzen)).build();
         }
 
         return Response.noContent().build();
@@ -82,37 +109,34 @@ public class PizzaRessource {
 
     }
 
-
-
     @POST
-    public Response pizzaHinzufuegen(PizzaDTO pizzaDTO){
+    public Response pizzaHinzufuegen(PizzaDTO pizzaDTO) {
 
-        Pizza pizza= PizzaDTO.Converter.toPizza(pizzaDTO);
-        
+        Pizza pizza = PizzaDTO.Converter.toPizza(pizzaDTO);
+
         pizzaService.pizzaAnlegen(pizza);
 
         return Response.noContent().build();
 
     }
 
-
     @PUT
-    public Response pizzaAendern(PizzaDTO pizzaDTO){
+    public Response pizzaAendern(PizzaDTO pizzaDTO) {
 
         Long id = pizzaDTO.id;
 
-        if(id.equals(null)){
+        if (id.equals(null)) {
             throw new WebApplicationException("Pizza ID was not set on request.", 422);
         }
-       
-        if(pizzaDTO.name==null){
+
+        if (pizzaDTO.name == null) {
             throw new WebApplicationException("Pizza Name was not set on request.", 422);
         }
 
-        Pizza pizzaToChange= pizzaService.suchePizzaNachId(id);
+        Pizza pizzaToChange = pizzaService.suchePizzaNachId(id);
 
-        if(pizzaToChange==null){
-            throw new WebApplicationException("No Pizza with ID: "+id+" found.", 422);
+        if (pizzaToChange == null) {
+            throw new WebApplicationException("No Pizza with ID: " + id + " found.", 422);
         }
 
         pizzaToChange.setName(pizzaDTO.name);
@@ -122,6 +146,5 @@ public class PizzaRessource {
         return Response.ok(PizzaDTO.Converter.toPizzaDTO(pizzaToChange)).build();
 
     }
-
 
 }
