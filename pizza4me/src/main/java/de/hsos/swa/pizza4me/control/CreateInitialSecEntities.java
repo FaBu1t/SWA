@@ -1,5 +1,5 @@
 package de.hsos.swa.pizza4me.control;
-/*
+
 import javax.enterprise.event.Observes;
 import javax.transaction.Transactional;
 
@@ -15,4 +15,3 @@ public class CreateInitialSecEntities {
     }
 
 }
-*/
