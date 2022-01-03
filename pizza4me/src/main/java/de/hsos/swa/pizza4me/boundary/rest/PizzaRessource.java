@@ -38,10 +38,7 @@ import io.quarkus.qute.TemplateInstance;
 @Transactional(value = TxType.REQUIRES_NEW)
 public class PizzaRessource {
 
-    @CheckedTemplate(requireTypeSafeExpressions = false)
-    public static class Templates {
-        public static native TemplateInstance pizzen();
-    }
+    
 
     @Inject
     @Named("PizzaRepo")
@@ -63,23 +60,6 @@ public class PizzaRessource {
         return Response.noContent().build();
     }
 
-    @GET
-    @Produces(MediaType.TEXT_HTML)
-    @Path("/{id}/html")
-    public Response allePizzenHTML() {
-        List<Pizza> allePizzen = pizzaService.allePizzenAbfragen();
-        List<PizzaDTO> allePizzenDTOs = new ArrayList<>();
-        if (allePizzen.isEmpty())
-            return Response.noContent().build();
-        for (Pizza p : allePizzen) {
-            allePizzenDTOs.add(PizzaDTO.Converter.toPizzaDTO(p));
-        }
-        if (!allePizzenDTOs.isEmpty()) {
-            return Response.ok(Templates.pizzen().data("pizzen", allePizzen)).build();
-        }
-
-        return Response.noContent().build();
-    }
 
     @GET
     @Path("/{id}")

@@ -1,5 +1,5 @@
 package de.hsos.swa.pizza4me.entity.Security;
-
+/*
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
@@ -29,7 +29,7 @@ public class UserLogin extends PanacheEntity {
      * @param password the unencrypted password (it will be encrypted with bcrypt)
      * @param role     the comma-separated roles
      */
-
+/*
     public static void add(String username, String password, String role) {
         UserLogin user = new UserLogin();
         user.username = username;
@@ -39,3 +39,4 @@ public class UserLogin extends PanacheEntity {
     }
 
 }
+*/
