@@ -2,6 +2,7 @@ package de.hsos.swa.pizza4me.boundary.rest.BestellungRessource;
 
 import java.util.List;
 
+import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.RequestScoped;
 import javax.ws.rs.Consumes;
@@ -15,6 +16,7 @@ import javax.inject.Named;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
+import javax.transaction.Transactional;
 import javax.transaction.Transactional.TxType;
 import de.hsos.swa.pizza4me.boundary.dto.BestellpostenDTOPizzaId;
 import de.hsos.swa.pizza4me.boundary.dto.PizzaDTO;
@@ -28,7 +30,7 @@ import de.hsos.swa.pizza4me.entity.Pizza;
 @Path("/bestellung/kundenId/{kundenId}")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
-@ApplicationScoped
+
 public class BestellungKundenIdRessource {
 
     @Inject
@@ -40,6 +42,7 @@ public class BestellungKundenIdRessource {
     PizzaService servicePizza;
 
     @GET
+    @RolesAllowed("KundIn")
     public Response getBestellung(@PathParam("kundenId") int kundenId) {
         List<List<Bestellung>> bestellung = service.alleBestellungenfureKundenAnzeigen(kundenId);
         if (bestellung != null) {
@@ -49,6 +52,7 @@ public class BestellungKundenIdRessource {
     }
 
     @PUT
+    @RolesAllowed("KundIn")
     public Response addBestellung(@PathParam("kundenId") int kundenId) {
         Bestellung bestellung = service.bestellungHinzufuegen(kundenId);
         if (bestellung != null) {
@@ -58,6 +62,7 @@ public class BestellungKundenIdRessource {
     }
 
     @PUT
+    @RolesAllowed("KundIn")
     @Path("/pizza")
     public Response addBestellungMitPizza(@PathParam("kundenId") int kundenId,
             BestellpostenDTOPizzaId neuerBestellpostenDTO) {

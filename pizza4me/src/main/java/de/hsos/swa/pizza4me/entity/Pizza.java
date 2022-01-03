@@ -9,7 +9,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "pizzen")
+@Table(name = "pizzen", schema = "DATA")
 @NamedQuery(name = "Pizza.findAll", query = "SELECT p FROM Pizza p ORDER BY p.id", hints = @QueryHint(name = "org.hibernate.cacheable", value = "true"))
 public class Pizza {
     @Id

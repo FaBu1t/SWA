@@ -1,5 +1,6 @@
 package de.hsos.swa.pizza4me.boundary.rest.BestellungRessource;
 
+import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.RequestScoped;
 import javax.ws.rs.Consumes;
@@ -33,7 +34,7 @@ import de.hsos.swa.pizza4me.entity.Pizza;
 @Path("/bestellung/{bestellungId}")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
-@ApplicationScoped
+
 public class BestellungIdRessource {
 
     @Inject
@@ -45,6 +46,7 @@ public class BestellungIdRessource {
     PizzaService servicePizza;
 
     @GET
+    @RolesAllowed("KundIn")
     public Response getBestellung(@PathParam("bestellungId") int id) {
         Bestellung bestellung = service.bestellungAnzeigen(id);
         if (bestellung != null) {
@@ -54,6 +56,7 @@ public class BestellungIdRessource {
     }
 
     @POST
+    @RolesAllowed("KundIn")
     @Operation(description = "Pizza zu Bestellung hinzufügen")
     public Response pizzaZuBestellungHinzufuegen(@PathParam("bestellungId") int bestellungId,
             BestellpostenDTOPizzaId neuerBestellpostenDTO) {
@@ -77,6 +80,7 @@ public class BestellungIdRessource {
     }
 
     @POST
+    @RolesAllowed("KundIn")
     @Path("/abschliessen")
     @Operation(description = "Bestellung abschließen")
     public Response bestellungAbschliessen(@PathParam("bestellungId") int bestellungId) {
@@ -88,11 +92,13 @@ public class BestellungIdRessource {
     }
 
     @PUT
+    @RolesAllowed("KundIn")
     public Response putBestellung() {
         return Response.status(Status.NOT_IMPLEMENTED).build();
     }
 
     @DELETE
+    @RolesAllowed("KundIn")
     public Response deleteBestellung(@PathParam("bestellungId") int id) {
         if (service.isAbgeschlossen(id) == true) {
             return Response.status(Status.FORBIDDEN)

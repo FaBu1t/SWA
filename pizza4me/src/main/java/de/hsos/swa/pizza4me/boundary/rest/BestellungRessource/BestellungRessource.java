@@ -1,5 +1,6 @@
 package de.hsos.swa.pizza4me.boundary.rest.BestellungRessource;
 
+import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -14,15 +15,16 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
+import javax.transaction.Transactional;
 import javax.transaction.Transactional.TxType;
 import de.hsos.swa.pizza4me.control.BestellungService;
 
+@Transactional(value = TxType.REQUIRES_NEW)
 @RequestScoped
 @Path("/bestellung")
-@Transactional(value = TxType.REQUIRES_NEW)
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
-@ApplicationScoped
+
 public class BestellungRessource {
 
     @Inject
@@ -30,6 +32,7 @@ public class BestellungRessource {
     BestellungService service;
 
     @GET
+    @RolesAllowed("KundIn")
     public Response getAll() {
         return Response.ok(service.alleBestellungenAnzeigen()).build();
     }

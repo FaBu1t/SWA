@@ -9,7 +9,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "bestellposten")
+@Table(name = "bestellposten", schema = "DATA")
 public class Bestellposten {
     @Id
     @SequenceGenerator(name = "bestellpostenSequenz", sequenceName = "bestellposten_id_seq", allocationSize = 1, initialValue = 1000)

@@ -1,5 +1,6 @@
 package de.hsos.swa.pizza4me.boundary.rest.BestellungRessource;
 
+import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.RequestScoped;
 import javax.ws.rs.Consumes;
@@ -28,7 +29,7 @@ import de.hsos.swa.pizza4me.entity.Pizza;
 @Path("/bestellung/bestellposten/{bestellpostenId}")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
-@ApplicationScoped
+
 public class BestellungBestellpostenIdRessource {
 
     @Inject
@@ -52,6 +53,7 @@ public class BestellungBestellpostenIdRessource {
 
     // BestellpostenId = BestellungID !! Ressource ändern
     @POST
+    @RolesAllowed("KundIn")
     public Response postBestellposten(@PathParam("bestellpostenId") int id,
             BestellpostenDTOPizzaId neuerBestellposten) {
         int bestellungId = service.findBestellungId(id);
@@ -71,6 +73,7 @@ public class BestellungBestellpostenIdRessource {
     }
 
     @DELETE
+    @RolesAllowed("KundIn")
     public Response deleteBestellposten(@PathParam("bestellpostenId") int id) {
         int bestellungId = service.findBestellungId(id);
         if (service.isAbgeschlossen(bestellungId) == true) {

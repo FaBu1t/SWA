@@ -15,7 +15,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "bestellungen")
+@Table(name = "bestellungen", schema = "DATA")
 public class Bestellung {
     @Id
     @SequenceGenerator(name = "bestellungSequenz", sequenceName = "bestellungen_id_seq", allocationSize = 1, initialValue = 1000)

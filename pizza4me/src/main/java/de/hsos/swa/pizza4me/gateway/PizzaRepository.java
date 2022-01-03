@@ -7,13 +7,13 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
-
+import javax.transaction.Transactional.TxType;
 import de.hsos.swa.pizza4me.control.PizzaService;
 import de.hsos.swa.pizza4me.entity.Pizza;
 
 @RequestScoped
 @Named("PizzaRepo")
-@Transactional
+@Transactional(value = TxType.REQUIRED)
 public class PizzaRepository implements PizzaService {
 
     @Inject
