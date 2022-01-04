@@ -4,7 +4,6 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
 
 import io.quarkus.qute.CheckedTemplate;
 import io.quarkus.qute.TemplateInstance;
@@ -18,12 +17,10 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 
-import org.jboss.resteasy.annotations.Form;
-
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.hsos.swa.pizza4me.boundary.dto.KundeDTO;
 import de.hsos.swa.pizza4me.boundary.dto.PizzaDTO;
 import de.hsos.swa.pizza4me.control.BestellungService;
 import de.hsos.swa.pizza4me.control.KundenService;
@@ -35,7 +32,7 @@ import de.hsos.swa.pizza4me.entity.Pizza;
 
 @Path("/index")
 @Produces(MediaType.TEXT_HTML)
-public class PizzaRessource {
+public class IndexRessource {
     @CheckedTemplate(requireTypeSafeExpressions = false)
     public static class Templates {
         public static native TemplateInstance index();
@@ -71,9 +68,10 @@ public class PizzaRessource {
                 for (Bestellposten bp : bestellposten) {
                     gesamtpreis += bp.gesamtpreis();
                 }
+                DecimalFormat f = new DecimalFormat("#0.00");
                 return Response
                         .ok(Templates.index().data("pizzen", allePizzen).data("bestellposten", bestellposten)
-                                .data("bestellungId", bestellung.getId()).data("gesamtpreis", gesamtpreis))
+                                .data("bestellungId", bestellung.getId()).data("gesamtpreis", f.format(gesamtpreis)))
                         .build();
             }
             return Response

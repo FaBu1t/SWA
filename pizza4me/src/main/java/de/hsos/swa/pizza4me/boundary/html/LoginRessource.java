@@ -12,14 +12,25 @@ import javax.ws.rs.core.Response;
 
 @Path("/login")
 public class LoginRessource {
+    
     @CheckedTemplate(requireTypeSafeExpressions = false)
     public static class Templates {
-        public static native TemplateInstance login();
+        public static native TemplateInstance login_login();
+
+        public static native TemplateInstance login_register();
     }
 
     @GET
     @Produces(MediaType.TEXT_HTML)
     public Response login() {
-        return Response.ok(Templates.login()).build();
+        return Response.ok(Templates.login_login()).build();
     }
+
+    @GET
+    @Path("/register")
+    @Produces(MediaType.TEXT_HTML)
+    public Response register() {
+        return Response.ok(Templates.login_register()).build();
+    }
+
 }
