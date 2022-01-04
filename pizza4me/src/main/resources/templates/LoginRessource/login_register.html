@@ -26,34 +26,37 @@
                 <div class="card">
                     <div class="card-title text-center">
                     </div>
+
+                    <div class="card-header">
+                        <ul class="nav nav-tabs card-header-tabs">
+                            <li class="nav-item">
+                                <a class="nav-link text-dark " href="/login">Login</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#">Registrieren</a>
+                            </li>
+                        </ul>
+                    </div>
                     <div class="card-body">
-                        <div class="card-header">
-                            <ul class="nav nav-tabs card-header-tabs">
-                                <li class="nav-item">
-                                    <a class="nav-link " href="/login">Login</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link active" href="#">Registrieren</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <form action="" autocomplete="off">
+                        <form form="register" action="" autocomplete="off">
                             <div class="form-group py-3">
                                 <input type="text" class="form-control" name="username" placeholder="Username"
-                                    id="username">
+                                    id="username" required>
                             </div>
                             <div class="form-group py-3">
                                 <input type="password" class="form-control" name="password" placeholder="Passwort"
-                                    id="passwort">
+                                    id="passwort" required>
                             </div>
                             <div class="row px-3 py-3">
-                                <button type="button" id="sendlogin" class="btn btn-info">Registrieren</button>
+                                <button type="submit" formaction="./register/send" formmethod="post"
+                                    class="btn btn-info">Registrieren</button>
                             </div>
-                        </form>
                     </div>
+                    </form>
                 </div>
             </div>
         </div>
+    </div>
     </div>
 </body>
 

@@ -36,6 +36,8 @@ public class IndexRessource {
     @CheckedTemplate(requireTypeSafeExpressions = false)
     public static class Templates {
         public static native TemplateInstance index();
+
+        public static native TemplateInstance index_kundIn();
     }
 
     @Inject
@@ -51,8 +53,16 @@ public class IndexRessource {
     KundenService kundenService;
 
     @GET
-    @Path("/bestellung/{bestellungId}")
-    public Response allePizzenHTML(@PathParam("bestellungId") int bestellungId) {
+    @Path("/logout")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response logout() {
+        return Response.seeOther(UriBuilder.fromPath("/index").build())
+                .build();
+    }
+
+    @GET
+    @Path("/kunde/{kundenId}/bestellung/{bestellungId}")
+    public Response allePizzenHTML(@PathParam("kundenId") int kundenId, @PathParam("bestellungId") int bestellungId) {
         List<Pizza> allePizzen = pizzaService.allePizzenAbfragen();
         List<PizzaDTO> allePizzenDTOs = new ArrayList<>();
         if (allePizzen.isEmpty())
@@ -70,16 +80,40 @@ public class IndexRessource {
                 }
                 DecimalFormat f = new DecimalFormat("#0.00");
                 return Response
-                        .ok(Templates.index().data("pizzen", allePizzen).data("bestellposten", bestellposten)
-                                .data("bestellungId", bestellung.getId()).data("gesamtpreis", f.format(gesamtpreis)))
+                        .ok(Templates.index_kundIn().data("pizzen", allePizzen).data("bestellposten", bestellposten)
+                                .data("bestellungId", bestellung.getId()).data("gesamtpreis", f.format(gesamtpreis))
+                                .data("kundenId", kundenId))
                         .build();
             }
             return Response
-                    .ok(Templates.index().data("pizzen", allePizzen).data("bestellposten", null).data("bestellungId",
-                            0).data("gesamtpreis", "00.00"))
+                    .ok(Templates.index_kundIn().data("pizzen", allePizzen).data("bestellposten", null)
+                            .data("bestellungId",
+                                    0)
+                            .data("gesamtpreis", "00.00").data("kundenId", kundenId))
                     .build();
         }
 
+        return Response.noContent().build();
+    }
+
+    @GET
+    @Path("/kunde/{kundenId}")
+    public Response indexKunde(@PathParam("kundenId") int kundenId) {
+        List<Pizza> allePizzen = pizzaService.allePizzenAbfragen();
+        List<PizzaDTO> allePizzenDTOs = new ArrayList<>();
+        if (allePizzen.isEmpty())
+            return Response.noContent().build();
+        for (Pizza p : allePizzen) {
+            allePizzenDTOs.add(PizzaDTO.Converter.toPizzaDTO(p));
+        }
+        if (!allePizzenDTOs.isEmpty()) {
+            return Response
+                    .ok(Templates.index_kundIn().data("pizzen", allePizzen).data("bestellposten", null)
+                            .data("bestellungId",
+                                    0)
+                            .data("gesamtpreis", "00.00").data("kundenId", kundenId))
+                    .build();
+        }
         return Response.noContent().build();
     }
 
@@ -95,7 +129,7 @@ public class IndexRessource {
         if (!allePizzenDTOs.isEmpty()) {
             return Response
                     .ok(Templates.index().data("pizzen", allePizzen).data("bestellposten", null).data("bestellungId",
-                            0).data("gesamtpreis", "00.00"))
+                            0).data("gesamtpreis", "00.00").data("kundenId", 0))
                     .build();
         }
         return Response.noContent().build();
@@ -127,23 +161,26 @@ public class IndexRessource {
             if (pizza != null) {
                 Bestellposten bp = new Bestellposten(pizza, menge);
                 if (service.bestellpostenHinzufuegen(bestellung.getId(), bp) != null) {
-                    return Response.seeOther(UriBuilder.fromPath("/index/bestellung/" + bestellung.getId()).build())
+                    return Response
+                            .seeOther(UriBuilder
+                                    .fromPath("/index/kunde/" + kundenId + "/bestellung/" + bestellung.getId()).build())
                             .build();
                 }
             }
         }
-        return Response.seeOther(UriBuilder.fromPath("/index").build()).build();
+        return Response.seeOther(UriBuilder.fromPath("/index/kunde/" + kundenId).build()).build();
     }
 
     @POST
-    @Path("/bestellung/{bestellungId}/abschliessen")
+    @Path("/kunde/{kundenId}/bestellung/{bestellungId}/abschliessen")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response bestellungAbschliessen(@PathParam("bestellungId") int bestellungId) {
+    public Response bestellungAbschliessen(@PathParam("kundenId") int kundenId,
+            @PathParam("bestellungId") int bestellungId) {
         if (bestellungId != 0) {
             service.bestellungAbschliessen(bestellungId);
         }
-        return Response.seeOther(UriBuilder.fromPath("/index").build())
+        return Response.seeOther(UriBuilder.fromPath("/index/kunde/" + kundenId).build())
                 .build();
     }
 

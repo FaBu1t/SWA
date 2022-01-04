@@ -1,5 +1,7 @@
 package de.hsos.swa.pizza4me.entity;
 
+import java.text.DecimalFormat;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -49,6 +51,7 @@ public class Bestellposten {
     }
 
     public double gesamtpreis() {
-        return this.pizza.getPreis() * this.menge;
+        double preis = (pizza.getPreis() * this.menge);
+        return Math.round(preis * 100.0) / 100.0;
     }
 }
