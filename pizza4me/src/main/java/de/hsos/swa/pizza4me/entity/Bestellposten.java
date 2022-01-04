@@ -48,4 +48,7 @@ public class Bestellposten {
         return id;
     }
 
+    public double gesamtpreis() {
+        return this.pizza.getPreis() * this.menge;
+    }
 }

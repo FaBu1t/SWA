@@ -39,7 +39,6 @@ public class KundenRessource {
 
     @GET
     public Response alleKundenAnzeigen() {
-
         List<Kunde> kunden = kundenService.alleKundenAnzeigen();
         if (kunden.isEmpty()) {
             return Response.noContent().build();
@@ -48,9 +47,7 @@ public class KundenRessource {
         for (Kunde k : kunden) {
             kundenDTOs.add(KundeDTO.Converter.toKundeDTO(k));
         }
-
         return Response.ok(kundenDTOs).build();
-
     }
 
     @GET

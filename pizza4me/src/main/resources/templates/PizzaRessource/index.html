@@ -7,6 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pizza4Me</title>
 
+
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
 
@@ -18,9 +20,9 @@
             <div class="col-sm-8 ">
                 <a class="navbar-brand" href="#">Pizza4Me</a>
             </div>
-            <div class="col-sm-4">
-                <form class="form-inline my-2 my-lg-0">
-                    <button class="btn btn-sm btn-outline-secondary my-2 my-sm-0" type="submit">Search</button>
+            <div class="col-sm-4 px-4">
+                <form action="../login" method="GET">
+                    <button class="btn btn-sm btn-outline-secondary " type="submit">Login</button>
                 </form>
             </div>
         </div>
@@ -28,6 +30,7 @@
 </head>
 
 <body>
+
     <div class="container">
         <div class="row">
             <div class="col-sm-8 ">
@@ -40,15 +43,18 @@
                         <div class="card bg-light h-100">
                             <div class="card-body h-50">
                                 <h5 class="card-title h-25">{pizzaDTO.name}</h5>
-                                <p class="card-text h-25">{pizzaDTO.beschreibung}</p>
+                                <p class="card-text h-25 text-secondary">{pizzaDTO.beschreibung}</p>
                                 <div class="row h-25">
                                     <div class="col-sm-4">
                                         <p class="card-text">{pizzaDTO.preis}€</p>
                                     </div>
                                     <div class="col-sm-6">
-                                        <form action="./" method="POST" id="form_{pizzaDTO.id}">
-                                            <input type="number" value="" name="menge">
+                                        <form action="http://localhost:8080/index/kunde/1/pizza" method="post"
+                                            id="form_{pizzaDTO.id}">
+                                            <input type="number" name="menge" required>
+                                            <input type="hidden" value="{pizzaDTO.id}" name="pizza">
                                         </form>
+
                                     </div>
                                     <div class="col-sm-2">
                                         <input type="submit" value="Add" form="form_{pizzaDTO.id}">
@@ -67,7 +73,12 @@
                 <div class="card ">
                     <div class="card-header bg-dark text-center text-light">Warenkorb</div>
                     <div class="card-body bg-light">
-                        Produkteee
+                        {#for bp in bestellposten.orEmpty}
+                        <div class="row">
+                            <div class="col-sm-8">{bp.menge}x {bp.pizza.name}</div>
+                            <div class="col-sm-4">{bp.gesamtpreis()}€</div>
+                        </div>
+                        {/for}
                     </div>
                     <div class="card-footer bg-light">
                         <div class="row">
@@ -75,13 +86,18 @@
                                 Gesamtpreis:
                             </div>
                             <div class="col-sm-3">
-                                XX.XX€
+                                {gesamtpreis}€
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-sm-9"></div>
                             <div class="col-sm-3 pt-3">
-                                <input type="button" class="btn btn-success" value="Bestellen">
+                                <form>
+
+                                    <input type="submit"
+                                        formaction="http://localhost:8080/index/bestellung/{bestellungId}/abschliessen"
+                                        formmethod="post" class="btn btn-success" value="Bestellen">
+                                </form>
                             </div>
                         </div>
                     </div>
