@@ -59,4 +59,11 @@ public class KundenRepository implements KundenService {
         return kunden;
     }
 
+    @Override
+    public Kunde kundeAnzeigen(String name) {
+        Kunde kunde = entityManager.createQuery("Select k From Kunde k Where k.name=:name ", Kunde.class)
+                .setParameter("name", name).getResultList().get(0);
+        return kunde;
+    }
+
 }

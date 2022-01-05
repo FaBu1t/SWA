@@ -1,5 +1,7 @@
 package de.hsos.swa.pizza4me.boundary.html;
 
+import java.security.Principal;
+
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.PostPersist;
@@ -11,6 +13,7 @@ import javax.ws.rs.POST;
 
 import io.quarkus.qute.CheckedTemplate;
 import io.quarkus.qute.TemplateInstance;
+import io.quarkus.security.identity.SecurityIdentity;
 
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -39,7 +42,8 @@ public class LoginRessource {
     @GET
     @Produces(MediaType.TEXT_HTML)
     public Response login() {
-        return Response.ok(Templates.login_login()).build();
+        return Response.ok(Templates.login_register()).build();
+
     }
 
     @GET
@@ -57,7 +61,7 @@ public class LoginRessource {
     public Response addUser(@FormParam("username") String username, @FormParam("password") String passwort) {
         UserLogin.add(username, passwort, "KundIn");
         Kunde kunde = kundenService.kundeHinzufuegen(username);
-        return Response.seeOther(UriBuilder.fromPath("/index/kunde/" + kunde.getId()).build()).build();
+        return Response.seeOther(UriBuilder.fromPath("/index/kunde/").build()).build();
     }
 
 }

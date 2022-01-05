@@ -8,6 +8,7 @@ import javax.ws.rs.POST;
 import io.quarkus.qute.CheckedTemplate;
 import io.quarkus.qute.TemplateInstance;
 
+import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.ws.rs.Path;
@@ -17,6 +18,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 
+import java.security.Principal;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +43,9 @@ public class IndexRessource {
     }
 
     @Inject
+    Principal principal;
+
+    @Inject
     @Named("BestellungRepos")
     BestellungService service;
 
@@ -51,6 +56,8 @@ public class IndexRessource {
     @Inject
     @Named("KundenRepo")
     KundenService kundenService;
+
+    @Inject
 
     @GET
     @Path("/logout")
@@ -118,6 +125,38 @@ public class IndexRessource {
     }
 
     @GET
+    @Path("/kunde")
+    @RolesAllowed("KundIn")
+    public Response indexKunde() {
+        int kundenId = 0;
+        String username = principal.getName();
+        System.out.println("Username: " + username);
+        Kunde kunde = kundenService.kundeAnzeigen(username);
+
+        if (kunde == null) {
+            kunde = kundenService.kundeHinzufuegen(username);
+        }
+        kundenId = kunde.getId();
+        List<Pizza> allePizzen = pizzaService.allePizzenAbfragen();
+        List<PizzaDTO> allePizzenDTOs = new ArrayList<>();
+        if (allePizzen.isEmpty())
+            return Response.noContent().build();
+        for (Pizza p : allePizzen) {
+            allePizzenDTOs.add(PizzaDTO.Converter.toPizzaDTO(p));
+        }
+        if (!allePizzenDTOs.isEmpty()) {
+            return Response
+                    .ok(Templates.index_kundIn().data("pizzen", allePizzen).data("bestellposten", null)
+                            .data("bestellungId",
+                                    0)
+                            .data("gesamtpreis", "00.00").data("kundenId", kundenId))
+                    .build();
+        }
+
+        return Response.noContent().build();
+    }
+
+    @GET
     public Response index() {
         List<Pizza> allePizzen = pizzaService.allePizzenAbfragen();
         List<PizzaDTO> allePizzenDTOs = new ArrayList<>();
@@ -136,6 +175,7 @@ public class IndexRessource {
     }
 
     @POST
+
     @Path("/kunde/{kundenId}/pizza")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.APPLICATION_JSON)
@@ -172,6 +212,7 @@ public class IndexRessource {
     }
 
     @POST
+    @RolesAllowed("KundIn")
     @Path("/kunde/{kundenId}/bestellung/{bestellungId}/abschliessen")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.APPLICATION_JSON)

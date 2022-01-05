@@ -14,6 +14,8 @@ public interface KundenService {
 
     public Kunde kundeAnzeigen(int id);
 
+    public Kunde kundeAnzeigen(String name);
+
     public List<Kunde> alleKundenAnzeigen();
 
 }
